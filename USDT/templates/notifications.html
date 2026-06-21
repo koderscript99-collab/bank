@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Notifications{% endblock %}
+{% block page_title %}Notifications{% endblock %}
+{% block nav_notif %}active{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <div class="ch-icon" style="background:var(--sky-dim)"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--sky)" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></div>
+    <h3>Notifications</h3>
+  </div>
+  <div class="card-body" style="padding:0">
+    {% for n in notifications %}
+    <div style="padding:16px 20px;border-bottom:1px solid var(--border);{% if not n.is_read %}background:var(--sky-dim){% endif %}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+        <div>
+          <div style="font-size:14px;font-weight:600;margin-bottom:4px">{{ n.title }}</div>
+          <div style="font-size:13px;color:var(--muted)">{{ n.message }}</div>
+        </div>
+        <div style="font-size:11.5px;color:var(--muted);white-space:nowrap">{{ n.created_at|date:"M d, H:i" }}</div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="empty-state">No notifications yet.</div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

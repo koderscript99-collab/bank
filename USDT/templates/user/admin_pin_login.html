@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f9fafb;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;--accent:#2563eb;--red:#dc2626;--red-dim:rgba(220,38,38,.08);--radius:10px}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d27;--border:#2a2d3a;--text:#f3f4f6;--muted:#6b7280}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;transition:background .3s}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:36px;width:100%;max-width:380px}
+.brand{font-size:20px;font-weight:800;margin-bottom:4px}
+.sub{font-size:13px;color:var(--muted);margin-bottom:24px}
+.form-group{margin-bottom:16px}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+input[type=text]{width:100%;padding:11px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);font-size:14px;color:var(--text);outline:none;font-family:inherit;transition:border-color .2s}
+input[type=text]:focus{border-color:var(--accent)}
+.pin-dots{display:flex;justify-content:center;gap:14px;margin:20px 0 18px}
+.dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--border);transition:all .15s}
+.dot.on{background:var(--accent);border-color:var(--accent)}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.key{padding:15px;text-align:center;font-size:18px;font-weight:600;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:background .1s,transform .1s;user-select:none}
+.key:hover{background:var(--border)}
+.key:active{transform:scale(.94)}
+.key.action{font-size:13px;color:var(--red)}
+.btn{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s}
+.btn:hover{opacity:.9}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.err{background:var(--red-dim);border:1px solid var(--red);color:var(--red);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:16px}
+.back{display:block;text-align:center;margin-top:16px;font-size:13px;color:var(--muted);text-decoration:none}
+.back:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="brand">Admin Access</div>
+  <div class="sub">Enter your username and 4-digit PIN</div>
+
+  {% if messages %}
+    {% for m in messages %}
+    <div class="err">{{ m }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" id="f">
+    {% csrf_token %}
+
+    <input type="hidden" name="pin" id="pin">
+
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" name="username" required placeholder="Admin username" autofocus>
+    </div>
+
+    <div class="pin-dots">
+      <div class="dot" id="d0"></div>
+      <div class="dot" id="d1"></div>
+      <div class="dot" id="d2"></div>
+      <div class="dot" id="d3"></div>
+    </div>
+
+    <div class="keypad">
+      <div class="key" onclick="add('1')">1</div>
+      <div class="key" onclick="add('2')">2</div>
+      <div class="key" onclick="add('3')">3</div>
+      <div class="key" onclick="add('4')">4</div>
+      <div class="key" onclick="add('5')">5</div>
+      <div class="key" onclick="add('6')">6</div>
+      <div class="key" onclick="add('7')">7</div>
+      <div class="key" onclick="add('8')">8</div>
+      <div class="key" onclick="add('9')">9</div>
+      <div class="key action" onclick="clear_()">CLR</div>
+      <div class="key" onclick="add('0')">0</div>
+      <div class="key action" onclick="del()">⌫</div>
+    </div>
+
+    <button class="btn" id="sb" type="submit" disabled>Unlock</button>
+  </form>
+
+  <a href="{% url 'login' %}" class="back">← Back to user login</a>
+</div>
+
+<script>
+let p = '';
+
+function sync() {
+  for (let i = 0; i < 4; i++) {
+    document.getElementById('d' + i).classList.toggle('on', i < p.length);
+  }
+  document.getElementById('sb').disabled = p.length !== 4;
+}
+
+function add(d) {
+  if (p.length < 4) { p += d; sync(); }
+}
+
+function del() {
+  p = p.slice(0, -1);
+  sync();
+}
+
+function clear_() {
+  p = '';
+  sync();
+}
+
+// set pin value right before form submits
+document.getElementById('f').addEventListener('submit', function() {
+  document.getElementById('pin').value = p;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+{% extends 'admin/base.html' %}
+{% block title %}Activations{% endblock %}
+{% block page_title %}Pending Activations{% endblock %}
+{% block nav_activations %}active{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <div class="ch-icon" style="background:var(--amber-dim)"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--amber)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+    <h3>Activation Requests</h3>
+    <span class="ch-meta">{{ pending|length }} pending</span>
+  </div>
+  <div class="card-body" style="padding:0">
+    {% if pending %}
+    <table>
+      <thead><tr><th>User</th><th>Amount</th><th>Submitted</th><th>Actions</th></tr></thead>
+      <tbody>
+      {% for p in pending %}
+      <tr>
+        <td>
+          <div style="font-weight:600">{{ p.user.username }}</div>
+          <div style="font-size:11.5px;color:var(--muted)">{{ p.user.email }}</div>
+        </td>
+        <td style="font-weight:600">${{ p.amount_required }}</td>
+        <td style="font-size:12.5px;color:var(--muted)">{{ p.created_at|date:"M d, Y H:i" }}</td>
+        <td>
+          <div style="display:flex;gap:8px">
+            <form method="post" action="{% url 'admin-approve-activation' p.user.id %}">
+              {% csrf_token %}
+              <button name="action" value="approve" type="submit" class="btn btn-sm btn-green">✓ Approve</button>
+            </form>
+            <form method="post" action="{% url 'admin-approve-activation' p.user.id %}">
+              {% csrf_token %}
+              <button name="action" value="reject" type="submit" class="btn btn-sm btn-red" onclick="return confirm('Reject this activation?')">✗ Reject</button>
+            </form>
+            <a href="{% url 'admin-user-detail' p.user.id %}" class="btn btn-sm btn-outline">Profile</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="var(--muted)" stroke-width="1.5" style="margin:0 auto 12px;display:block"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      No pending activations. You're all caught up!
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

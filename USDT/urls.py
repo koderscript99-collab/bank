@@ -1,0 +1,42 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    # auth
+    path('', views.home, name='home'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('admin-login/', views.admin_pin_login, name='admin-pin-login'),
+
+    # user
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('activate/', views.activate_account, name='activate-account'),
+    path('withdraw/', views.request_withdrawal, name='request-withdrawal'),
+    path('notifications/', views.notifications, name='notifications'),
+    path('profile/', views.profile, name='profile'),
+
+    
+
+    # admin
+    path('admin-panel/', views.admin_dashboard, name='admin-dashboard'),
+    path('admin-panel/users/<int:user_id>/', views.admin_user_detail, name='admin-user-detail'),
+    path('admin-panel/users/<int:user_id>/toggle-activation/', views.admin_toggle_activation, name='admin-toggle-activation'),
+    path('admin-panel/users/<int:user_id>/toggle-freeze/', views.admin_toggle_freeze_wallet, name='admin-toggle-freeze'),
+    path('admin-panel/users/<int:user_id>/fund/', views.admin_fund_user, name='admin-fund-user'),
+    path('admin-panel/users/<int:user_id>/assign-account/', views.admin_assign_payment_account, name='admin-assign-account'),
+    path('admin-panel/accounts/<int:account_id>/remove/', views.admin_remove_payment_account, name='admin-remove-account'),
+    path('admin-panel/withdrawals/', views.admin_withdrawals, name='admin-withdrawals'),
+    path('admin-panel/withdrawals/<int:withdrawal_id>/review/', views.admin_review_withdrawal, name='admin-review-withdrawal'),
+    # activation
+    path('activate/', views.activate_account, name='activate-account'),
+
+# admin payment details
+    path('admin-panel/payment-details/', views.admin_payment_details, name='admin-payment-details'),
+    path('admin-panel/payment-details/add/', views.admin_add_payment_detail, name='admin-add-payment-detail'),
+    path('admin-panel/payment-details/<int:detail_id>/edit/', views.admin_edit_payment_detail, name='admin-edit-payment-detail'),
+    path('admin-panel/payment-details/<int:detail_id>/delete/', views.admin_delete_payment_detail, name='admin-delete-payment-detail'),
+
+# admin activations
+    path('admin-panel/activations/', views.admin_pending_activations, name='admin-pending-activations'),
+    path('admin-panel/activations/<int:user_id>/review/', views.admin_approve_activation, name='admin-approve-activation'),
+]

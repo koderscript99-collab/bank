@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f9fafb;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;
+  --accent:#2563eb;--accent-dim:rgba(37,99,235,.08);--green:#16a34a;
+  --green-dim:rgba(22,163,74,.08);--amber:#d97706;--amber-dim:rgba(217,119,6,.08);
+  --red:#dc2626;--red-dim:rgba(220,38,38,.08);--sidebar-w:220px;--header-h:56px;--radius:10px;
+}
+[data-theme="dark"]{
+  --bg:#0f1117;--surface:#1a1d27;--border:#2a2d3a;--text:#f3f4f6;--muted:#6b7280;
+  --accent-dim:rgba(37,99,235,.15);--green-dim:rgba(22,163,74,.15);
+  --amber-dim:rgba(217,119,6,.15);--red-dim:rgba(220,38,38,.15);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s}
+.sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;transition:transform .3s}
+.logo{height:var(--header-h);display:flex;align-items:center;padding:0 18px;font-size:17px;font-weight:800;border-bottom:1px solid var(--border)}
+.logo span{color:var(--accent)}
+.nav{padding:12px 8px;flex:1}
+.nav a{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;font-size:13.5px;color:var(--muted);text-decoration:none;margin-bottom:2px;transition:background .15s,color .15s}
+.nav a:hover{background:var(--accent-dim);color:var(--text)}
+.nav a.active{background:var(--accent-dim);color:var(--accent);font-weight:600}
+.sidebar-foot{padding:12px;border-top:1px solid var(--border)}
+.ucard{display:flex;align-items:center;gap:9px;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:9px;margin-bottom:8px}
+.av{width:32px;height:32px;border-radius:50%;background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.uname{font-size:13px;font-weight:600}
+.urole{font-size:11px;color:var(--muted)}
+.signout{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:13px;color:var(--red);text-decoration:none}
+.signout:hover{background:var(--red-dim)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:150}
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column}
+.topbar{height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:100}
+.menu-btn{display:none;background:none;border:none;cursor:pointer;color:var(--muted);padding:6px;border-radius:7px}
+.page-title{font-size:14px;font-weight:600}
+.tt{width:34px;height:34px;border-radius:50%;background:var(--bg);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+[data-theme="light"] .moon{display:none}
+[data-theme="dark"] .sun{display:none}
+.content{padding:24px;max-width:640px;width:100%}
+/* PROFILE HERO */
+.profile-hero{background:linear-gradient(135deg,var(--accent),#1d4ed8);border-radius:14px;padding:28px;display:flex;align-items:center;gap:20px;margin-bottom:20px;color:#fff}
+.hero-av{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;flex-shrink:0;border:3px solid rgba(255,255,255,.4)}
+.hero-name{font-size:20px;font-weight:700;margin-bottom:4px}
+.hero-acc{font-size:13px;opacity:.85;display:flex;align-items:center;gap:8px}
+.copy-acc{background:rgba(255,255,255,.2);border:none;color:#fff;padding:3px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600;transition:background .15s}
+.copy-acc:hover{background:rgba(255,255,255,.3)}
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.card-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.card-head h3{font-size:14px;font-weight:600}
+.card-body{padding:18px}
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.form-group input,.form-group textarea{padding:11px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);font-size:14px;color:var(--text);outline:none;font-family:inherit;transition:border-color .2s;width:100%}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
+.form-group input:disabled{opacity:.6;cursor:not-allowed}
+.span-2{grid-column:span 2}
+.acc-field{display:flex;align-items:center;gap:8px;padding:11px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:monospace}
+.acc-copy{background:none;border:none;cursor:pointer;color:var(--accent);padding:2px;display:flex}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:var(--radius);font-size:14px;font-weight:600;border:none;cursor:pointer;transition:opacity .15s}
+.btn:hover{opacity:.9}
+.btn-accent{background:var(--accent);color:#fff;width:100%;justify-content:center}
+/* NOTICE */
+.notice{display:flex;align-items:flex-start;gap:10px;padding:13px 16px;border-radius:9px;font-size:13px;border:1px solid;margin-top:14px}
+.notice-blue{background:var(--accent-dim);border-color:rgba(37,99,235,.2);color:var(--accent)}
+/* MSG */
+.msg{padding:11px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;border-left:3px solid}
+.msg.success{background:var(--green-dim);border-color:var(--green);color:var(--green)}
+.msg.error{background:var(--red-dim);border-color:var(--red);color:var(--red)}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .overlay.open{display:block}
+  .main{margin-left:0}
+  .menu-btn{display:flex}
+  .content{padding:14px}
+  .form-grid{grid-template-columns:1fr}
+  .span-2{grid-column:span 1}
+  .profile-hero{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="overlay" id="ov" onclick="closeSB()"></div>
+
+<aside class="sidebar" id="sb">
+  <div class="logo">My<span>Portal</span></div>
+  <nav class="nav">
+    <a href="{% url 'dashboard' %}">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Dashboard
+    </a>
+    <a href="{% url 'request-withdrawal' %}">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Withdraw
+    </a>
+    <a href="{% url 'notifications' %}">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      Notifications
+    </a>
+    {% if not request.user.account_activated %}
+    <a href="{% url 'activate-account' %}">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      Activate Account
+    </a>
+    {% endif %}
+    <a href="{% url 'profile' %}" class="active">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profile
+    </a>
+  </nav>
+  <div class="sidebar-foot">
+    <div class="ucard">
+      <div class="av">{{ request.user.initials }}</div>
+      <div>
+        <div class="uname">{{ request.user.full_name }}</div>
+        <div class="urole">
+          {% if request.user.account_activated %}
+          <span style="color:var(--green)">● Active</span>
+          {% else %}
+          <span style="color:var(--amber)">● Pending</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <a href="{% url 'logout' %}" class="signout">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign out
+    </a>
+  </div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="menu-btn" onclick="openSB()">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <span class="page-title">My Profile</span>
+    </div>
+    <button class="tt" id="tt">
+      <svg class="sun" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="moon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+  </header>
+
+  <div class="content">
+    {% if messages %}
+      {% for m in messages %}
+      <div class="msg {{ m.tags }}">{{ m }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <!-- PROFILE HERO -->
+    <div class="profile-hero">
+      <div class="hero-av">{{ request.user.initials }}</div>
+      <div>
+        <div class="hero-name">{{ request.user.full_name }}</div>
+        <div class="hero-acc">
+          Account #{{ request.user.account_number|default:"Not assigned" }}
+          <button class="copy-acc" onclick="cp('{{ request.user.account_number }}')">Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE FORM -->
+    <div class="card">
+      <div class="card-head">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <h3>Profile Information</h3>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" name="first_name" value="{{ request.user.first_name }}" placeholder="First name">
+            </div>
+
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" name="last_name" value="{{ request.user.last_name }}" placeholder="Last name">
+            </div>
+
+            <div class="form-group span-2">
+              <label>Account Number</label>
+              <div class="acc-field">
+                <span style="color:var(--muted);margin-right:4px">#</span>
+                <span style="flex:1;font-weight:600">{{ request.user.account_number|default:"Will be assigned" }}</span>
+                <button type="button" class="acc-copy" onclick="cp('{{ request.user.account_number }}')" title="Copy">
+                  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                </button>
+              </div>
+              <span style="font-size:11.5px;color:var(--muted)">Your unique account identifier</span>
+            </div>
+
+            <div class="form-group span-2">
+              <label>Email Address</label>
+              <input type="email" name="email" value="{{ request.user.email }}" placeholder="your@email.com">
+            </div>
+
+            <div class="form-group">
+              <label>Date of Birth</label>
+              <input type="date" name="date_of_birth" value="{{ request.user.date_of_birth|date:'Y-m-d' }}">
+            </div>
+
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" name="phone" value="{{ request.user.phone }}" placeholder="+1 234 567 8900">
+            </div>
+
+            <div class="form-group span-2">
+              <label>Address</label>
+              <input type="text" name="address" value="{{ request.user.address }}" placeholder="Your address">
+            </div>
+
+          </div>
+
+          <div class="notice notice-blue" style="margin-bottom:16px">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Account number is assigned automatically and cannot be changed.
+          </div>
+
+          <button type="submit" class="btn btn-accent">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Save Profile
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const h=document.documentElement;
+h.setAttribute('data-theme',localStorage.getItem('theme')||'light');
+document.getElementById('tt').onclick=()=>{
+  const n=h.getAttribute('data-theme')==='light'?'dark':'light';
+  h.setAttribute('data-theme',n);localStorage.setItem('theme',n);
+};
+function openSB(){document.getElementById('sb').classList.add('open');document.getElementById('ov').classList.add('open')}
+function closeSB(){document.getElementById('sb').classList.remove('open');document.getElementById('ov').classList.remove('open')}
+function cp(t){
+  navigator.clipboard.writeText(t).then(()=>{
+    const btn=event.target.closest('button');
+    const orig=btn.innerHTML;
+    btn.innerHTML='✓';
+    setTimeout(()=>btn.innerHTML=orig,2000);
+  });
+}
+</script>
+</body>
+</html>

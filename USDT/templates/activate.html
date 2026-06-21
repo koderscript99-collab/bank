@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}Activate Account{% endblock %}
+{% block page_title %}Activate Account{% endblock %}
+{% block nav_activate %}active{% endblock %}
+
+{% block content %}
+<div style="max-width:600px">
+
+{% if payment.status == 'pending' %}
+<div class="card">
+  <div class="card-header">
+    <div class="ch-icon" style="background:var(--amber-dim)"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--amber)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+    <h3>Account Activation</h3>
+  </div>
+  <div class="card-body">
+    <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px">
+      To activate your account, send <strong style="color:var(--text)">${{ activation_amount }} USD</strong> to any of the payment accounts below, then click <strong>I've Sent Payment</strong>.
+    </p>
+
+    {% for detail in payment_details %}
+    <div style="border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+        <span class="badge {% if detail.payment_type == 'bank' %}badge-sky{% else %}badge-amber{% endif %}">
+          {{ detail.get_payment_type_display }}
+        </span>
+        <strong style="font-size:14px">{{ detail.label }}</strong>
+      </div>
+
+      {% if detail.payment_type == 'bank' %}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px">
+        {% if detail.bank_name %}<div><span style="color:var(--muted)">Bank:</span> <strong>{{ detail.bank_name }}</strong></div>{% endif %}
+        {% if detail.account_name %}<div><span style="color:var(--muted)">Account Name:</span> <strong>{{ detail.account_name }}</strong></div>{% endif %}
+        {% if detail.account_number %}<div><span style="color:var(--muted)">Account No:</span> <strong>{{ detail.account_number }}</strong></div>{% endif %}
+        {% if detail.bank_country %}<div><span style="color:var(--muted)">Country:</span> {{ detail.bank_country }}</div>{% endif %}
+        {% if detail.swift_code %}<div><span style="color:var(--muted)">SWIFT:</span> {{ detail.swift_code }}</div>{% endif %}
+        {% if detail.iban %}<div><span style="color:var(--muted)">IBAN:</span> {{ detail.iban }}</div>{% endif %}
+        {% if detail.routing_number %}<div><span style="color:var(--muted)">Routing:</span> {{ detail.routing_number }}</div>{% endif %}
+      </div>
+      {% else %}
+      <div style="font-size:13px">
+        <div style="margin-bottom:6px"><span style="color:var(--muted)">Currency:</span> <strong>{{ detail.crypto_currency }}</strong> &nbsp;|&nbsp; <span style="color:var(--muted)">Network:</span> <strong>{{ detail.crypto_network }}</strong></div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:monospace;font-size:13px;word-break:break-all">{{ detail.wallet_address }}</div>
+      </div>
+      {% endif %}
+    </div>
+    {% empty %}
+    <div style="text-align:center;padding:30px;color:var(--muted);font-size:13.5px">No payment details available yet. Please contact admin.</div>
+    {% endfor %}
+
+    {% if payment_details %}
+    <form method="post" style="margin-top:20px">
+      {% csrf_token %}
+      <div style="background:var(--sky-dim);border:1px solid rgba(14,165,233,.3);border-radius:10px;padding:14px;margin-bottom:16px;font-size:13px">
+        ⚠ Only click below after you have sent the payment. Admin will verify and activate your account.
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        I've Sent Payment — Notify Admin
+      </button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+
+{% elif payment.status == 'paid' %}
+<div class="card">
+  <div class="card-body" style="text-align:center;padding:40px">
+    <div style="width:64px;height:64px;background:var(--green-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+      <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h3 style="font-size:18px;margin-bottom:8px">Account Activated!</h3>
+    <p style="color:var(--muted);font-size:13.5px">Your account has been activated. Enjoy full access.</p>
+    <a href="{% url 'dashboard' %}" class="btn btn-primary" style="margin-top:20px">Go to Dashboard</a>
+  </div>
+</div>
+
+{% else %}
+<div class="card">
+  <div class="card-body" style="text-align:center;padding:40px;color:var(--muted)">
+    Payment submitted. Awaiting admin confirmation.
+  </div>
+</div>
+{% endif %}
+
+</div>
+{% endblock %}

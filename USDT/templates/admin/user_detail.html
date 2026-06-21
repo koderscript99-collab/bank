@@ -1,0 +1,229 @@
+{% extends 'admin/base.html' %}
+{% block title %}{{ target.username }}{% endblock %}
+{% block page_title %}User — {{ target.username }}{% endblock %}
+{% block nav_users %}active{% endblock %}
+
+{% block content %}
+<a href="{% url 'admin-dashboard' %}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:20px">
+  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+  Back to Users
+</a>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+
+<!-- USER INFO -->
+<div class="card" style="margin:0">
+  <div class="card-header">
+    <div class="ch-icon" style="background:var(--sky-dim)"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--sky)" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <h3>User Info</h3>
+  </div>
+  <div class="card-body">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+      <div style="width:52px;height:52px;border-radius:50%;background:var(--sky-dim);color:var(--sky);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700">{{ target.username|first|upper }}</div>
+      <div>
+        <div style="font-size:17px;font-weight:700">{{ target.username }}</div>
+        <div style="font-size:13px;color:var(--muted)">{{ target.email }}</div>
+      </div>
+    </div>
+    <table style="font-size:13px">
+      <tr><td style="color:var(--muted);padding:6px 0;border:none;width:120px">Phone</td><td style="border:none">{{ target.phone|default:"—" }}</td></tr>
+      <tr><td style="color:var(--muted);padding:6px 0;border:none">Joined</td><td style="border:none">{{ target.date_joined|date:"M d, Y" }}</td></tr>
+      <tr><td style="color:var(--muted);padding:6px 0;border:none">Status</td><td style="border:none">{% if target.account_activated %}<span class="badge badge-green">Active</span>{% else %}<span class="badge badge-amber">Inactive</span>{% endif %}</td></tr>
+      <tr><td style="color:var(--muted);padding:6px 0;border:none">Balance</td><td style="border:none;font-weight:700;color:var(--sky)">${{ wallet.balance }}</td></tr>
+      <tr><td style="color:var(--muted);padding:6px 0;border:none">Wallet</td><td style="border:none">{% if wallet.is_frozen %}<span class="badge badge-red">Frozen</span>{% else %}<span class="badge badge-green">Active</span>{% endif %}</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- QUICK ACTIONS -->
+<div class="card" style="margin:0">
+  <div class="card-header">
+    <div class="ch-icon" style="background:var(--purple-dim)"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--purple)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div>
+    <h3>Quick Actions</h3>
+  </div>
+  <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+
+    <!-- TOGGLE ACTIVATION -->
+    <form method="post" action="{% url 'admin-toggle-activation' target.id %}">
+      {% csrf_token %}
+      <input type="hidden" name="note" value="Manual toggle">
+      <button type="submit" class="btn {% if target.account_activated %}btn-amber{% else %}btn-green{% endif %}" style="width:100%;justify-content:center">
+        {% if target.account_activated %}⊘ Deactivate Account{% else %}✓ Activate Account{% endif %}
+      </button>
+    </form>
+
+    <!-- TOGGLE FREEZE -->
+    <form method="post" action="{% url 'admin-toggle-freeze' target.id %}">
+      {% csrf_token %}
+      <input type="hidden" name="note" value="Manual toggle">
+      <button type="submit" class="btn {% if wallet.is_frozen %}btn-green{% else %}btn-red{% endif %}" style="width:100%;justify-content:center">
+        {% if wallet.is_frozen %}❄ Unfreeze Wallet{% else %}❄ Freeze Wallet{% endif %}
+      </button>
+    </form>
+
+    <!-- FUND -->
+    <form method="post" action="{% url 'admin-fund-user' target.id %}" style="border:1px solid var(--border);border-radius:10px;padding:14px">
+      {% csrf_token %}
+      <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;margin-bottom:10px">Fund Wallet</div>
+      <div style="display:flex;gap:8px">
+        <input type="number" name="amount" step="0.01" min="1" placeholder="Amount USD" style="flex:1;padding:9px 12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;color:var(--text);outline:none">
+        <button type="submit" class="btn btn-sky" style="background:var(--sky);color:#fff;white-space:nowrap">+ Add Funds</button>
+      </div>
+      <input type="text" name="note" placeholder="Note (optional)" style="width:100%;padding:9px 12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--text);outline:none;margin-top:8px">
+    </form>
+  </div>
+</div>
+
+</div>
+
+<!-- PAYMENT ACCOUNTS -->
+<div class="card" style="margin-top:20px">
+  <div class="card-header">
+    <div class="ch-icon" style="background:var(--green-dim)"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--green)" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+    <h3>Payment Accounts</h3>
+    <button onclick="toggleForm('accountForm')" class="btn btn-sm btn-purple ch-meta" style="background:#7c3aed;color:#fff">+ Assign New</button>
+  </div>
+
+  <!-- ADD ACCOUNT FORM -->
+  <div id="accountForm" style="display:none;padding:20px;border-bottom:1px solid var(--border);background:var(--surface2)">
+    <form method="post" action="{% url 'admin-assign-account' target.id %}">
+      {% csrf_token %}
+      <div class="form-group" style="margin-bottom:14px">
+        <label>Account Type</label>
+        <select name="account_type" id="accType" onchange="switchAccountType()">
+          <option value="bank">Bank Account</option>
+          <option value="crypto">Crypto Wallet</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Label / Nickname</label><input type="text" name="label" placeholder="e.g. Main GTBank or USDT TRC20"></div>
+
+      <div id="bankFields">
+        <div class="form-grid">
+          <div class="form-group"><label>Bank Name</label><input type="text" name="bank_name"></div>
+          <div class="form-group"><label>Account Name</label><input type="text" name="account_name"></div>
+          <div class="form-group"><label>Account Number</label><input type="text" name="account_number"></div>
+          <div class="form-group"><label>Country</label><input type="text" name="bank_country"></div>
+          <div class="form-group"><label>SWIFT</label><input type="text" name="swift_code"></div>
+          <div class="form-group"><label>IBAN</label><input type="text" name="iban"></div>
+          <div class="form-group span-2"><label>Routing Number</label><input type="text" name="routing_number"></div>
+        </div>
+      </div>
+      <div id="cryptoFields" style="display:none">
+        <div class="form-grid">
+          <div class="form-group"><label>Currency</label><input type="text" name="crypto_currency" placeholder="e.g. USDT, BTC"></div>
+          <div class="form-group"><label>Network</label><input type="text" name="crypto_network" placeholder="e.g. TRC20, ERC20"></div>
+          <div class="form-group span-2"><label>Wallet Address</label><input type="text" name="wallet_address"></div>
+        </div>
+      </div>
+      <div class="form-group"><label>Note</label><input type="text" name="note" placeholder="Internal note"></div>
+      <div style="display:flex;gap:10px;margin-top:4px">
+        <button type="submit" class="btn btn-green">Save Account</button>
+        <button type="button" onclick="toggleForm('accountForm')" class="btn btn-outline">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card-body" style="padding:0">
+    {% if payment_accounts %}
+    <table>
+      <thead><tr><th>Type</th><th>Details</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+      {% for acc in payment_accounts %}
+      <tr>
+        <td><span class="badge {% if acc.account_type == 'bank' %}badge-sky{% else %}badge-amber{% endif %}">{{ acc.get_account_type_display }}</span></td>
+        <td>
+          {% if acc.account_type == 'bank' %}
+            <strong>{{ acc.account_name }}</strong><br><span style="font-size:12px;color:var(--muted)">{{ acc.bank_name }} — {{ acc.account_number }}</span>
+          {% else %}
+            <strong>{{ acc.crypto_currency }}</strong> ({{ acc.crypto_network }})<br>
+            <span style="font-size:11px;color:var(--muted);word-break:break-all">{{ acc.wallet_address }}</span>
+          {% endif %}
+        </td>
+        <td>{% if acc.is_active %}<span class="badge badge-green">Active</span>{% else %}<span class="badge badge-muted">Removed</span>{% endif %}</td>
+        <td>
+          {% if acc.is_active %}
+          <form method="post" action="{% url 'admin-remove-account' acc.id %}" onsubmit="return confirm('Remove this account?')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-red">Remove</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">No payment accounts assigned yet.</div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- TRANSACTIONS -->
+<div class="card">
+  <div class="card-header">
+    <div class="ch-icon" style="background:var(--sky-dim)"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--sky)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg></div>
+    <h3>Transaction History</h3>
+  </div>
+  <div class="card-body" style="padding:0">
+    {% if transactions %}
+    <table>
+      <thead><tr><th>Type</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+      <tbody>
+      {% for t in transactions %}
+      <tr>
+        <td>{{ t.get_transaction_type_display }}</td>
+        <td style="font-weight:600">${{ t.amount }}</td>
+        <td><span class="badge {% if t.status == 'success' %}badge-green{% elif t.status == 'pending' %}badge-amber{% else %}badge-red{% endif %}">{{ t.status }}</span></td>
+        <td style="font-size:12px;color:var(--muted)">{{ t.created_at|date:"M d, Y H:i" }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">No transactions.</div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- ACTIVITY LOG -->
+<div class="card">
+  <div class="card-header">
+    <div class="ch-icon" style="background:var(--purple-dim)"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--purple)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+    <h3>Admin Activity Log</h3>
+  </div>
+  <div class="card-body" style="padding:0">
+    {% if control_logs %}
+    <table>
+      <thead><tr><th>Action</th><th>By</th><th>Note</th><th>Date</th></tr></thead>
+      <tbody>
+      {% for log in control_logs %}
+      <tr>
+        <td><span class="badge badge-purple">{{ log.get_action_display }}</span></td>
+        <td style="font-size:13px">{{ log.admin.username }}</td>
+        <td style="font-size:12.5px;color:var(--muted)">{{ log.note|default:"—" }}</td>
+        <td style="font-size:12px;color:var(--muted)">{{ log.created_at|date:"M d, H:i" }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">No activity logged.</div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleForm(id){
+  const el=document.getElementById(id);
+  el.style.display=el.style.display==='none'?'block':'none';
+}
+function switchAccountType(){
+  const t=document.getElementById('accType').value;
+  document.getElementById('bankFields').style.display=t==='bank'?'block':'none';
+  document.getElementById('cryptoFields').style.display=t==='crypto'?'block':'none';
+}
+</script>
+{% endblock %}

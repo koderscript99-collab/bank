@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Withdraw{% endblock %}
+{% block page_title %}Request Withdrawal{% endblock %}
+{% block nav_withdraw %}active{% endblock %}
+
+{% block content %}
+<div style="max-width:560px">
+<div class="card">
+  <div class="card-header">
+    <div class="ch-icon" style="background:var(--sky-dim)"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--sky)" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+    <h3>Withdraw Funds</h3>
+    <span class="ch-meta">Balance: <strong style="color:var(--sky)">${{ wallet.balance }}</strong></span>
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label>Amount (USD) <span class="req">*</span></label>
+        <input type="number" name="amount" step="0.01" min="1" max="{{ wallet.balance }}" placeholder="0.00" required>
+      </div>
+      <div class="form-group">
+        <label>Withdraw To <span class="req">*</span></label>
+        <select name="payment_account_id" required>
+          <option value="">— Select account —</option>
+          {% for acc in payment_accounts %}
+          <option value="{{ acc.id }}">
+            {% if acc.account_type == 'bank' %}
+              🏦 {{ acc.bank_name }} — {{ acc.account_number }}
+            {% else %}
+              🔐 {{ acc.crypto_currency }} ({{ acc.crypto_network }}) — {{ acc.wallet_address|truncatechars:20 }}
+            {% endif %}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div style="background:var(--amber-dim);border:1px solid var(--amber);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--amber);margin-bottom:16px">
+        ⚠ Withdrawals are reviewed by admin before processing.
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:13px">
+        Submit Withdrawal Request
+      </button>
+    </form>
+  </div>
+</div>
+</div>
+{% endblock %}
