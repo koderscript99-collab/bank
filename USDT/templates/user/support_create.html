@@ -1,0 +1,28 @@
+
+
+{% block content %}
+<h2>Contact Support</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <input
+        type="text"
+        name="subject"
+        placeholder="Subject"
+        required
+    >
+
+    <textarea
+        name="message"
+        rows="6"
+        placeholder="Describe your issue"
+        required
+    ></textarea>
+
+    <button type="submit">
+        Submit Ticket
+    </button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,90 @@
+```html
+
+{% block title %}Support{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <h2>Support Tickets</h2>
+
+        <a href="{% url 'support-create' %}"
+           class="btn btn-primary">
+            + New Ticket
+        </a>
+    </div>
+
+    {% if tickets %}
+
+    <div class="card">
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Subject</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td>#{{ ticket.id }}</td>
+
+                    <td>{{ ticket.subject }}</td>
+
+                    <td>
+                        {% if ticket.status == 'open' %}
+                            <span class="badge badge-success">
+                                Open
+                            </span>
+
+                        {% elif ticket.status == 'pending' %}
+                            <span class="badge badge-warning">
+                                Pending
+                            </span>
+
+                        {% else %}
+                            <span class="badge badge-danger">
+                                Closed
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {{ ticket.created_at|date:"M d, Y" }}
+                    </td>
+
+                    <td>
+                        <a href="{% url 'support-detail' ticket.id %}">
+                            Open
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% else %}
+
+    <div class="card" style="padding:30px;text-align:center;">
+        <h3>No Tickets Yet</h3>
+
+        <p>
+            You have not opened any support ticket.
+        </p>
+
+        <a href="{% url 'support-create' %}"
+           class="btn btn-primary">
+            Contact Support
+        </a>
+    </div>
+
+    {% endif %}
+
+</div>
+{% endblock %}
+```

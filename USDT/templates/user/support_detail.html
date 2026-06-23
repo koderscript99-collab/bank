@@ -1,0 +1,93 @@
+```html
+
+{% block title %}Support Ticket{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <a href="{% url 'support-list' %}" class="btn btn-secondary">
+        ← Back
+    </a>
+
+    <div class="card" style="margin-top:20px;padding:20px;">
+        <h2>{{ ticket.subject }}</h2>
+
+        <p>
+            Status:
+            <strong>{{ ticket.get_status_display }}</strong>
+        </p>
+
+        <p>
+            Created:
+            {{ ticket.created_at|date:"M d, Y H:i" }}
+        </p>
+    </div>
+
+    <div class="card" style="margin-top:20px;padding:20px;">
+
+        <h3>Conversation</h3>
+
+        {% for msg in ticket.messages.all %}
+
+        <div style="
+            margin-bottom:15px;
+            padding:15px;
+            border-radius:10px;
+            background:#f5f5f5;
+        ">
+            <strong>
+                {{ msg.sender.username }}
+            </strong>
+
+            <small style="float:right;">
+                {{ msg.created_at|date:"M d, Y H:i" }}
+            </small>
+
+            <div style="margin-top:10px;">
+                {{ msg.message }}
+            </div>
+        </div>
+
+        {% empty %}
+
+        <p>No messages yet.</p>
+
+        {% endfor %}
+
+    </div>
+
+    {% if ticket.status != 'closed' %}
+
+    <div class="card" style="margin-top:20px;padding:20px;">
+
+        <h3>Reply</h3>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <textarea
+                name="message"
+                rows="5"
+                required
+                style="width:100%;padding:10px;"
+                placeholder="Type your message..."
+            ></textarea>
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+                style="margin-top:10px;"
+            >
+                Send Reply
+            </button>
+        </form>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
+```

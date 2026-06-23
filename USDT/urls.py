@@ -41,6 +41,8 @@ urlpatterns = [
     path('admin-panel/users/<int:user_id>/delete/', views.admin_delete_user, name='admin-delete-user'),
     path('admin-panel/users/<int:user_id>/reset-password/', views.admin_reset_password, name='admin-reset-password'),
     path('admin-panel/users/', views.admin_users, name='admin-users'),
+    path('admin-panel/users/<int:user_id>/assign-account/', views.admin_assign_payment_account, name='admin-assign-account'),
+    path('admin-panel/accounts/<int:account_id>/remove/', views.admin_remove_payment_account, name='admin-remove-account'),
 
 # admin activations
     path('admin-panel/activations/', views.admin_pending_activations, name='admin-pending-activations'),
@@ -65,4 +67,12 @@ urlpatterns = [
     path('admin-panel/activations/<int:user_id>/review/', views.admin_approve_activation, name='admin-approve-activation'),
     path('admin-panel/transactions/', views.admin_transactions, name='admin-transactions'),
     path('admin-panel/change-pin/', views.admin_change_pin, name='admin-change-pin'),
+    # USER
+
+    path('support/',views.support_list,name='support-list'),
+    path('support/create/',views.support_create,name='support-create'),
+    path('support/<int:ticket_id>/',views.support_detail,name='support-detail'),
+    path('admin-panel/support/',views.admin_support_tickets,name='admin-support-tickets'),
+    path('admin-panel/support/<int:ticket_id>/',views.admin_support_detail,name='admin-support-detail'),
+    path('admin-panel/support/<int:ticket_id>/close/',views.admin_close_ticket,name='admin-close-ticket'),
 ]

@@ -1,0 +1,154 @@
+```html
+{% extends "admin/base.html" %}
+
+{% block title %}Support Ticket{% endblock %}
+{% block page_title %}Support Ticket #{{ ticket.id }}{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'admin-support-tickets' %}"
+   class="btn btn-outline"
+   style="margin-bottom:20px;">
+    ← Back to Tickets
+</a>
+
+<div class="card">
+    <div class="card-head">
+        <div class="card-title">
+            {{ ticket.subject }}
+        </div>
+    </div>
+
+    <div class="card-body">
+        <p>
+            <strong>User:</strong>
+            {{ ticket.user.username }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+
+            {% if ticket.status == 'open' %}
+                <span class="badge badge-green">Open</span>
+
+            {% elif ticket.status == 'pending' %}
+                <span class="badge badge-amber">Pending</span>
+
+            {% else %}
+                <span class="badge badge-red">Closed</span>
+            {% endif %}
+        </p>
+
+        <p>
+            <strong>Created:</strong>
+            {{ ticket.created_at|date:"M d, Y H:i" }}
+        </p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-head">
+        <div class="card-title">
+            Conversation
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        {% for msg in ticket.messages.all %}
+
+        <div style="
+            padding:15px;
+            margin-bottom:12px;
+            border-radius:12px;
+            background:var(--surface2);
+            border:1px solid var(--border);
+        ">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                margin-bottom:8px;
+            ">
+                <strong>
+                    {{ msg.sender.username }}
+                </strong>
+
+                <small style="color:var(--muted)">
+                    {{ msg.created_at|date:"M d, Y H:i" }}
+                </small>
+            </div>
+
+            <div>
+                {{ msg.message|linebreaks }}
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="empty">
+            No messages yet.
+        </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+
+{% if ticket.status != 'closed' %}
+
+<div class="card">
+    <div class="card-head">
+        <div class="card-title">
+            Reply to User
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        <form method="post">
+            {% csrf_token %}
+
+            <textarea
+                name="message"
+                rows="6"
+                required
+                placeholder="Type your reply..."
+                style="
+                    width:100%;
+                    padding:12px;
+                    border:1px solid var(--border);
+                    border-radius:10px;
+                    background:var(--surface2);
+                    color:var(--text);
+                "
+            ></textarea>
+
+            <div style="
+                display:flex;
+                gap:10px;
+                margin-top:12px;
+            ">
+                <button
+                    type="submit"
+                    class="btn btn-green">
+                    Send Reply
+                </button>
+
+                <a href="{% url 'admin-close-ticket' ticket.id %}"
+                   class="btn btn-red"
+                   onclick="return confirm('Close this ticket?')">
+                    Close Ticket
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}
+```

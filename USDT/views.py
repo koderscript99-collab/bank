@@ -13,7 +13,7 @@ from .models import (
     User, AdminProfile, Wallet, PaymentAccount,
     ActivationPayment, AdminDeposit, Transaction,
     WithdrawalRequest, AccountControlLog, Notification,
-    PaymentDetail
+    PaymentDetail,SupportTicket, SupportMessage
 )
 
 from django.db import models as db_models
@@ -1165,3 +1165,218 @@ def admin_user_detail(request, user_id):
         'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
         'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
     })
+
+@admin_required
+def admin_assign_payment_account(request, user_id):
+    target = get_object_or_404(User, id=user_id, role='user')
+
+    if request.method == 'POST':
+        account_type = request.POST.get('account_type')
+
+        account = PaymentAccount(
+            user=target,
+            assigned_by=request.user,
+            account_type=account_type,
+            note=request.POST.get('note', '')
+        )
+
+        if account_type == 'bank':
+            account.bank_name = request.POST.get('bank_name', '')
+            account.account_name = request.POST.get('account_name', '')
+            account.account_number = request.POST.get('account_number', '')
+            account.bank_country = request.POST.get('bank_country', '')
+            account.routing_number = request.POST.get('routing_number', '')
+            account.swift_code = request.POST.get('swift_code', '')
+            account.iban = request.POST.get('iban', '')
+
+        elif account_type == 'crypto':
+            account.crypto_currency = request.POST.get('crypto_currency', '')
+            account.crypto_network = request.POST.get('crypto_network', '')
+            account.wallet_address = request.POST.get('wallet_address', '')
+
+        account.save()
+
+        AccountControlLog.objects.create(
+            admin=request.user,
+            target_user=target,
+            action='assign_account',
+            note=f'Assigned {account_type} payment account'
+        )
+
+        _notify(target, 'Payment Account Added',
+                f'A new {account_type} payment account has been assigned to you.')
+        messages.success(request, 'Payment account assigned successfully.')
+
+    return redirect('admin-user-detail', user_id=user_id)
+
+
+@admin_required
+def admin_remove_payment_account(request, account_id):
+    account = get_object_or_404(PaymentAccount, id=account_id)
+    user_id = account.user.id
+
+    if request.method == 'POST':
+        account.is_active = False
+        account.save()
+
+        AccountControlLog.objects.create(
+            admin=request.user,
+            target_user=account.user,
+            action='remove_account',
+            note=f'Removed {account.account_type} payment account'
+        )
+
+        _notify(account.user, 'Payment Account Removed',
+                'A payment account has been removed from your profile.')
+        messages.success(request, 'Payment account removed.')
+
+    return redirect('admin-user-detail', user_id=user_id)
+
+
+@login_required
+def support_create(request):
+
+    if request.method == "POST":
+        subject = request.POST.get("subject")
+        message = request.POST.get("message")
+
+        ticket = SupportTicket.objects.create(
+            user=request.user,
+            subject=subject
+        )
+
+        SupportMessage.objects.create(
+            ticket=ticket,
+            sender=request.user,
+            message=message
+        )
+
+        return redirect('support-detail', ticket.id)
+
+    return render(request, 'user/support_create.html')
+
+
+@login_required
+def support_list(request):
+    tickets = SupportTicket.objects.filter(
+        user=request.user
+    ).order_by('-created_at')
+
+    return render(
+        request,
+        'user/support_list.html',
+        {'tickets': tickets}
+    )
+
+
+@login_required
+def support_detail(request, ticket_id):
+
+    ticket = get_object_or_404(
+        SupportTicket,
+        id=ticket_id,
+        user=request.user
+    )
+
+    if request.method == "POST":
+        SupportMessage.objects.create(
+            ticket=ticket,
+            sender=request.user,
+            message=request.POST.get("message")
+        )
+
+    return render(
+        request,
+        'user/support_detail.html',
+        {'ticket': ticket}
+    )
+
+
+@login_required
+def admin_support_tickets(request):
+
+    tickets = SupportTicket.objects.select_related(
+        'user'
+    ).order_by('-created_at')
+
+    return render(
+        request,
+        'admin/support_tickets.html',
+        {'tickets': tickets}
+    )
+
+
+@login_required
+def admin_support_detail(request, ticket_id):
+
+    ticket = get_object_or_404(
+        SupportTicket,
+        id=ticket_id
+    )
+
+    if request.method == "POST":
+
+        message = request.POST.get("message")
+
+        if message:
+            SupportMessage.objects.create(
+                ticket=ticket,
+                sender=request.user,
+                message=message
+            )
+
+            ticket.status = 'pending'
+            ticket.save()
+
+    return render(
+        request,
+        'admin/support_detail.html',
+        {'ticket': ticket}
+    )
+
+
+@login_required
+def admin_close_ticket(request, ticket_id):
+
+    ticket = get_object_or_404(
+        SupportTicket,
+        id=ticket_id
+    )
+
+    ticket.status = 'closed'
+    ticket.save()
+
+    return redirect(
+        'admin-support-detail',
+        ticket.id
+    )
+
+
+
+@login_required
+def admin_support_detail(request, ticket_id):
+
+    ticket = get_object_or_404(
+        SupportTicket,
+        id=ticket_id
+    )
+
+    if request.method == "POST":
+
+        message = request.POST.get("message")
+
+        if message:
+            SupportMessage.objects.create(
+                ticket=ticket,
+                sender=request.user,
+                message=message
+            )
+
+            ticket.status = "pending"
+            ticket.save()
+
+    return render(
+        request,
+        "admin/support_detail.html",
+        {"ticket": ticket}
+    )
