@@ -118,3 +118,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 AUTH_USER_MODEL = 'USDT.User'
 LOGIN_URL = '/login/'
+
+
+SESSION_COOKIE_AGE = 86400        # 1 day in seconds
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False

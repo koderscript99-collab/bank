@@ -16,6 +16,11 @@ from .models import (
     PaymentDetail
 )
 
+from django.db import models as db_models
+
+
+
+
 
 # ======================
 # HELPERS
@@ -43,10 +48,13 @@ def _notify(user, title, message):
 # ======================
 # ADMIN DECORATOR
 # ======================
+import functools
 
 def admin_required(view_func):
-    @login_required
+    @functools.wraps(view_func)
     def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('admin-pin-login')
         if not request.user.is_admin_user:
             messages.error(request, 'Access denied.')
             return redirect('dashboard')
@@ -98,12 +106,10 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
-
-
 # ======================
 # AUTH — ADMIN PIN
-# ======================
-
+ #
+ #======================
 def admin_pin_login(request):
     if request.user.is_authenticated:
         if request.user.is_admin_user:
@@ -114,41 +120,31 @@ def admin_pin_login(request):
         username = request.POST.get('username', '').strip()
         pin = request.POST.get('pin', '').strip()
 
-        print(f"DEBUG: username={username}, pin={pin}")
-
         if not pin.isdigit() or len(pin) != 4:
             messages.error(request, 'PIN must be exactly 4 digits.')
             return render(request, 'user/admin_pin_login.html')
 
         try:
             user = User.objects.get(username=username, role='admin')
-            print(f"DEBUG: found user {user.username}")
         except User.DoesNotExist:
-            print("DEBUG: user not found")
             messages.error(request, 'Invalid admin credentials.')
             return render(request, 'user/admin_pin_login.html')
 
         try:
             admin_profile = user.admin_profile
-            print("DEBUG: found profile, checking pin")
         except AdminProfile.DoesNotExist:
-            print("DEBUG: no admin profile found")
             messages.error(request, 'Admin profile not set up.')
             return render(request, 'user/admin_pin_login.html')
 
         if not admin_profile.check_pin(pin):
-            print("DEBUG: wrong PIN")
             messages.error(request, 'Invalid PIN.')
             return render(request, 'user/admin_pin_login.html')
 
-        print("DEBUG: login successful")
         user.backend = 'django.contrib.auth.backends.ModelBackend'
         login(request, user)
         return redirect('admin-dashboard')
 
     return render(request, 'user/admin_pin_login.html')
-
-
 # ======================
 # USER DASHBOARD
 # ======================
@@ -194,6 +190,7 @@ def notifications(request):
 # ======================
 # ACTIVATION
 # ======================
+
 @login_required
 def activate_account(request):
     if request.user.is_admin_user:
@@ -203,7 +200,6 @@ def activate_account(request):
         messages.info(request, 'Your account is already activated.')
         return redirect('dashboard')
 
-    # get existing payment or None — admin must create it
     payment = ActivationPayment.objects.filter(user=request.user).first()
 
     if not payment:
@@ -214,30 +210,25 @@ def activate_account(request):
         })
 
     activation_amount = payment.amount_required
-    payment_details = PaymentDetail.objects.filter(is_active=True)
+    payment_details = PaymentDetail.objects.filter(is_active=True)  # ← must be PaymentDetail
 
     if request.method == 'POST' and payment.status == 'pending':
         payment.amount_paid = payment.amount_required
         payment.save()
-
         _notify(
             request.user,
             'Activation Payment Submitted',
-            f'Your activation payment of ${activation_amount} has been submitted. '
-            'Admin will confirm and activate your account shortly.'
+            f'Your activation payment of ${activation_amount} has been submitted.'
         )
-
-        messages.success(
-            request,
-            'Payment submitted. Your account will be activated once admin confirms.'
-        )
+        messages.success(request, 'Payment submitted. Awaiting admin confirmation.')
         return redirect('dashboard')
 
     return render(request, 'user/activate.html', {
         'payment': payment,
-        'payment_details': payment_details,
+        'payment_details': payment_details,  # ← PaymentDetail objects
         'activation_amount': activation_amount,
     })
+
 
 # ======================
 # WITHDRAWAL
@@ -341,32 +332,31 @@ def admin_dashboard(request):
         'pending_activations_count': pending_activations,
         'pending_withdrawals_count': pending_withdrawals,
     })
-
-
+from .models import models
 # ======================
 # ADMIN — USER DETAIL
 # ======================
-
+from django.db import models as db_models
 @admin_required
-def admin_user_detail(request, user_id):
-    target = get_object_or_404(User, id=user_id, role='user')
-    wallet, _ = Wallet.objects.get_or_create(user=target)
-    payment_accounts = PaymentAccount.objects.filter(user=target)
-    transactions = Transaction.objects.filter(user=target)[:20]
-    control_logs = AccountControlLog.objects.filter(target_user=target)[:20]
-    withdrawals = WithdrawalRequest.objects.filter(user=target)
+def admin_users(request):
+    search = request.GET.get('search', '').strip()
+    users = User.objects.filter(role='user').order_by('-date_joined')
 
-    return render(request, 'admin/user_detail.html', {
-        'target': target,
-        'wallet': wallet,
-        'payment_accounts': payment_accounts,
-        'transactions': transactions,
-        'control_logs': control_logs,
-        'withdrawals': withdrawals,
+    if search:
+        users = users.filter(
+            models.Q(username__icontains=search) |
+            models.Q(email__icontains=search) |
+            models.Q(first_name__icontains=search) |
+            models.Q(last_name__icontains=search)
+        )
+
+    return render(request, 'admin/users.html', {
+        'users': users,
+        'search': search,
+        'total': users.count(),
         'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
         'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
     })
-
 
 # ======================
 # ADMIN — TOGGLE ACTIVATION
@@ -810,4 +800,368 @@ def profile(request):
 
     return render(request, 'user/profile.html', {
         'user': request.user,
+    })
+
+
+@admin_required
+def admin_change_pin(request):
+    if request.method == 'POST':
+        current_pin = request.POST.get('current_pin', '').strip()
+        new_pin = request.POST.get('new_pin', '').strip()
+        confirm_pin = request.POST.get('confirm_pin', '').strip()
+
+        try:
+            profile = request.user.admin_profile
+        except AdminProfile.DoesNotExist:
+            profile = AdminProfile(user=request.user)
+
+        # if profile already has a pin verify it first
+        if profile.pk and profile.pin:
+            if not profile.check_pin(current_pin):
+                messages.error(request, 'Current PIN is incorrect.')
+                return redirect('admin-change-pin')
+
+        if not new_pin.isdigit() or len(new_pin) != 4:
+            messages.error(request, 'PIN must be exactly 4 digits.')
+            return redirect('admin-change-pin')
+
+        if new_pin != confirm_pin:
+            messages.error(request, 'PINs do not match.')
+            return redirect('admin-change-pin')
+
+        profile.set_pin(new_pin)
+        profile.save()
+        messages.success(request, 'PIN updated successfully.')
+        return redirect('admin-dashboard')
+
+    # check if pin already exists
+    has_pin = False
+    try:
+        has_pin = bool(request.user.admin_profile.pin)
+    except AdminProfile.DoesNotExist:
+        pass
+
+    return render(request, 'admin/change_pin.html', {
+        'has_pin': has_pin,
+        'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
+        'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
+    })
+
+# SET ACTIVATION FEE
+@admin_required
+def admin_set_activation_fee(request, user_id):
+    target = get_object_or_404(User, id=user_id, role='user')
+
+    if request.method == 'POST':
+        try:
+            amount = Decimal(request.POST.get('amount', '0'))
+        except Exception:
+            messages.error(request, 'Invalid amount.')
+            return redirect('admin-user-detail', user_id=user_id)
+
+        if amount <= 0:
+            messages.error(request, 'Amount must be greater than zero.')
+            return redirect('admin-user-detail', user_id=user_id)
+
+        payment, created = ActivationPayment.objects.get_or_create(
+            user=target,
+            defaults={'amount_required': amount}
+        )
+
+        if not created:
+            payment.amount_required = amount
+            payment.status = 'pending'  # reset if was rejected
+            payment.save()
+
+        _notify(
+            target,
+            'Activation Fee Set',
+            f'Your activation fee has been set to ${amount}. Please visit the activation page to proceed.'
+        )
+
+        messages.success(request, f'Activation fee set to ${amount} for {target.username}.')
+
+    return redirect('admin-user-detail', user_id=user_id)
+
+
+# VIEW ALL TRANSACTIONS
+@admin_required
+def admin_transactions(request):
+    transactions = Transaction.objects.select_related(
+        'user', 'performed_by'
+    ).order_by('-created_at')
+
+    type_filter = request.GET.get('type', '')
+    if type_filter:
+        transactions = transactions.filter(transaction_type=type_filter)
+
+    return render(request, 'admin/transactions.html', {
+        'transactions': transactions,
+        'type_filter': type_filter,
+        'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
+        'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
+    })
+
+
+# DELETE USER
+@admin_required
+def admin_delete_user(request, user_id):
+    target = get_object_or_404(User, id=user_id, role='user')
+
+    if request.method == 'POST':
+        username = target.username
+        target.delete()
+        messages.success(request, f'User {username} deleted.')
+        return redirect('admin-dashboard')
+
+    return render(request, 'admin/confirm_delete.html', {
+        'target': target,
+        'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
+        'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
+    })
+
+
+# RESET USER PASSWORD
+@admin_required
+def admin_reset_password(request, user_id):
+    target = get_object_or_404(User, id=user_id, role='user')
+
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password', '').strip()
+
+        if len(new_password) < 6:
+            messages.error(request, 'Password must be at least 6 characters.')
+            return redirect('admin-user-detail', user_id=user_id)
+
+        target.set_password(new_password)
+        target.save()
+
+        AccountControlLog.objects.create(
+            admin=request.user,
+            target_user=target,
+            action='force_reset',
+            note='Password reset by admin'
+        )
+
+        _notify(target, 'Password Changed',
+                'Your password has been reset by admin. Please log in with your new password.')
+
+        messages.success(request, f'Password reset for {target.username}.')
+
+    return redirect('admin-user-detail', user_id=user_id)
+
+
+# ======================
+# ADMIN — ALL USERS
+# ======================
+
+@admin_required
+def admin_users(request):
+    from django.db import models as db_models
+    search = request.GET.get('search', '').strip()
+    users = User.objects.filter(role='user').order_by('-date_joined')
+
+    if search:
+        users = users.filter(
+            db_models.Q(username__icontains=search) |
+            db_models.Q(email__icontains=search) |
+            db_models.Q(first_name__icontains=search) |
+            db_models.Q(last_name__icontains=search)
+        )
+
+    return render(request, 'admin/users.html', {
+        'users': users,
+        'search': search,
+        'total': users.count(),
+        'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
+        'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
+    })
+
+
+# ======================
+# ADMIN — SET ACTIVATION FEE
+# ======================
+
+@admin_required
+def admin_set_activation_fee(request, user_id):
+    target = get_object_or_404(User, id=user_id, role='user')
+
+    if request.method == 'POST':
+        try:
+            amount = Decimal(request.POST.get('amount', '0'))
+        except Exception:
+            messages.error(request, 'Invalid amount.')
+            return redirect('admin-user-detail', user_id=user_id)
+
+        if amount <= 0:
+            messages.error(request, 'Amount must be greater than zero.')
+            return redirect('admin-user-detail', user_id=user_id)
+
+        payment, created = ActivationPayment.objects.get_or_create(
+            user=target,
+            defaults={'amount_required': amount}
+        )
+
+        if not created:
+            payment.amount_required = amount
+            payment.status = 'pending'
+            payment.save()
+
+        _notify(
+            target,
+            'Activation Fee Set',
+            f'Your activation fee has been set to ${amount}. Please visit the activation page to proceed.'
+        )
+
+        messages.success(request, f'Activation fee set to ${amount} for {target.username}.')
+
+    return redirect('admin-user-detail', user_id=user_id)
+
+
+# ======================
+# ADMIN — RESET PASSWORD
+# ======================
+
+@admin_required
+def admin_reset_password(request, user_id):
+    target = get_object_or_404(User, id=user_id, role='user')
+
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password', '').strip()
+
+        if len(new_password) < 6:
+            messages.error(request, 'Password must be at least 6 characters.')
+            return redirect('admin-user-detail', user_id=user_id)
+
+        target.set_password(new_password)
+        target.save()
+
+        AccountControlLog.objects.create(
+            admin=request.user,
+            target_user=target,
+            action='force_reset',
+            note='Password reset by admin'
+        )
+
+        _notify(target, 'Password Changed',
+                'Your password has been reset by admin. Please log in with your new password.')
+
+        messages.success(request, f'Password reset for {target.username}.')
+
+    return redirect('admin-user-detail', user_id=user_id)
+
+
+# ======================
+# ADMIN — DELETE USER
+# ======================
+
+@admin_required
+def admin_delete_user(request, user_id):
+    target = get_object_or_404(User, id=user_id, role='user')
+
+    if request.method == 'POST':
+        username = target.username
+        target.delete()
+        messages.success(request, f'User {username} deleted successfully.')
+        return redirect('admin-users')
+
+    return render(request, 'admin/confirm_delete.html', {
+        'target': target,
+        'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
+        'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
+    })
+
+
+# ======================
+# ADMIN — TRANSACTIONS
+# ======================
+
+@admin_required
+def admin_transactions(request):
+    from django.db import models as db_models
+    type_filter = request.GET.get('type', '')
+    transactions = Transaction.objects.select_related(
+        'user', 'performed_by'
+    ).order_by('-created_at')
+
+    if type_filter:
+        transactions = transactions.filter(transaction_type=type_filter)
+
+    return render(request, 'admin/transactions.html', {
+        'transactions': transactions,
+        'type_filter': type_filter,
+        'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
+        'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
+    })
+
+
+# ======================
+# ADMIN — CHANGE PIN
+# ======================
+
+@admin_required
+def admin_change_pin(request):
+    if request.method == 'POST':
+        current_pin = request.POST.get('current_pin', '').strip()
+        new_pin = request.POST.get('new_pin', '').strip()
+        confirm_pin = request.POST.get('confirm_pin', '').strip()
+
+        try:
+            profile = request.user.admin_profile
+        except AdminProfile.DoesNotExist:
+            profile = AdminProfile(user=request.user)
+
+        if profile.pk and profile.pin:
+            if not profile.check_pin(current_pin):
+                messages.error(request, 'Current PIN is incorrect.')
+                return redirect('admin-change-pin')
+
+        if not new_pin.isdigit() or len(new_pin) != 4:
+            messages.error(request, 'PIN must be exactly 4 digits.')
+            return redirect('admin-change-pin')
+
+        if new_pin != confirm_pin:
+            messages.error(request, 'PINs do not match.')
+            return redirect('admin-change-pin')
+
+        profile.set_pin(new_pin)
+        profile.save()
+        messages.success(request, 'PIN updated successfully.')
+        return redirect('admin-dashboard')
+
+    has_pin = False
+    try:
+        has_pin = bool(request.user.admin_profile.pin)
+    except AdminProfile.DoesNotExist:
+        pass
+
+    return render(request, 'admin/change_pin.html', {
+        'has_pin': has_pin,
+        'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
+        'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
+    })
+
+
+@admin_required
+def admin_user_detail(request, user_id):
+    target = get_object_or_404(User, id=user_id, role='user')
+    wallet, _ = Wallet.objects.get_or_create(user=target)
+    payment_accounts = PaymentAccount.objects.filter(user=target)
+    transactions = Transaction.objects.filter(user=target)[:20]
+    control_logs = AccountControlLog.objects.filter(target_user=target)[:20]
+    withdrawals = WithdrawalRequest.objects.filter(user=target)
+
+    # get activation payment if exists
+    activation_payment = ActivationPayment.objects.filter(user=target).first()
+
+    return render(request, 'admin/user_detail.html', {
+        'target': target,
+        'wallet': wallet,
+        'payment_accounts': payment_accounts,
+        'transactions': transactions,
+        'control_logs': control_logs,
+        'withdrawals': withdrawals,
+        'activation_payment': activation_payment,
+        'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
+        'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
     })

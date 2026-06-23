@@ -1,0 +1,102 @@
+{% extends 'admin/base.html' %}
+{% block title %}All Users{% endblock %}
+{% block page_title %}All Users{% endblock %}
+{% block page_sub %}{{ total }} registered user{{ total|pluralize }}{% endblock %}
+{% block nav_users %}active{% endblock %}
+
+{% block content %}
+
+<!-- SEARCH -->
+<form method="get" style="margin-bottom:20px">
+  <div style="display:flex;gap:10px;max-width:420px">
+    <input
+      type="text"
+      name="search"
+      value="{{ search }}"
+      placeholder="Search by username, email or name..."
+      style="flex:1;padding:10px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;color:var(--text);outline:none;font-family:inherit;transition:border-color .2s"
+      onfocus="this.style.borderColor='var(--green)'"
+      onblur="this.style.borderColor='var(--border)'"
+    >
+    <button type="submit" class="btn btn-green">Search</button>
+    {% if search %}
+    <a href="{% url 'admin-users' %}" class="btn btn-outline">Clear</a>
+    {% endif %}
+  </div>
+</form>
+
+<div class="card">
+  <div class="card-head">
+    <div class="card-head-left">
+      <div class="card-head-icon" style="background:var(--blue-dim)">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--blue)" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      </div>
+      <div>
+        <div class="card-title">Users</div>
+        <div class="card-sub">{{ total }} result{{ total|pluralize }}</div>
+      </div>
+    </div>
+  </div>
+
+  {% if users %}
+  <table>
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Account No</th>
+        <th>Status</th>
+        <th>Wallet</th>
+        <th>Joined</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for u in users %}
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--green-dim);color:var(--green-bright);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">
+            {{ u.username|first|upper }}
+          </div>
+          <div>
+            <div style="font-weight:500;font-size:13.5px">{{ u.username }}</div>
+            <div style="font-size:11.5px;color:var(--muted)">{{ u.email|default:"No email" }}</div>
+          </div>
+        </div>
+      </td>
+      <td style="font-family:monospace;font-size:12.5px;color:var(--muted)">
+        {{ u.account_number|default:"—" }}
+      </td>
+      <td>
+        {% if u.account_activated %}
+        <span class="badge badge-green">● Active</span>
+        {% else %}
+        <span class="badge badge-amber">● Pending</span>
+        {% endif %}
+      </td>
+      <td style="font-weight:600">
+        {% if u.wallet %}
+          {% if u.wallet.is_frozen %}
+          <span style="color:var(--red)">❄ Frozen</span>
+          {% else %}
+          ${{ u.wallet.balance }}
+          {% endif %}
+        {% else %}
+        <span style="color:var(--muted)">—</span>
+        {% endif %}
+      </td>
+      <td style="color:var(--muted);font-size:12.5px">{{ u.date_joined|date:"M d, Y" }}</td>
+      <td>
+        <a href="{% url 'admin-user-detail' u.id %}" class="btn btn-outline btn-sm">Manage</a>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty">
+    {% if search %}No users found for "{{ search }}"{% else %}No users registered yet.{% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'admin/base.html' %}
+{% block title %}Delete User{% endblock %}
+{% block page_title %}Delete User{% endblock %}
+
+{% block content %}
+<div style="max-width:480px">
+  <div class="card">
+    <div class="card-body" style="text-align:center;padding:40px">
+      <div style="width:64px;height:64px;background:var(--red-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="var(--red)" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+      </div>
+      <h3 style="font-size:18px;margin-bottom:8px">Delete {{ target.username }}?</h3>
+      <p style="color:var(--muted);font-size:13.5px;margin-bottom:24px">
+        This will permanently delete the user and all their data including wallet, transactions and notifications. This cannot be undone.
+      </p>
+      <div style="display:flex;gap:12px;justify-content:center">
+        <a href="{% url 'admin-user-detail' target.id %}" class="btn btn-outline">Cancel</a>
+        <form method="post" action="{% url 'admin-delete-user' target.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-red">Yes, Delete User</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

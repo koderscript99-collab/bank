@@ -1,0 +1,197 @@
+{% extends 'admin/base.html' %}
+{% block title %}Change PIN{% endblock %}
+{% block page_title %}Change Admin PIN{% endblock %}
+{% block page_sub %}Update your 4-digit login PIN{% endblock %}
+
+{% block content %}
+<div style="max-width:440px">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-left">
+        <div class="card-head-icon" style="background:var(--green-dim)">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--green-bright)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </div>
+        <div>
+          <div class="card-title">{% if has_pin %}Change PIN{% else %}Set PIN{% endif %}</div>
+          <div class="card-sub">{% if has_pin %}Enter your current PIN then set a new one{% else %}No PIN set yet — create one now{% endif %}</div>
+        </div>
+      </div>
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      <div class="card-body">
+
+        {% if has_pin %}
+        <!-- PIN DOTS FOR CURRENT -->
+        <div class="form-group">
+          <label>Current PIN</label>
+          <div class="pin-dots" id="cur-dots">
+            <div class="pdot" id="c0"></div>
+            <div class="pdot" id="c1"></div>
+            <div class="pdot" id="c2"></div>
+            <div class="pdot" id="c3"></div>
+          </div>
+          <input type="hidden" name="current_pin" id="cur-input">
+        </div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:4px 0 16px">
+        {% else %}
+        <input type="hidden" name="current_pin" value="0000">
+        {% endif %}
+
+        <div class="form-group">
+          <label>New PIN</label>
+          <div class="pin-dots" id="new-dots">
+            <div class="pdot" id="n0"></div>
+            <div class="pdot" id="n1"></div>
+            <div class="pdot" id="n2"></div>
+            <div class="pdot" id="n3"></div>
+          </div>
+          <input type="hidden" name="new_pin" id="new-input">
+        </div>
+
+        <div class="form-group">
+          <label>Confirm New PIN</label>
+          <div class="pin-dots" id="con-dots">
+            <div class="pdot" id="k0"></div>
+            <div class="pdot" id="k1"></div>
+            <div class="pdot" id="k2"></div>
+            <div class="pdot" id="k3"></div>
+          </div>
+          <input type="hidden" name="confirm_pin" id="con-input">
+        </div>
+
+        <!-- KEYPAD -->
+        <div class="pin-pad">
+          {% for n in "123456789" %}
+          <div class="pin-key" onclick="pressKey('{{ n }}')">{{ n }}</div>
+          {% endfor %}
+          <div class="pin-key pin-action" onclick="clearActive()">CLR</div>
+          <div class="pin-key" onclick="pressKey('0')">0</div>
+          <div class="pin-key pin-action" onclick="deleteKey()">⌫</div>
+        </div>
+
+        <!-- STEP INDICATOR -->
+        <div style="display:flex;gap:8px;margin-bottom:16px;font-size:12px">
+          <span id="step-cur" style="padding:4px 10px;border-radius:6px;background:var(--green-dim);color:var(--green-bright);font-weight:600">
+            {% if has_pin %}① Current{% else %}①{% endif %}
+          </span>
+          <span id="step-new" style="padding:4px 10px;border-radius:6px;background:var(--surface2);color:var(--muted)">② New</span>
+          <span id="step-con" style="padding:4px 10px;border-radius:6px;background:var(--surface2);color:var(--muted)">③ Confirm</span>
+        </div>
+
+      </div>
+      <div class="form-actions">
+        <a href="{% url 'admin-dashboard' %}" class="btn btn-outline">Cancel</a>
+        <button type="submit" class="btn btn-green" id="save-btn" disabled>
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          {% if has_pin %}Update PIN{% else %}Set PIN{% endif %}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+.pin-dots{display:flex;gap:12px;justify-content:center;margin:10px 0 16px}
+.pdot{width:14px;height:14px;border-radius:50%;border:2px solid var(--border);transition:all .15s}
+.pdot.on{background:var(--green-bright);border-color:var(--green-bright)}
+.pdot.active-field{border-color:var(--blue)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.pin-key{padding:14px;text-align:center;font-size:17px;font-weight:600;background:var(--surface2);border:1px solid var(--border);border-radius:9px;cursor:pointer;transition:background .1s,transform .1s;user-select:none}
+.pin-key:hover{background:var(--border)}
+.pin-key:active{transform:scale(.93)}
+.pin-action{font-size:12px;color:var(--red)}
+</style>
+
+<script>
+const HAS_PIN = {% if has_pin %}true{% else %}false{% endif %};
+
+// state: which field are we filling
+// 0 = current, 1 = new, 2 = confirm
+let step = HAS_PIN ? 0 : 1;
+let pins = ['', '', ''];
+
+const inputs = ['cur-input', 'new-input', 'con-input'];
+const dotIds = [['c0','c1','c2','c3'], ['n0','n1','n2','n3'], ['k0','k1','k2','k3']];
+const stepEls = ['step-cur', 'step-new', 'step-con'];
+
+function updateDots(s) {
+  const p = pins[s];
+  dotIds[s].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.classList.toggle('on', i < p.length);
+  });
+  document.getElementById(inputs[s]).value = p;
+}
+
+function highlightStep() {
+  [0, 1, 2].forEach(i => {
+    const el = document.getElementById(stepEls[i]);
+    if (!el) return;
+    if (i === step) {
+      el.style.background = 'var(--green-dim)';
+      el.style.color = 'var(--green-bright)';
+    } else if (pins[i].length === 4) {
+      el.style.background = 'rgba(46,160,67,.3)';
+      el.style.color = 'var(--green-bright)';
+    } else {
+      el.style.background = 'var(--surface2)';
+      el.style.color = 'var(--muted)';
+    }
+  });
+}
+
+function checkReady() {
+  const ready = HAS_PIN
+    ? pins[0].length === 4 && pins[1].length === 4 && pins[2].length === 4
+    : pins[1].length === 4 && pins[2].length === 4;
+  document.getElementById('save-btn').disabled = !ready;
+}
+
+function pressKey(d) {
+  if (pins[step].length < 4) {
+    pins[step] += d;
+    updateDots(step);
+    // auto advance
+    if (pins[step].length === 4) {
+      if (step === 0 && HAS_PIN) { step = 1; }
+      else if (step === 1) { step = 2; }
+    }
+    highlightStep();
+    checkReady();
+  }
+}
+
+function deleteKey() {
+  if (pins[step].length > 0) {
+    pins[step] = pins[step].slice(0, -1);
+  } else if (step > (HAS_PIN ? 0 : 1)) {
+    step--;
+  }
+  updateDots(step);
+  highlightStep();
+  checkReady();
+}
+
+function clearActive() {
+  pins[step] = '';
+  updateDots(step);
+  highlightStep();
+  checkReady();
+}
+
+// click on a dot group to switch active field
+[0,1,2].forEach(i => {
+  const dotsEl = document.getElementById(['cur-dots','new-dots','con-dots'][i]);
+  if (dotsEl) dotsEl.onclick = () => { step = i; highlightStep(); };
+});
+
+// init
+if (!HAS_PIN) {
+  step = 1;
+  const curEl = document.getElementById('step-cur');
+  if (curEl) curEl.style.display = 'none';
+}
+highlightStep();
+</script>
+{% endblock %}

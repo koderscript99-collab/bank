@@ -1,81 +1,125 @@
 {% extends 'admin/base.html' %}
 {% block title %}Add Payment Detail{% endblock %}
 {% block page_title %}Add Payment Detail{% endblock %}
-{% block nav_payment_details %}active{% endblock %}
+{% block page_sub %}Add a bank or crypto account shown to users on the activation page{% endblock %}
+{% block nav_pd %}active{% endblock %}
 
 {% block content %}
-<div style="max-width:640px">
 <a href="{% url 'admin-payment-details' %}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:20px">
-  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg> Back
+  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+  Back to Payment Details
 </a>
-<div class="card">
-  <div class="card-header">
-    <div class="ch-icon" style="background:var(--green-dim)"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--green)" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
-    <h3>Add Payment Detail</h3>
+
+<div style="max-width:640px">
+  <div class="card">
+    <div class="card-head">
+      <div class="card-head-left">
+        <div class="card-head-icon" style="background:var(--green-dim)">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--green-bright)" stroke-width="2">
+            <rect x="1" y="4" width="22" height="16" rx="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+        </div>
+        <div class="card-title">New Payment Detail</div>
+      </div>
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="card-body">
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Type</label>
+            <select name="payment_type" id="pdType" onchange="pdSwitchType()">
+              <option value="bank">Bank Account</option>
+              <option value="crypto">Crypto Wallet</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Label</label>
+            <input type="text" name="label" placeholder="e.g. GTBank Nigeria or USDT TRC20" required>
+          </div>
+          <div class="form-group span-2" style="display:flex;flex-direction:row;align-items:center;gap:10px;margin-bottom:0">
+            <input type="checkbox" name="is_active" id="isActive" checked style="width:auto;accent-color:var(--green)">
+            <label for="isActive" style="text-transform:none;letter-spacing:0;font-size:13.5px;color:var(--text);margin:0">
+              Show to users (active)
+            </label>
+          </div>
+        </div>
+
+        <hr>
+
+        <div id="pdBankFields">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:14px">Bank Details</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Bank Name</label>
+              <input type="text" name="bank_name" placeholder="e.g. GTBank">
+            </div>
+            <div class="form-group">
+              <label>Account Name</label>
+              <input type="text" name="account_name" placeholder="e.g. John Doe">
+            </div>
+            <div class="form-group">
+              <label>Account Number</label>
+              <input type="text" name="account_number" placeholder="e.g. 0123456789">
+            </div>
+            <div class="form-group">
+              <label>Country</label>
+              <input type="text" name="bank_country" placeholder="e.g. Nigeria">
+            </div>
+            <div class="form-group">
+              <label>SWIFT / BIC</label>
+              <input type="text" name="swift_code" placeholder="e.g. GTBINGLAXXX">
+            </div>
+            <div class="form-group">
+              <label>IBAN <span style="font-weight:400;text-transform:none">(optional)</span></label>
+              <input type="text" name="iban" placeholder="e.g. GB29NWBK...">
+            </div>
+            <div class="form-group span-2">
+              <label>Routing Number <span style="font-weight:400;text-transform:none">(optional)</span></label>
+              <input type="text" name="routing_number" placeholder="e.g. 021000021">
+            </div>
+          </div>
+        </div>
+
+        <div id="pdCryptoFields" style="display:none">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:14px">Crypto Details</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Currency</label>
+              <input type="text" name="crypto_currency" placeholder="e.g. USDT, BTC, ETH">
+            </div>
+            <div class="form-group">
+              <label>Network</label>
+              <input type="text" name="crypto_network" placeholder="e.g. TRC20, ERC20, BEP20">
+            </div>
+            <div class="form-group span-2">
+              <label>Wallet Address</label>
+              <input type="text" name="wallet_address" placeholder="e.g. TXyz1234... or 0xabc123...">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <a href="{% url 'admin-payment-details' %}" class="btn btn-outline">Cancel</a>
+        <button type="submit" class="btn btn-green">Save Payment Detail</button>
+      </div>
+    </form>
   </div>
-  <form method="post">
-    {% csrf_token %}
-    <div class="card-body">
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Type <span class="req">*</span></label>
-          <select name="payment_type" id="accType" onchange="switchType()">
-            <option value="bank">Bank Account</option>
-            <option value="crypto">Crypto Wallet</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Label <span class="req">*</span></label>
-          <input type="text" name="label" placeholder="e.g. GTBank Nigeria or USDT TRC20" required>
-        </div>
-        <div class="form-group span-2" style="flex-direction:row;align-items:center;gap:10px">
-          <input type="checkbox" name="is_active" id="isActive" checked style="width:auto">
-          <label for="isActive" style="text-transform:none;letter-spacing:0;font-size:13.5px;color:var(--text)">Show to clients (active)</label>
-        </div>
-      </div>
-
-      <hr class="divider">
-
-      <!-- BANK -->
-      <div id="bankFields">
-        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:12px">Bank Details</div>
-        <div class="form-grid">
-          <div class="form-group"><label>Bank Name</label><input type="text" name="bank_name"></div>
-          <div class="form-group"><label>Account Name</label><input type="text" name="account_name"></div>
-          <div class="form-group"><label>Account Number</label><input type="text" name="account_number"></div>
-          <div class="form-group"><label>Country</label><input type="text" name="bank_country"></div>
-          <div class="form-group"><label>SWIFT Code</label><input type="text" name="swift_code"></div>
-          <div class="form-group"><label>IBAN</label><input type="text" name="iban"></div>
-          <div class="form-group span-2"><label>Routing Number</label><input type="text" name="routing_number"></div>
-        </div>
-      </div>
-
-      <!-- CRYPTO -->
-      <div id="cryptoFields" style="display:none">
-        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:12px">Crypto Details</div>
-        <div class="form-grid">
-          <div class="form-group"><label>Currency</label><input type="text" name="crypto_currency" placeholder="e.g. USDT, BTC, ETH"></div>
-          <div class="form-group"><label>Network</label><input type="text" name="crypto_network" placeholder="e.g. TRC20, ERC20, BEP20"></div>
-          <div class="form-group span-2"><label>Wallet Address</label><input type="text" name="wallet_address"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-actions">
-      <a href="{% url 'admin-payment-details' %}" class="btn btn-outline">Cancel</a>
-      <button type="submit" class="btn btn-green">Save Payment Detail</button>
-    </div>
-  </form>
-</div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-function switchType(){
-  const t=document.getElementById('accType').value;
-  document.getElementById('bankFields').style.display=t==='bank'?'block':'none';
-  document.getElementById('cryptoFields').style.display=t==='crypto'?'block':'none';
-}
+  function pdSwitchType() {
+    var t = document.getElementById('pdType').value;
+    document.getElementById('pdBankFields').style.display   = (t === 'bank')   ? 'block' : 'none';
+    document.getElementById('pdCryptoFields').style.display = (t === 'crypto') ? 'block' : 'none';
+  }
+  pdSwitchType();
 </script>
 {% endblock %}
