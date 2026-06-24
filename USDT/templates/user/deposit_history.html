@@ -1,0 +1,49 @@
+{% extends "user/base.html" %}
+{% block title %}Deposit History{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="card">
+        <h2>My Deposits</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for deposit in deposits %}
+                <tr>
+                    <td>${{ deposit.amount }}</td>
+                    <td>
+                        <span class="badge badge-{{ deposit.status }}">
+                            {{ deposit.status }}
+                        </span>
+                    </td>
+                    <td>{{ deposit.created_at }}</td>
+                    <td>
+                        <a href="{% url 'deposit-detail' deposit.id %}">
+                            View
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">
+                        No deposits found.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+{% endblock %}

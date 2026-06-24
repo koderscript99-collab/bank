@@ -1,0 +1,49 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Deposit Review{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2>Deposit Review</h2>
+
+    <p><strong>User:</strong> {{ deposit.user.username }}</p>
+
+    <p><strong>Amount:</strong> ${{ deposit.amount }}</p>
+
+    <p><strong>Status:</strong> {{ deposit.status }}</p>
+
+    <p>
+        <strong>Transaction ID:</strong>
+        {{ deposit.transaction_id }}
+    </p>
+
+    <p>
+        <strong>Note:</strong>
+        {{ deposit.note }}
+    </p>
+
+    {% if deposit.proof %}
+    <img src="{{ deposit.proof.url }}"
+         style="width:400px;max-width:100%;border-radius:10px;">
+    {% endif %}
+
+    <br><br>
+
+    {% if deposit.status == "pending" %}
+
+    <a href="{% url 'approve-deposit' deposit.id %}"
+       class="btn-success">
+        Approve
+    </a>
+
+    <a href="{% url 'reject-deposit' deposit.id %}"
+       class="btn-danger">
+        Reject
+    </a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

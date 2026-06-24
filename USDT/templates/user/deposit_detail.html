@@ -1,0 +1,54 @@
+
+{% block title %}Deposit Details{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="card">
+
+        <h2>Deposit Details</h2>
+
+        <p><strong>Amount:</strong> ${{ deposit.amount }}</p>
+
+        <p>
+            <strong>Status:</strong>
+
+            <span class="badge badge-{{ deposit.status }}">
+                {{ deposit.status }}
+            </span>
+        </p>
+
+        <p>
+            <strong>Transaction ID:</strong>
+            {{ deposit.transaction_id }}
+        </p>
+
+        <p>
+            <strong>Date:</strong>
+            {{ deposit.created_at }}
+        </p>
+
+        <p>
+            <strong>Note:</strong>
+            {{ deposit.note }}
+        </p>
+
+        {% if deposit.proof %}
+        <p>
+            <strong>Proof:</strong><br>
+            <img src="{{ deposit.proof.url }}"
+                 style="max-width:300px;border-radius:10px;">
+        </p>
+        {% endif %}
+
+        {% if deposit.rejection_reason %}
+        <div class="alert-danger">
+            <strong>Reason:</strong>
+            {{ deposit.rejection_reason }}
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+{% endblock %}

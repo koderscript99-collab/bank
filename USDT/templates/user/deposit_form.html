@@ -1,0 +1,116 @@
+
+{% block title %}Deposit Funds{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-group">
+    <label>Payment Method</label>
+
+    <select id="paymentType" onchange="togglePaymentMethod()">
+        <option value="">Select Method</option>
+        <option value="bank">Bank Transfer</option>
+        <option value="crypto">Crypto Currency</option>
+    </select>
+</div>
+
+<!-- BANK DETAILS -->
+<div id="bankSection" style="display:none;">
+
+    <h4>Bank Transfer Details</h4>
+
+    {% for detail in payment_details %}
+        {% if detail.payment_type == "bank" %}
+
+        <div class="payment-card">
+            <p><strong>Bank:</strong> {{ detail.bank_name }}</p>
+            <p><strong>Account Name:</strong> {{ detail.account_name }}</p>
+            <p><strong>Account Number:</strong> {{ detail.account_number }}</p>
+
+            <input type="radio"
+                   name="payment_detail"
+                   value="{{ detail.id }}"
+                   required>
+
+            Select This Account
+
+            <hr>
+
+        </div>
+
+        {% endif %}
+    {% endfor %}
+
+</div>
+
+<!-- CRYPTO DETAILS -->
+<div id="cryptoSection" style="display:none;">
+
+    <h4>Crypto Wallet Details</h4>
+
+    {% for detail in payment_details %}
+        {% if detail.payment_type == "crypto" %}
+
+        <div class="payment-card">
+
+            <p><strong>Currency:</strong> {{ detail.crypto_currency }}</p>
+
+            <p><strong>Network:</strong> {{ detail.crypto_network }}</p>
+
+            <p>
+                <strong>Wallet Address:</strong><br>
+                {{ detail.wallet_address }}
+            </p>
+
+            <input type="radio"
+                   name="payment_detail"
+                   value="{{ detail.id }}"
+                   required>
+
+            Select This Wallet
+
+            <hr>
+
+        </div>
+
+        {% endif %}
+    {% endfor %}
+
+</div>
+
+
+            <div class="form-group">
+                <label>Upload Proof</label>
+                <input type="file" name="proof">
+            </div>
+
+            <div class="form-group">
+                <label>Note</label>
+                <textarea name="note" rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">
+                Submit Deposit
+            </button>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+<script>
+function togglePaymentMethod() {
+
+    let type = document.getElementById("paymentType").value;
+
+    document.getElementById("bankSection").style.display = "none";
+    document.getElementById("cryptoSection").style.display = "none";
+
+    if(type === "bank"){
+        document.getElementById("bankSection").style.display = "block";
+    }
+
+    if(type === "crypto"){
+        document.getElementById("cryptoSection").style.display = "block";
+    }
+}
+</script>

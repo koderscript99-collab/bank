@@ -4,7 +4,7 @@ from django.utils import timezone
 from .models import (
     User, AdminProfile, Wallet, PaymentAccount,
     ActivationPayment, AdminDeposit, Transaction,
-    WithdrawalRequest, AccountControlLog, Notification
+    WithdrawalRequest, AccountControlLog, Notification,DepositRequest
 )
 
 
@@ -297,3 +297,22 @@ class PaymentDetailAdmin(admin.ModelAdmin):
         if not obj.created_by:
             obj.created_by = request.user
         super().save_model(request, obj, form, change)
+
+@admin.register(DepositRequest)
+class DepositRequestAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'amount',
+        'status',
+        'created_at',
+    )
+
+    list_filter = (
+        'status',
+        'created_at',
+    )
+
+    search_fields = (
+        'user__username',
+        'transaction_id',
+    )

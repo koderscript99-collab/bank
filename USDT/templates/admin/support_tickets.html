@@ -1,37 +1,69 @@
 {% extends 'admin/base.html' %}
+{% block title %}Support Tickets{% endblock %}
+{% block page_title %}Support Tickets{% endblock %}
+{% block page_sub %}User support requests{% endblock %}
+{% block nav_support %}active{% endblock %}
 
 {% block content %}
+<div style="display:flex;gap:8px;margin-bottom:20px">
+  <a href="{% url 'admin-support-tickets' %}" class="btn btn-sm {% if not status_filter %}btn-green{% else %}btn-outline{% endif %}">All</a>
+  <a href="?status=open" class="btn btn-sm {% if status_filter == 'open' %}btn-red{% else %}btn-outline{% endif %}">Open</a>
+  <a href="?status=pending" class="btn btn-sm {% if status_filter == 'pending' %}btn-amber{% else %}btn-outline{% endif %}">Pending</a>
+  <a href="?status=closed" class="btn btn-sm {% if status_filter == 'closed' %}btn-outline{% else %}btn-outline{% endif %}">Closed</a>
+</div>
 
-<h2>Support Tickets</h2>
-
-<table>
+<div class="card">
+  <div class="card-head">
+    <div class="card-head-left">
+      <div class="card-head-icon" style="background:var(--blue-dim)">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--blue)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <div>
+        <div class="card-title">All Tickets</div>
+        <div class="card-sub">{{ tickets|length }} tickets</div>
+      </div>
+    </div>
+  </div>
+  {% if tickets %}
+  <table>
     <thead>
-        <tr>
-            <th>ID</th>
-            <th>User</th>
-            <th>Subject</th>
-            <th>Status</th>
-            <th>Date</th>
-            <th></th>
-        </tr>
+      <tr>
+        <th>#</th>
+        <th>User</th>
+        <th>Subject</th>
+        <th>Status</th>
+        <th>Last Updated</th>
+        <th>Action</th>
+      </tr>
     </thead>
-
     <tbody>
-    {% for ticket in tickets %}
-        <tr>
-            <td>#{{ ticket.id }}</td>
-            <td>{{ ticket.user.username }}</td>
-            <td>{{ ticket.subject }}</td>
-            <td>{{ ticket.status }}</td>
-            <td>{{ ticket.created_at }}</td>
-            <td>
-                <a href="{% url 'admin-support-detail' ticket.id %}">
-                    Open
-                </a>
-            </td>
-        </tr>
+    {% for t in tickets %}
+    <tr>
+      <td style="color:var(--muted);font-size:12px">#{{ t.id }}</td>
+      <td>
+        <a href="{% url 'admin-user-detail' t.user.id %}" style="color:var(--blue);text-decoration:none;font-weight:500">
+          {{ t.user.username }}
+        </a>
+      </td>
+      <td style="font-weight:500">{{ t.subject }}</td>
+      <td>
+        <span class="badge
+          {% if t.status == 'open' %}badge-red
+          {% elif t.status == 'pending' %}badge-amber
+          {% else %}badge-muted{% endif %}">
+          {{ t.status }}
+        </span>
+      </td>
+      <td style="color:var(--muted);font-size:12.5px">{{ t.updated_at|date:"M d, Y H:i" }}</td>
+      <td>
+        <a href="{% url 'admin-support-detail' t.id %}" class="btn btn-sm btn-outline">View</a>
+      </td>
+    </tr>
     {% endfor %}
     </tbody>
-</table>
-
+  </table>
+  {% else %}
+  <div class="empty">No support tickets found.</div>
+  {% endif %}
+</div>
 {% endblock %}

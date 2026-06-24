@@ -1,0 +1,30 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Reject Deposit{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2>Reject Deposit</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Reason For Rejection</label>
+
+            <textarea name="reason"
+                      rows="5"
+                      required></textarea>
+        </div>
+
+        <button type="submit"
+                class="btn-danger">
+            Reject Deposit
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -75,4 +75,14 @@ urlpatterns = [
     path('admin-panel/support/',views.admin_support_tickets,name='admin-support-tickets'),
     path('admin-panel/support/<int:ticket_id>/',views.admin_support_detail,name='admin-support-detail'),
     path('admin-panel/support/<int:ticket_id>/close/',views.admin_close_ticket,name='admin-close-ticket'),
+    path('deposit/',views.deposit_request,name='deposit-request'),
+    path('deposit/history/',views.deposit_history,name='deposit-history'),
+
+    path('deposit/<int:pk>/',views.deposit_detail,name='deposit-detail'),
+    # ADMIN
+    path('admin/deposits/',views.admin_deposits,name='admin-deposits'),
+    path('admin/deposits/<int:pk>/approve/',views.approve_deposit, name='approve-deposit'),
+    path('admin/deposits/<int:pk>/reject/',views.reject_deposit, name='reject-deposit'),
+    path('admin/deposits/<int:pk>/',views.admin_deposit_detail,name='admin-deposit-detail'),
+    
 ]

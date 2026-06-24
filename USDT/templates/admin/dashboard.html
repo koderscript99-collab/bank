@@ -157,6 +157,10 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       Withdrawals
       {% if pending_withdrawals_count %}<span class="nbadge">{{ pending_withdrawals_count }}</span>{% endif %}
     </a>
+    <a href="{% url 'admin-deposits' %}" class="nav-item {% block nav_deposits %}{% endblock %}">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 1v22m11-11H1"/></svg>
+      Deposit Requests
+    </a>
     <a href="{% url 'admin-payment-details' %}" class="nav-item {% block nav_pd %}{% endblock %}">
       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
       Payment Details
@@ -165,12 +169,12 @@ hr{border:none;border-top:1px solid var(--border);margin:16px 0}
       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
       Transactions
     </a>
+    <a href="{% url 'admin-support-tickets' %}" class="nav-item {% block nav_support %}{% endblock %}">
+     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    Support Tickets
+    {% if open_tickets_count %}<span class="nbadge">{{ open_tickets_count }}</span>{% endif %}
+</a>
   </div>
-  <li>
-    <a href="{% url 'admin-support-tickets' %}">
-        🎧 Support Tickets
-    </a>
-  </li>
 
   <div class="nav-section">
     <div class="nav-label">Settings</div>

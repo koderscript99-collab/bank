@@ -208,6 +208,7 @@ class AdminDeposit(models.Model):
 
 class Transaction(models.Model):
     TYPES = (
+        ('deposit', 'Deposit'),
         ('admin_deposit', 'Admin Deposit'),
         ('activation_fee', 'Activation Fee'),
         ('withdrawal', 'Withdrawal'),
@@ -423,3 +424,79 @@ class SupportMessage(models.Model):
 
     def __str__(self):
         return f"Message #{self.id}"
+
+
+# ======================
+# DEPOSIT REQUEST
+# ======================
+
+class DepositRequest(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    )
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='deposit_requests'
+    )
+
+    payment_detail = models.ForeignKey(
+        PaymentDetail,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    amount = models.DecimalField(
+        max_digits=20,
+        decimal_places=2
+    )
+
+    proof = models.ImageField(
+        upload_to='deposit_proofs/',
+        blank=True,
+        null=True
+    )
+
+    transaction_id = models.CharField(
+        max_length=100,
+        blank=True
+    )
+
+    note = models.TextField(blank=True)
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='pending'
+    )
+
+    reviewed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='deposit_reviews'
+    )
+
+    reviewed_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    rejection_reason = models.TextField(
+        blank=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.amount} ({self.status})"

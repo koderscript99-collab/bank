@@ -1,154 +1,90 @@
-```html
-{% extends "admin/base.html" %}
-
-{% block title %}Support Ticket{% endblock %}
-{% block page_title %}Support Ticket #{{ ticket.id }}{% endblock %}
+{% extends 'admin/base.html' %}
+{% block title %}Ticket #{{ ticket.id }}{% endblock %}
+{% block page_title %}Ticket #{{ ticket.id }}{% endblock %}
+{% block page_sub %}{{ ticket.subject }}{% endblock %}
+{% block nav_support %}active{% endblock %}
 
 {% block content %}
-
-<a href="{% url 'admin-support-tickets' %}"
-   class="btn btn-outline"
-   style="margin-bottom:20px;">
-    ← Back to Tickets
+<a href="{% url 'admin-support-tickets' %}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:20px">
+  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+  Back to Tickets
 </a>
 
-<div class="card">
-    <div class="card-head">
-        <div class="card-title">
-            {{ ticket.subject }}
-        </div>
-    </div>
-
-    <div class="card-body">
-        <p>
-            <strong>User:</strong>
-            {{ ticket.user.username }}
-        </p>
-
-        <p>
-            <strong>Status:</strong>
-
-            {% if ticket.status == 'open' %}
-                <span class="badge badge-green">Open</span>
-
-            {% elif ticket.status == 'pending' %}
-                <span class="badge badge-amber">Pending</span>
-
-            {% else %}
-                <span class="badge badge-red">Closed</span>
-            {% endif %}
-        </p>
-
-        <p>
-            <strong>Created:</strong>
-            {{ ticket.created_at|date:"M d, Y H:i" }}
-        </p>
-    </div>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+  <span class="badge {% if ticket.status == 'open' %}badge-red{% elif ticket.status == 'pending' %}badge-amber{% else %}badge-muted{% endif %}" style="font-size:13px;padding:5px 14px">
+    {{ ticket.status|upper }}
+  </span>
+  <span style="color:var(--muted);font-size:13px">Opened by <strong style="color:var(--text)">{{ ticket.user.username }}</strong> on {{ ticket.created_at|date:"M d, Y" }}</span>
+  {% if ticket.status != 'closed' %}
+  <form method="post" action="{% url 'admin-close-ticket' ticket.id %}" style="margin-left:auto">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-sm btn-outline" onclick="return confirm('Close this ticket?')">
+      ✓ Close Ticket
+    </button>
+  </form>
+  {% endif %}
 </div>
 
+<!-- MESSAGES -->
 <div class="card">
-    <div class="card-head">
-        <div class="card-title">
-            Conversation
-        </div>
+  <div class="card-head">
+    <div class="card-head-left">
+      <div class="card-head-icon" style="background:var(--blue-dim)">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--blue)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <div class="card-title">Conversation</div>
     </div>
-
-    <div class="card-body">
-
-        {% for msg in ticket.messages.all %}
-
-        <div style="
-            padding:15px;
-            margin-bottom:12px;
-            border-radius:12px;
-            background:var(--surface2);
-            border:1px solid var(--border);
-        ">
-
-            <div style="
-                display:flex;
-                justify-content:space-between;
-                margin-bottom:8px;
-            ">
-                <strong>
-                    {{ msg.sender.username }}
-                </strong>
-
-                <small style="color:var(--muted)">
-                    {{ msg.created_at|date:"M d, Y H:i" }}
-                </small>
-            </div>
-
-            <div>
-                {{ msg.message|linebreaks }}
-            </div>
-
+  </div>
+  <div class="card-body" style="padding:0">
+    {% for msg in ticket.messages.all %}
+    <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;gap:12px;{% if msg.sender == ticket.user %}background:var(--surface){% else %}background:var(--surface2){% endif %}">
+      <div style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;{% if msg.sender == ticket.user %}background:var(--blue-dim);color:var(--blue){% else %}background:var(--green-dim);color:var(--green-bright){% endif %}">
+        {{ msg.sender.username|first|upper }}
+      </div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:13px;font-weight:600">{{ msg.sender.username }}</span>
+          {% if msg.sender != ticket.user %}
+          <span class="badge badge-green" style="font-size:10px;padding:2px 7px">Admin</span>
+          {% endif %}
+          <span style="font-size:11.5px;color:var(--muted);margin-left:auto">{{ msg.created_at|date:"M d, Y H:i" }}</span>
         </div>
-
-        {% empty %}
-
-        <div class="empty">
-            No messages yet.
-        </div>
-
-        {% endfor %}
-
+        <div style="font-size:13.5px;line-height:1.6;color:var(--text)">{{ msg.message|linebreaks }}</div>
+      </div>
     </div>
+    {% empty %}
+    <div class="empty">No messages yet.</div>
+    {% endfor %}
+  </div>
 </div>
 
+<!-- REPLY -->
 {% if ticket.status != 'closed' %}
-
 <div class="card">
-    <div class="card-head">
-        <div class="card-title">
-            Reply to User
-        </div>
+  <div class="card-head">
+    <div class="card-head-left">
+      <div class="card-head-icon" style="background:var(--green-dim)">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--green-bright)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <div class="card-title">Reply to User</div>
     </div>
-
+  </div>
+  <form method="post">
+    {% csrf_token %}
     <div class="card-body">
-
-        <form method="post">
-            {% csrf_token %}
-
-            <textarea
-                name="message"
-                rows="6"
-                required
-                placeholder="Type your reply..."
-                style="
-                    width:100%;
-                    padding:12px;
-                    border:1px solid var(--border);
-                    border-radius:10px;
-                    background:var(--surface2);
-                    color:var(--text);
-                "
-            ></textarea>
-
-            <div style="
-                display:flex;
-                gap:10px;
-                margin-top:12px;
-            ">
-                <button
-                    type="submit"
-                    class="btn btn-green">
-                    Send Reply
-                </button>
-
-                <a href="{% url 'admin-close-ticket' ticket.id %}"
-                   class="btn btn-red"
-                   onclick="return confirm('Close this ticket?')">
-                    Close Ticket
-                </a>
-            </div>
-
-        </form>
-
+      <textarea name="message" placeholder="Type your reply..." rows="4"
+        style="width:100%;padding:12px 14px;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;color:var(--text);outline:none;font-family:inherit;resize:vertical;transition:border-color .2s"
+        onfocus="this.style.borderColor='var(--green)'"
+        onblur="this.style.borderColor='var(--border)'"></textarea>
     </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-green">Send Reply</button>
+    </div>
+  </form>
 </div>
-
+{% else %}
+<div style="text-align:center;padding:20px;color:var(--muted);font-size:13.5px;border:1px dashed var(--border);border-radius:10px">
+  This ticket is closed. No further replies can be added.
+</div>
 {% endif %}
-
 {% endblock %}
-```

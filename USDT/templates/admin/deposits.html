@@ -1,0 +1,54 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Deposit Requests{% endblock %}
+
+{% block page_title %}Deposit Requests{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <table>
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for deposit in deposits %}
+            <tr>
+
+                <td>{{ deposit.user.username }}</td>
+
+                <td>${{ deposit.amount }}</td>
+
+                <td>
+                    <span class="badge badge-{{ deposit.status }}">
+                        {{ deposit.status }}
+                    </span>
+                </td>
+
+                <td>{{ deposit.created_at }}</td>
+
+                <td>
+                    <a href="{% url 'admin-deposit-detail' deposit.id %}"
+                       class="btn-primary">
+                        View
+                    </a>
+                </td>
+
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

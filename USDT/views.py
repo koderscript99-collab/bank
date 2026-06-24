@@ -10,7 +10,7 @@ from decimal import Decimal
 import json, hmac, hashlib
 
 from .models import (
-    User, AdminProfile, Wallet, PaymentAccount,
+    DepositRequest, User, AdminProfile, Wallet, PaymentAccount,
     ActivationPayment, AdminDeposit, Transaction,
     WithdrawalRequest, AccountControlLog, Notification,
     PaymentDetail,SupportTicket, SupportMessage
@@ -1232,26 +1232,26 @@ def admin_remove_payment_account(request, account_id):
 
     return redirect('admin-user-detail', user_id=user_id)
 
+from .models import SupportTicket, SupportMessage
 
 @login_required
 def support_create(request):
+    if request.method == 'POST':
+        subject = request.POST.get('subject', '').strip()
+        message = request.POST.get('message', '').strip()
 
-    if request.method == "POST":
-        subject = request.POST.get("subject")
-        message = request.POST.get("message")
-
-        ticket = SupportTicket.objects.create(
-            user=request.user,
-            subject=subject
-        )
-
-        SupportMessage.objects.create(
-            ticket=ticket,
-            sender=request.user,
-            message=message
-        )
-
-        return redirect('support-detail', ticket.id)
+        if subject and message:
+            ticket = SupportTicket.objects.create(
+                user=request.user,
+                subject=subject
+            )
+            SupportMessage.objects.create(
+                ticket=ticket,
+                sender=request.user,
+                message=message
+            )
+            messages.success(request, 'Support ticket created successfully.')
+            return redirect('support-detail', ticket.id)
 
     return render(request, 'user/support_create.html')
 
@@ -1262,121 +1262,233 @@ def support_list(request):
         user=request.user
     ).order_by('-created_at')
 
-    return render(
-        request,
-        'user/support_list.html',
-        {'tickets': tickets}
-    )
+    return render(request, 'user/support_list.html', {
+        'tickets': tickets
+    })
 
 
 @login_required
 def support_detail(request, ticket_id):
+    ticket = get_object_or_404(SupportTicket, id=ticket_id, user=request.user)
 
-    ticket = get_object_or_404(
-        SupportTicket,
-        id=ticket_id,
-        user=request.user
-    )
-
-    if request.method == "POST":
-        SupportMessage.objects.create(
-            ticket=ticket,
-            sender=request.user,
-            message=request.POST.get("message")
-        )
-
-    return render(
-        request,
-        'user/support_detail.html',
-        {'ticket': ticket}
-    )
-
-
-@login_required
-def admin_support_tickets(request):
-
-    tickets = SupportTicket.objects.select_related(
-        'user'
-    ).order_by('-created_at')
-
-    return render(
-        request,
-        'admin/support_tickets.html',
-        {'tickets': tickets}
-    )
-
-
-@login_required
-def admin_support_detail(request, ticket_id):
-
-    ticket = get_object_or_404(
-        SupportTicket,
-        id=ticket_id
-    )
-
-    if request.method == "POST":
-
-        message = request.POST.get("message")
-
-        if message:
+    if request.method == 'POST':
+        msg = request.POST.get('message', '').strip()
+        if msg:
             SupportMessage.objects.create(
                 ticket=ticket,
                 sender=request.user,
-                message=message
+                message=msg
             )
+            ticket.status = 'open'
+            ticket.save()
+            return redirect('support-detail', ticket_id)
 
+    return render(request, 'user/support_detail.html', {
+        'ticket': ticket
+    })
+
+
+@admin_required
+def admin_support_tickets(request):
+    status_filter = request.GET.get('status', '')
+    tickets = SupportTicket.objects.select_related('user').order_by('-updated_at')
+
+    if status_filter in ('open', 'pending', 'closed'):
+        tickets = tickets.filter(status=status_filter)
+
+    return render(request, 'admin/support_tickets.html', {
+        'tickets': tickets,
+        'status_filter': status_filter,
+        'open_tickets_count': SupportTicket.objects.filter(status='open').count(),
+        'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
+        'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
+    })
+
+
+@admin_required
+def admin_support_detail(request, ticket_id):
+    ticket = get_object_or_404(SupportTicket, id=ticket_id)
+
+    if request.method == 'POST':
+        msg = request.POST.get('message', '').strip()
+        if msg:
+            SupportMessage.objects.create(
+                ticket=ticket,
+                sender=request.user,
+                message=msg
+            )
             ticket.status = 'pending'
             ticket.save()
 
-    return render(
-        request,
-        'admin/support_detail.html',
-        {'ticket': ticket}
-    )
+            _notify(
+                ticket.user,
+                f'Support Reply — #{ticket.id}',
+                f'Admin replied to your ticket: {ticket.subject}'
+            )
+            return redirect('admin-support-detail', ticket_id)
+
+    return render(request, 'admin/support_detail.html', {
+        'ticket': ticket,
+        'open_tickets_count': SupportTicket.objects.filter(status='open').count(),
+        'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
+        'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
+    })
 
 
-@login_required
+@admin_required
 def admin_close_ticket(request, ticket_id):
-
-    ticket = get_object_or_404(
-        SupportTicket,
-        id=ticket_id
-    )
-
+    ticket = get_object_or_404(SupportTicket, id=ticket_id)
     ticket.status = 'closed'
     ticket.save()
 
-    return redirect(
-        'admin-support-detail',
-        ticket.id
+    _notify(
+        ticket.user,
+        f'Ticket Closed — #{ticket.id}',
+        f'Your support ticket "{ticket.subject}" has been closed.'
+    )
+
+    messages.success(request, f'Ticket #{ticket.id} closed.')
+    return redirect('admin-support-detail', ticket_id)
+
+
+@admin_required
+def admin_dashboard(request):
+    users = User.objects.filter(role='user').order_by('-date_joined')
+    pending_activations = ActivationPayment.objects.filter(status='pending').count()
+    pending_withdrawals = WithdrawalRequest.objects.filter(status='pending').count()
+    open_tickets = SupportTicket.objects.filter(status='open').count()
+
+    return render(request, 'admin/dashboard.html', {
+        'users': users,
+        'total_users': users.count(),
+        'active_users': users.filter(account_activated=True).count(),
+        'pending_activations': pending_activations,
+        'pending_withdrawals': pending_withdrawals,
+        'pending_activations_count': pending_activations,
+        'pending_withdrawals_count': pending_withdrawals,
+        'open_tickets_count': open_tickets,
+    })
+
+
+
+from decimal import Decimal
+from django.utils import timezone
+
+def approve_deposit(deposit, admin_user):
+    if deposit.status != "pending":
+        return
+
+    wallet = deposit.user.wallet
+
+    wallet.balance += Decimal(deposit.amount)
+    wallet.save()
+
+    deposit.status = "approved"
+    deposit.reviewed_by = admin_user
+    deposit.reviewed_at = timezone.now()
+    deposit.save()
+
+    Transaction.objects.create(
+        user=deposit.user,
+        amount=deposit.amount,
+        transaction_type="admin_deposit",
+        status="success",
+        description="Wallet funding approved",
+        performed_by=admin_user,
+    )
+
+    Notification.objects.create(
+        user=deposit.user,
+        title="Deposit Approved",
+        message=f"Your deposit of ${deposit.amount} has been approved and added to your wallet."
     )
 
 
+from django.utils import timezone
+
+def reject_deposit(deposit, admin_user, reason):
+    deposit.status = "rejected"
+    deposit.reviewed_by = admin_user
+    deposit.reviewed_at = timezone.now()
+    deposit.rejection_reason = reason
+    deposit.save()
+
+    Notification.objects.create(
+        user=deposit.user,
+        title="Deposit Rejected",
+        message=f"Your deposit request was rejected. Reason: {reason}"
+    )
 
 @login_required
-def admin_support_detail(request, ticket_id):
+def deposit_request(request):
 
-    ticket = get_object_or_404(
-        SupportTicket,
-        id=ticket_id
-    )
+    payment_details = PaymentDetail.objects.filter(is_active=True)
 
     if request.method == "POST":
 
-        message = request.POST.get("message")
+        DepositRequest.objects.create(
+            user=request.user,
+            payment_detail_id=request.POST.get("payment_detail"),
+            amount=request.POST.get("amount"),
+            transaction_id=request.POST.get("transaction_id"),
+            note=request.POST.get("note"),
+            proof=request.FILES.get("proof")
+        )
 
-        if message:
-            SupportMessage.objects.create(
-                ticket=ticket,
-                sender=request.user,
-                message=message
-            )
-
-            ticket.status = "pending"
-            ticket.save()
+        return redirect("deposit-history")
 
     return render(
         request,
-        "admin/support_detail.html",
-        {"ticket": ticket}
+        "user/deposit_form.html",
+        {
+            "payment_details": payment_details
+        }
+    )
+
+
+@login_required
+def deposit_history(request):
+
+    deposits = DepositRequest.objects.filter(
+        user=request.user
+    )
+
+    return render(
+        request,
+        "user/deposit_history.html",
+        {
+            "deposits": deposits
+        }
+    )
+
+
+
+
+def deposit_detail(request, pk):
+    pass
+
+
+def admin_deposits(request):
+    pass
+
+
+def approve_deposit_view(request, pk):
+    pass
+
+
+def reject_deposit_view(request, pk):
+    pass
+
+
+@login_required
+def admin_deposit_detail(request, pk):
+    deposit = get_object_or_404(
+        DepositRequest,
+        pk=pk
+    )
+
+    return render(
+        request,
+        'admin/deposit_detail.html',
+        {'deposit': deposit}
     )

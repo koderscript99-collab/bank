@@ -1,93 +1,152 @@
-```html
-
-{% block title %}Support Ticket{% endblock %}
-
-{% block content %}
-
-<div class="container">
-
-    <a href="{% url 'support-list' %}" class="btn btn-secondary">
-        ← Back
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ticket #{{ ticket.id }}</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f9fafb;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;--accent:#2563eb;--accent-dim:rgba(37,99,235,.08);--green:#16a34a;--green-dim:rgba(22,163,74,.08);--amber:#d97706;--amber-dim:rgba(217,119,6,.08);--red:#dc2626;--red-dim:rgba(220,38,38,.08);--sidebar-w:220px;--header-h:56px;--radius:10px}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d27;--border:#2a2d3a;--text:#f3f4f6;--muted:#6b7280;--accent-dim:rgba(37,99,235,.15);--green-dim:rgba(22,163,74,.15);--amber-dim:rgba(217,119,6,.15);--red-dim:rgba(220,38,38,.15)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s}
+.sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;transition:transform .3s}
+.logo{height:var(--header-h);display:flex;align-items:center;padding:0 18px;font-size:17px;font-weight:800;border-bottom:1px solid var(--border)}
+.logo span{color:var(--accent)}
+.nav{padding:12px 8px;flex:1}
+.nav a{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;font-size:13.5px;color:var(--muted);text-decoration:none;margin-bottom:2px;transition:background .15s,color .15s}
+.nav a:hover{background:var(--accent-dim);color:var(--text)}
+.nav a.active{background:var(--accent-dim);color:var(--accent);font-weight:600}
+.sidebar-foot{padding:12px;border-top:1px solid var(--border)}
+.ucard{display:flex;align-items:center;gap:9px;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:9px;margin-bottom:8px}
+.av{width:32px;height:32px;border-radius:50%;background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.signout{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:13px;color:var(--red);text-decoration:none}
+.signout:hover{background:var(--red-dim)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:150}
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column}
+.topbar{height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:100}
+.menu-btn{display:none;background:none;border:none;cursor:pointer;color:var(--muted);padding:6px}
+.page-title{font-size:14px;font-weight:600}
+.tt{width:34px;height:34px;border-radius:50%;background:var(--bg);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+[data-theme="light"] .moon{display:none}
+[data-theme="dark"] .sun{display:none}
+.content{padding:24px;max-width:680px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px}
+.card-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border)}
+.card-title{font-size:14px;font-weight:600}
+.badge{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600}
+.badge-green{background:var(--green-dim);color:var(--green)}
+.badge-amber{background:var(--amber-dim);color:var(--amber)}
+.badge-red{background:var(--red-dim);color:var(--red)}
+.badge-muted{background:var(--bg);color:var(--muted);border:1px solid var(--border)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:opacity .15s}
+.btn:hover{opacity:.9}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.msg-bubble{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;gap:12px}
+.msg-bubble:last-child{border-bottom:none}
+.bubble-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.form-group{margin-bottom:14px}
+.form-group textarea{width:100%;padding:11px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);font-size:14px;color:var(--text);outline:none;font-family:inherit;resize:vertical;min-height:100px;transition:border-color .2s}
+.form-group textarea:focus{border-color:var(--accent)}
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.overlay.open{display:block}.main{margin-left:0}.menu-btn{display:flex}.content{padding:14px}}
+</style>
+</head>
+<body>
+<div class="overlay" id="ov" onclick="closeSB()"></div>
+<aside class="sidebar" id="sb">
+  <div class="logo">My<span>Portal</span></div>
+  <nav class="nav">
+    <a href="{% url 'dashboard' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Dashboard</a>
+    <a href="{% url 'request-withdrawal' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Withdraw</a>
+    <a href="{% url 'notifications' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>Notifications</a>
+    <a href="{% url 'support-list' %}" class="active"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Support</a>
+    {% if not request.user.account_activated %}<a href="{% url 'activate-account' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Activate</a>{% endif %}
+    <a href="{% url 'profile' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
+  </nav>
+  <div class="sidebar-foot">
+    <div class="ucard">
+      <div class="av">{{ request.user.username|first|upper }}</div>
+      <div>
+        <div style="font-size:13px;font-weight:600">{{ request.user.username }}</div>
+        <div style="font-size:11px;color:var(--muted)">{% if request.user.account_activated %}<span style="color:var(--green)">● Active</span>{% else %}<span style="color:var(--amber)">● Pending</span>{% endif %}</div>
+      </div>
+    </div>
+    <a href="{% url 'logout' %}" class="signout"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</a>
+  </div>
+</aside>
+<div class="main">
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="menu-btn" onclick="openSB()"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <span class="page-title">Ticket #{{ ticket.id }}</span>
+    </div>
+    <button class="tt" id="tt">
+      <svg class="sun" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="moon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+  </header>
+  <div class="content">
+    <a href="{% url 'support-list' %}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:16px">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to tickets
     </a>
 
-    <div class="card" style="margin-top:20px;padding:20px;">
-        <h2>{{ ticket.subject }}</h2>
-
-        <p>
-            Status:
-            <strong>{{ ticket.get_status_display }}</strong>
-        </p>
-
-        <p>
-            Created:
-            {{ ticket.created_at|date:"M d, Y H:i" }}
-        </p>
-    </div>
-
-    <div class="card" style="margin-top:20px;padding:20px;">
-
-        <h3>Conversation</h3>
-
+    <!-- TICKET HEADER -->
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">{{ ticket.subject }}</span>
+        <span class="badge {% if ticket.status == 'open' %}badge-red{% elif ticket.status == 'pending' %}badge-amber{% else %}badge-muted{% endif %}">
+          {{ ticket.status }}
+        </span>
+      </div>
+      <div style="padding:0">
         {% for msg in ticket.messages.all %}
-
-        <div style="
-            margin-bottom:15px;
-            padding:15px;
-            border-radius:10px;
-            background:#f5f5f5;
-        ">
-            <strong>
-                {{ msg.sender.username }}
-            </strong>
-
-            <small style="float:right;">
-                {{ msg.created_at|date:"M d, Y H:i" }}
-            </small>
-
-            <div style="margin-top:10px;">
-                {{ msg.message }}
+        <div class="msg-bubble" style="{% if msg.sender != ticket.user %}background:var(--accent-dim){% endif %}">
+          <div class="bubble-av" style="{% if msg.sender == ticket.user %}background:var(--accent-dim);color:var(--accent){% else %}background:var(--green-dim);color:var(--green){% endif %}">
+            {{ msg.sender.username|first|upper }}
+          </div>
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+              <span style="font-size:13px;font-weight:600">
+                {% if msg.sender == ticket.user %}You{% else %}Support Team{% endif %}
+              </span>
+              <span style="font-size:11.5px;color:var(--muted)">{{ msg.created_at|date:"M d, Y H:i" }}</span>
             </div>
+            <div style="font-size:13.5px;line-height:1.6;color:var(--text)">{{ msg.message|linebreaks }}</div>
+          </div>
         </div>
-
         {% empty %}
-
-        <p>No messages yet.</p>
-
+        <div style="padding:30px;text-align:center;color:var(--muted)">No messages yet.</div>
         {% endfor %}
-
+      </div>
     </div>
 
+    <!-- REPLY FORM -->
     {% if ticket.status != 'closed' %}
-
-    <div class="card" style="margin-top:20px;padding:20px;">
-
-        <h3>Reply</h3>
-
+    <div class="card">
+      <div class="card-head"><span class="card-title">Send a Reply</span></div>
+      <div style="padding:18px">
         <form method="post">
-            {% csrf_token %}
-
-            <textarea
-                name="message"
-                rows="5"
-                required
-                style="width:100%;padding:10px;"
-                placeholder="Type your message..."
-            ></textarea>
-
-            <button
-                type="submit"
-                class="btn btn-primary"
-                style="margin-top:10px;"
-            >
-                Send Reply
-            </button>
+          {% csrf_token %}
+          <div class="form-group">
+            <textarea name="message" placeholder="Type your message..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-accent">Send Message</button>
         </form>
-
+      </div>
     </div>
-
+    {% else %}
+    <div style="text-align:center;padding:20px;color:var(--muted);font-size:13.5px;border:1px dashed var(--border);border-radius:10px">
+      This ticket is closed.
+    </div>
     {% endif %}
-
+  </div>
 </div>
-
-{% endblock %}
-```
+<script>
+const h=document.documentElement;h.setAttribute('data-theme',localStorage.getItem('theme')||'light');
+document.getElementById('tt').onclick=()=>{const n=h.getAttribute('data-theme')==='light'?'dark':'light';h.setAttribute('data-theme',n);localStorage.setItem('theme',n)};
+function openSB(){document.getElementById('sb').classList.add('open');document.getElementById('ov').classList.add('open')}
+function closeSB(){document.getElementById('sb').classList.remove('open');document.getElementById('ov').classList.remove('open')}
+</script>
+</body>
+</html>
