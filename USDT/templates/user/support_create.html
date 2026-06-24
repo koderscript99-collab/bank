@@ -1,114 +1,247 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New Ticket</title>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>New Support Ticket | Obsidian Forest</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#a4d1b6",
+                        "surface-tint": "#a1d1b4",
+                        "on-tertiary-fixed": "#002113",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#0c3825",
+                        "surface-container-low": "#1b1b1b",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-secondary-container": "#b7b5b4",
+                        "primary-fixed-dim": "#a1d1b4",
+                        "on-tertiary-container": "#a1ceb3",
+                        "tertiary": "#a4d1b6",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "secondary": "#c8c6c5",
+                        "on-secondary-fixed-variant": "#474746",
+                        "inverse-on-surface": "#303030",
+                        "on-tertiary-fixed-variant": "#254f3a",
+                        "secondary-container": "#474746",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-surface": "#e2e2e2",
+                        "surface": "#131313",
+                        "on-error-container": "#ffdad6",
+                        "background": "#000000",
+                        "on-background": "#e2e2e2",
+                        "surface-container": "#111111",
+                        "surface-dim": "#131313",
+                        "on-primary-fixed": "#002112",
+                        "inverse-primary": "#3a674f",
+                        "on-primary-fixed-variant": "#224f39",
+                        "inverse-surface": "#e2e2e2",
+                        "surface-variant": "#353535",
+                        "outline-variant": "#414943",
+                        "on-surface-variant": "#c0c9c1",
+                        "on-secondary": "#313030",
+                        "tertiary-fixed": "#bfedd1",
+                        "tertiary-container": "#305944",
+                        "on-primary-container": "#9fcfb2",
+                        "surface-bright": "#393939",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "primary": "#a1d1b4",
+                        "surface-container-highest": "#353535",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-container": "#2d5a43",
+                        "primary-fixed": "#bceecf",
+                        "on-primary": "#063824",
+                        "outline": "#222222",
+                        "on-error": "#690005",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "4px",
+                        "lg": "4px",
+                        "xl": "8px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "32px",
+                        "stack-sm": "4px",
+                        "gutter": "16px",
+                        "stack-md": "12px",
+                        "base": "8px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Hanken Grotesk"],
+                        "label-sm": ["Geist"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "mono-data": ["Geist"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "mono-data": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#f9fafb;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;--accent:#2563eb;--accent-dim:rgba(37,99,235,.08);--green:#16a34a;--green-dim:rgba(22,163,74,.08);--amber:#d97706;--red:#dc2626;--red-dim:rgba(220,38,38,.08);--sidebar-w:220px;--header-h:56px;--radius:10px}
-[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d27;--border:#2a2d3a;--text:#f3f4f6;--muted:#6b7280;--accent-dim:rgba(37,99,235,.15)}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s}
-.sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;transition:transform .3s}
-.logo{height:var(--header-h);display:flex;align-items:center;padding:0 18px;font-size:17px;font-weight:800;border-bottom:1px solid var(--border)}
-.logo span{color:var(--accent)}
-.nav{padding:12px 8px;flex:1}
-.nav a{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;font-size:13.5px;color:var(--muted);text-decoration:none;margin-bottom:2px;transition:background .15s,color .15s}
-.nav a:hover{background:var(--accent-dim);color:var(--text)}
-.nav a.active{background:var(--accent-dim);color:var(--accent);font-weight:600}
-.sidebar-foot{padding:12px;border-top:1px solid var(--border)}
-.ucard{display:flex;align-items:center;gap:9px;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:9px;margin-bottom:8px}
-.av{width:32px;height:32px;border-radius:50%;background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
-.signout{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:13px;color:var(--red);text-decoration:none}
-.signout:hover{background:var(--red-dim)}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:150}
-.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column}
-.topbar{height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:100}
-.menu-btn{display:none;background:none;border:none;cursor:pointer;color:var(--muted);padding:6px}
-.page-title{font-size:14px;font-weight:600}
-.tt{width:34px;height:34px;border-radius:50%;background:var(--bg);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted)}
-[data-theme="light"] .moon{display:none}
-[data-theme="dark"] .sun{display:none}
-.content{padding:24px;max-width:580px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px}
-.card-head{padding:14px 18px;border-bottom:1px solid var(--border)}
-.card-title{font-size:14px;font-weight:600}
-.card-body{padding:18px}
-.form-group{margin-bottom:16px}
-.form-group label{display:block;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
-.form-group input,.form-group textarea{width:100%;padding:11px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);font-size:14px;color:var(--text);outline:none;font-family:inherit;transition:border-color .2s}
-.form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
-.form-group textarea{resize:vertical;min-height:120px}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:11px 20px;border-radius:var(--radius);font-size:14px;font-weight:600;border:none;cursor:pointer;transition:opacity .15s;text-decoration:none}
-.btn:hover{opacity:.9}
-.btn-accent{background:var(--accent);color:#fff;width:100%;justify-content:center}
-.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
-@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.overlay.open{display:block}.main{margin-left:0}.menu-btn{display:flex}.content{padding:14px}}
-</style>
+        body {
+            background-color: #000000;
+            color: #e2e2e2;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-effect {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(24px);
+            border-top: 1px solid #2d5a43;
+        }
+        .form-focus-glow:focus {
+            outline: none;
+            border-color: #2d5a43;
+            box-shadow: 0 0 4px rgba(45, 90, 67, 0.5);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
 </head>
-<body>
-<div class="overlay" id="ov" onclick="closeSB()"></div>
-<aside class="sidebar" id="sb">
-  <div class="logo">My<span>Portal</span></div>
-  <nav class="nav">
-    <a href="{% url 'dashboard' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Dashboard</a>
-    <a href="{% url 'request-withdrawal' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Withdraw</a>
-    <a href="{% url 'notifications' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>Notifications</a>
-    <a href="{% url 'support-list' %}" class="active"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Support</a>
-    {% if not request.user.account_activated %}<a href="{% url 'activate-account' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Activate</a>{% endif %}
-    <a href="{% url 'profile' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
-  </nav>
-  <div class="sidebar-foot">
-    <div class="ucard">
-      <div class="av">{{ request.user.username|first|upper }}</div>
-      <div>
-        <div style="font-size:13px;font-weight:600">{{ request.user.username }}</div>
-        <div style="font-size:11px;color:var(--muted)">{% if request.user.account_activated %}<span style="color:var(--green)">● Active</span>{% else %}<span style="color:var(--amber)">● Pending</span>{% endif %}</div>
-      </div>
-    </div>
-    <a href="{% url 'logout' %}" class="signout"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</a>
-  </div>
-</aside>
-<div class="main">
-  <header class="topbar">
-    <div style="display:flex;align-items:center;gap:10px">
-      <button class="menu-btn" onclick="openSB()"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-      <span class="page-title">New Support Ticket</span>
-    </div>
-    <button class="tt" id="tt">
-      <svg class="sun" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg class="moon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-    </button>
-  </header>
-  <div class="content">
-    <a href="{% url 'support-list' %}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:16px">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-      Back to tickets
-    </a>
-    <div class="card">
-      <div class="card-head"><div class="card-title">New Support Ticket</div></div>
-      <div class="card-body">
-        <form method="post">
-          {% csrf_token %}
-          <div class="form-group">
-            <label>Subject</label>
-            <input type="text" name="subject" placeholder="Brief description of your issue" required autofocus>
-          </div>
-          <div class="form-group">
-            <label>Message</label>
-            <textarea name="message" placeholder="Describe your issue in detail..." required></textarea>
-          </div>
-          <button type="submit" class="btn btn-accent">Submit Ticket</button>
-        </form>
-      </div>
-    </div>
-  </div>
+<body class="font-body-md text-body-md min-h-screen flex flex-col">
+<!-- Top App Bar -->
+<header class="fixed top-0 left-0 right-0 h-16 z-30 bg-background/80 backdrop-blur-xl border-b border-outline flex items-center justify-between px-container-padding">
+<div class="flex items-center gap-base">
+<img alt="Santander Logo" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN3AnOVRPu8Dq2lIlwjMGQAPbGvyvBtdCgnW8BYisnHqX5LYiZgQMlW8iDBdhSriIRgHD_U8Qa3aYdLfdvepBU_7AKAZbzrRzMLjLoPsCT2z8p_muRKGxwjqxhnyi6eWPa8uYf2rtWQGhpYB6AFxNvxkvSX2AiI_C5y5QNEyP5VCNleFvuSyjwuINvZYKPtvUU28tuQAq8uge_Dw1lXUoBVVZ-9ob9PiJ1idZRO5VGlexFjB7A_0BhJFRNTeaXypJHp4EXdvP0GAg"/>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">New Support Ticket</h1>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="hover:bg-surface-container-high rounded-full p-2 transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">dark_mode</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center border border-primary/20">
+<span class="text-[10px] font-bold text-on-primary-container">AR</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-16 pb-24 px-container-padding max-w-4xl mx-auto w-full pt-stack-lg">
+<!-- Navigation Back -->
+<div class="mb-stack-lg">
+<a class="inline-flex items-center gap-base text-on-surface-variant hover:text-primary transition-colors duration-200" href="{% url 'support-list' %}">
+<span class="material-symbols-outlined">arrow_back</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest">Back to tickets</span>
+</a>
+</div>
+<!-- Ticket Form Card -->
+<div class="bg-surface-container border border-outline rounded-lg p-container-padding shadow-2xl relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-container to-primary"></div>
+<header class="mb-stack-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface">Submit a Request</h2>
+<p class="text-on-surface-variant font-body-md mt-base opacity-60">
+                    Hello, <span class="text-primary font-bold">{{ request.user.username }}</span>. Briefly describe your issue and our team will respond within 24 hours.
+                </p>
+</header>
+<form action="{% url 'support-create' %}" class="space-y-stack-lg" method="POST">
+                {% csrf_token %}
+                
+                <!-- Subject Input -->
+<div class="space-y-base">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase opacity-50" for="subject">Subject</label>
+<input class="w-full bg-black border border-outline rounded p-stack-md text-on-surface font-body-md form-focus-glow transition-all" id="subject" name="subject" placeholder="Brief summary of the issue" required="" type="text"/>
+</div>
+<!-- Message Input -->
+<div class="space-y-base">
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase opacity-50" for="message">Message</label>
+<textarea class="w-full bg-black border border-outline rounded p-stack-md text-on-surface font-body-md form-focus-glow transition-all resize-none" id="message" name="message" placeholder="Provide as much detail as possible..." required="" rows="8"></textarea>
+</div>
+<!-- Action Button -->
+<div class="pt-stack-md">
+<button class="w-full md:w-auto bg-primary-container hover:bg-primary text-on-primary-container px-stack-lg py-stack-md rounded-lg font-headline-md text-headline-md flex items-center justify-center gap-base transition-all duration-300 active:scale-95 group" type="submit">
+<span>Submit Ticket</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">send</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Help Info Bento -->
+<div class="mt-stack-lg grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="bg-surface-container/50 border border-outline p-gutter rounded-lg flex items-start gap-base">
+<span class="material-symbols-outlined text-primary">verified_user</span>
+<div>
+<h4 class="font-label-sm text-label-sm text-on-surface uppercase mb-1">Encrypted Support</h4>
+<p class="text-on-surface-variant text-sm opacity-60">All communications are end-to-end encrypted for your banking security.</p>
+</div>
+</div>
+<div class="bg-surface-container/50 border border-outline p-gutter rounded-lg flex items-start gap-base">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<div>
+<h4 class="font-label-sm text-label-sm text-on-surface uppercase mb-1">Response Time</h4>
+<p class="text-on-surface-variant text-sm opacity-60">Average response time for premium members is currently 2.4 hours.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-background/90 backdrop-blur-xl border-t border-outline flex justify-around items-center z-50">
+<a class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" href="{% url 'dashboard' %}">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="{% url 'support-list' %}">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+<span class="font-label-sm text-[10px] font-bold">Support</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" href="{% url 'profile' %}">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-label-sm text-[10px]">Profile</span>
+</a>
+</nav>
+<!-- Desktop Navigation Overlay (Simulated context for large screens) -->
+<div class="hidden md:flex fixed bottom-8 left-1/2 -translate-x-1/2 h-14 glass-effect px-stack-lg rounded-full border border-outline items-center gap-stack-lg z-50">
+<a class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-label-sm">DASHBOARD</span>
+</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-label-sm text-label-sm">ACCOUNTS</span>
+</a>
+<div class="h-6 w-[1px] bg-outline"></div>
+<a class="text-primary flex items-center gap-2" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+<span class="font-label-sm text-label-sm font-bold">SUPPORT</span>
+</a>
+<div class="h-6 w-[1px] bg-outline"></div>
+<a class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm">SETTINGS</span>
+</a>
 </div>
 <script>
-const h=document.documentElement;h.setAttribute('data-theme',localStorage.getItem('theme')||'light');
-document.getElementById('tt').onclick=()=>{const n=h.getAttribute('data-theme')==='light'?'dark':'light';h.setAttribute('data-theme',n);localStorage.setItem('theme',n)};
-function openSB(){document.getElementById('sb').classList.add('open');document.getElementById('ov').classList.add('open')}
-function closeSB(){document.getElementById('sb').classList.remove('open');document.getElementById('ov').classList.remove('open')}
-</script>
-</body>
-</html>
+        // Micro-interaction for form inputs
+        document.querySelectorAll('input, textarea').forEach(el => {
+            el.addEventListener('focus', () => {
+                el.parentElement.querySelector('label').style.opacity = '1';
+                el.parentElement.querySelector('label').style.color = '#a1d1b4';
+            });
+            el.addEventListener('blur', () => {
+                if(!el.value) {
+                    el.parentElement.querySelector('label').style.opacity = '0.5';
+                    el.parentElement.querySelector('label').style.color = '#c0c9c1';
+                }
+            });
+        });
+    </script>
+</body></html>

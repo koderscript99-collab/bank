@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Profile | Obsidian Forest</title>
+<title>Profile | MyPortal</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -13,7 +13,7 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        "on-tertiary-container": "#a1ceb3","surface-bright": "#393939","on-secondary-fixed-variant": "#474746","tertiary-fixed-dim": "#a4d1b6","error-container": "#93000a","inverse-surface": "#e2e2e2","secondary-fixed-dim": "#c8c6c5","surface-tint": "#a1d1b4","on-primary-fixed": "#002112","tertiary": "#a4d1b6","on-secondary": "#313030","on-tertiary": "#0c3825","secondary": "#c8c6c5","on-tertiary-fixed": "#002113","on-primary-fixed-variant": "#224f39","on-error-container": "#ffdad6","on-primary-container": "#9fcfb2","surface-container-low": "#1b1b1b","surface-dim": "#131313","on-background": "#e2e2e2","outline-variant": "#414943","error": "#ffb4ab","surface-variant": "#353535","surface-container-lowest": "#0e0e0e","surface-container-highest": "#353535","tertiary-fixed": "#bfedd1","primary-fixed-dim": "#a1d1b4","primary": "#a1d1b4","outline": "#8b938c","on-secondary-container": "#b7b5b4","surface-container": "#1f1f1f","on-surface-variant": "#c0c9c1","primary-container": "#2d5a43","on-error": "#690005","tertiary-container": "#305944","primary-fixed": "#bceecf","secondary-fixed": "#e5e2e1","inverse-primary": "#3a674f","on-surface": "#e2e2e2","on-primary": "#063824","background": "#131313","on-secondary-fixed": "#1c1b1b","inverse-on-surface": "#303030","surface-container-high": "#2a2a2a","secondary-container": "#474746","on-tertiary-fixed-variant": "#254f3a","surface": "#131313"
+        "on-tertiary-container": "#a1ceb3","surface-bright": "#393939","tertiary-fixed-dim": "#a4d1b6","error-container": "#93000a","inverse-surface": "#e2e2e2","secondary-fixed-dim": "#c8c6c5","surface-tint": "#a1d1b4","on-primary-fixed": "#002112","tertiary": "#a4d1b6","on-secondary": "#313030","on-tertiary": "#0c3825","secondary": "#c8c6c5","on-tertiary-fixed": "#002113","on-primary-fixed-variant": "#224f39","on-error-container": "#ffdad6","on-primary-container": "#9fcfb2","surface-container-low": "#1b1b1b","surface-dim": "#131313","on-background": "#e2e2e2","outline-variant": "#414943","error": "#ffb4ab","surface-variant": "#353535","surface-container-lowest": "#0e0e0e","surface-container-highest": "#353535","tertiary-fixed": "#bfedd1","primary-fixed-dim": "#a1d1b4","primary": "#a1d1b4","outline": "#8b938c","on-secondary-container": "#b7b5b4","surface-container": "#1f1f1f","on-surface-variant": "#c0c9c1","primary-container": "#2d5a43","on-error": "#690005","tertiary-container": "#305944","primary-fixed": "#bceecf","secondary-fixed": "#e5e2e1","inverse-primary": "#3a674f","on-surface": "#e2e2e2","on-primary": "#063824","background": "#131313","on-secondary-fixed": "#1c1b1b","inverse-on-surface": "#303030","surface-container-high": "#2a2a2a","secondary-container": "#474746","on-tertiary-fixed-variant": "#254f3a","surface": "#131313"
       },
       borderRadius: {"DEFAULT": "0.125rem","lg": "0.25rem","xl": "0.5rem","full": "0.75rem"},
       spacing: {"stack-lg": "32px","stack-md": "12px","container-padding": "24px","base": "8px","stack-sm": "4px","gutter": "16px"},
@@ -34,42 +34,78 @@ tailwind.config = {
 </head>
 <body class="font-body-md text-body-md overflow-x-hidden">
 
-<!-- Navigation Drawer (Desktop) -->
-<aside class="fixed left-0 top-0 h-full w-72 flex flex-col z-40 border-r border-surface-container-highest bg-background hidden md:flex">
-  <div class="p-gutter flex items-center gap-base">
-    <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-sm">OF</div>
-    <span class="font-headline-lg text-headline-lg font-bold text-primary tracking-tighter">Obsidian</span>
+<!-- Mobile Sidebar Overlay -->
+<div class="fixed inset-0 bg-background/95 z-[60] -translate-x-full transition-transform duration-300 md:hidden p-gutter" id="mobile-sidebar">
+  <div class="flex justify-between items-center mb-stack-lg">
+    <span class="font-headline-md text-primary font-bold">MyPortal</span>
+    <button class="p-2" id="close-sidebar"><span class="material-symbols-outlined">close</span></button>
+  </div>
+  <div class="flex flex-col gap-gutter">
+    <a class="text-headline-md font-bold text-on-surface-variant" href="{% url 'dashboard' %}">Dashboard</a>
+    <a class="text-headline-md font-bold text-on-surface-variant" href="{% url 'request-withdrawal' %}">Withdraw</a>
+    <a class="text-headline-md font-bold text-on-surface-variant" href="{% url 'notifications' %}">Notifications</a>
+    <a class="text-headline-md font-bold text-on-surface-variant" href="{% url 'support-list' %}">Support</a>
+    <a class="text-headline-md font-bold text-primary" href="{% url 'profile' %}">Profile</a>
+    <hr class="border-surface-container-highest my-stack-md"/>
+    <a class="text-body-md text-error flex items-center gap-base" href="{% url 'logout' %}">
+      <span class="material-symbols-outlined">logout</span>
+      Sign Out
+    </a>
+  </div>
+</div>
+
+<!-- Desktop Sidebar -->
+<aside class="fixed left-0 top-0 h-full w-72 flex-col z-40 border-r border-surface-container-highest bg-background hidden md:flex">
+  <div class="p-gutter flex items-center gap-base border-b border-surface-container-highest">
+    <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-sm">
+      {{ request.user.initials }}
+    </div>
+    <span class="font-headline-lg text-headline-lg font-bold text-primary tracking-tighter">MyPortal</span>
   </div>
   <div class="flex-1 px-stack-md py-stack-lg flex flex-col gap-base custom-scrollbar overflow-y-auto">
-    <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+    <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="{% url 'dashboard' %}">
       <span class="material-symbols-outlined">dashboard</span>
-      <span class="font-label-sm text-label-sm">Dashboard</span>
+      <span class="font-label-sm text-label-sm uppercase tracking-widest">Dashboard</span>
     </a>
-    <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
-      <span class="material-symbols-outlined">account_balance</span>
-      <span class="font-label-sm text-label-sm">Accounts</span>
+    <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="{% url 'request-withdrawal' %}">
+      <span class="material-symbols-outlined">payments</span>
+      <span class="font-label-sm text-label-sm uppercase tracking-widest">Withdraw</span>
     </a>
-    <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
-      <span class="material-symbols-outlined">receipt_long</span>
-      <span class="font-label-sm text-label-sm">Transactions</span>
+    <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="{% url 'notifications' %}">
+      <span class="material-symbols-outlined">notifications</span>
+      <span class="font-label-sm text-label-sm uppercase tracking-widest">Notifications</span>
     </a>
-    <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
-      <span class="material-symbols-outlined">monitoring</span>
-      <span class="font-label-sm text-label-sm">Analytics</span>
+    <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="{% url 'support-list' %}">
+      <span class="material-symbols-outlined">contact_support</span>
+      <span class="font-label-sm text-label-sm uppercase tracking-widest">Support</span>
     </a>
-    <a class="flex items-center gap-base px-gutter py-stack-md bg-primary-container text-on-primary-container rounded-lg active:scale-95 duration-150 ease-in-out" href="#">
-      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">settings</span>
-      <span class="font-label-sm text-label-sm">Settings</span>
+    {% if not request.user.account_activated %}
+    <a class="flex items-center gap-base px-gutter py-stack-md text-tertiary hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="{% url 'activate-account' %}">
+      <span class="material-symbols-outlined">verified_user</span>
+      <span class="font-label-sm text-label-sm uppercase tracking-widest">Activate Account</span>
+    </a>
+    {% endif %}
+    <a class="flex items-center gap-base px-gutter py-stack-md bg-primary-container text-on-primary-container rounded-lg" href="{% url 'profile' %}">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">person</span>
+      <span class="font-label-sm text-label-sm uppercase tracking-widest">Profile</span>
     </a>
   </div>
-  <div class="p-gutter border-t border-surface-container-highest mt-auto">
-    <div class="flex items-center gap-base">
-      <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold" id="sidebar-avatar">AR</div>
+  <div class="p-gutter border-t border-surface-container-highest">
+    <div class="flex items-center gap-base mb-stack-md">
+      <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">
+        {{ request.user.initials }}
+      </div>
       <div>
-        <p class="font-label-sm text-label-sm text-on-surface" id="sidebar-name">Alex Rivers</p>
-        <p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Premium Member</p>
+        <p class="font-label-sm text-label-sm text-on-surface">{{ request.user.full_name }}</p>
+        <p class="text-[10px] text-on-surface-variant uppercase tracking-widest">
+          {% if request.user.account_activated %}Active Member{% else %}Pending{% endif %}
+        </p>
       </div>
     </div>
+    <a href="{% url 'logout' %}" class="flex items-center gap-base w-full px-base py-stack-sm text-error hover:bg-error-container/10 rounded transition-colors group">
+      <span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">logout</span>
+      <span class="font-label-sm text-label-sm uppercase tracking-widest">Sign Out</span>
+    </a>
   </div>
 </aside>
 
@@ -82,72 +118,87 @@ tailwind.config = {
     <h1 class="font-headline-md text-headline-md font-bold text-primary">Profile Management</h1>
   </div>
   <div class="flex items-center gap-gutter">
-    <button class="hover:bg-surface-container-high rounded-full p-2 transition-colors" id="theme-toggle" title="Toggle theme">
-      <span class="material-symbols-outlined">dark_mode</span>
-    </button>
-    <button class="hover:bg-surface-container-high rounded-full p-2 transition-colors relative" id="notif-btn">
+    <a href="{% url 'notifications' %}" class="hover:bg-surface-container-high rounded-full p-2 transition-colors relative">
       <span class="material-symbols-outlined">notifications</span>
-      <span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full" id="notif-dot"></span>
-    </button>
+    </a>
   </div>
 </header>
 
 <!-- Main Content -->
-<main class="pt-24 pb-stack-lg px-container-padding md:ml-72 min-h-screen">
+<main class="pt-24 pb-24 md:pb-stack-lg px-container-padding md:ml-72 min-h-screen">
   <div class="max-w-4xl mx-auto space-y-gutter">
+
+    <!-- Django Messages -->
+    {% if messages %}
+    {% for m in messages %}
+    <div class="flex items-center gap-base p-gutter rounded-xl border
+      {% if m.tags == 'success' %}bg-primary-container/20 border-primary/30 text-primary
+      {% elif m.tags == 'error' %}bg-error-container/20 border-error/30 text-error
+      {% else %}bg-tertiary-container/20 border-tertiary/30 text-tertiary{% endif %}">
+      <span class="material-symbols-outlined">
+        {% if m.tags == 'success' %}check_circle{% elif m.tags == 'error' %}error{% else %}info{% endif %}
+      </span>
+      {{ m }}
+    </div>
+    {% endfor %}
+    {% endif %}
 
     <!-- Profile Hero -->
     <section class="relative bg-surface-container-lowest border border-surface-container-highest rounded-xl overflow-hidden p-stack-lg">
       <div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/10 blur-[100px] -z-10 rounded-full"></div>
       <div class="flex flex-col md:flex-row items-center gap-stack-lg">
+
+        <!-- Avatar -->
         <div class="relative group">
-          <div class="w-32 h-32 rounded-full bg-gradient-to-br from-primary-container to-surface-container-high flex items-center justify-center text-headline-xl font-bold text-on-primary-container shadow-2xl border-4 border-background overflow-hidden relative">
-            <span id="avatar-initials">AR</span>
-            <img id="avatar-img" class="hidden w-full h-full object-cover absolute inset-0" alt="Profile photo"/>
+          <div class="w-32 h-32 rounded-full bg-gradient-to-br from-primary-container to-surface-container-high flex items-center justify-center text-headline-xl font-bold text-on-primary-container shadow-2xl border-4 border-background">
+            {{ request.user.initials }}
           </div>
-          <button class="absolute bottom-1 right-1 bg-primary text-on-primary p-2 rounded-full shadow-lg hover:scale-110 transition-transform" id="camera-btn" title="Change photo">
-            <span class="material-symbols-outlined text-[20px]">photo_camera</span>
-          </button>
-          <input type="file" id="photo-input" accept="image/*" class="hidden"/>
         </div>
+
+        <!-- Name + Account -->
         <div class="text-center md:text-left space-y-stack-sm flex-1">
-          <div class="flex items-center justify-center md:justify-start gap-base">
-            <h2 class="font-headline-lg text-headline-lg" id="display-name">Alex Rivers</h2>
-            <span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-tighter border border-primary/20">Verified</span>
+          <div class="flex items-center justify-center md:justify-start gap-base flex-wrap">
+            <h2 class="font-headline-lg text-headline-lg">{{ request.user.full_name }}</h2>
+            {% if request.user.account_activated %}
+            <span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-tighter border border-primary/20">Active</span>
+            {% else %}
+            <span class="bg-tertiary/10 text-tertiary px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-tighter border border-tertiary/20">Pending</span>
+            {% endif %}
           </div>
-          <div class="flex items-center justify-center md:justify-start gap-base group cursor-pointer" id="copy-account">
-            <span class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-widest">Account Number:</span>
-            <span class="font-mono-data text-mono-data text-primary" id="account-num">ACC-8829-5512</span>
+          <div class="flex items-center justify-center md:justify-start gap-base group cursor-pointer" onclick="copyAccountNumber()">
+            <span class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-widest">Account:</span>
+            <span class="font-mono-data text-mono-data text-primary" id="account-num">{{ request.user.account_number|default:"Not assigned" }}</span>
             <span class="material-symbols-outlined text-[16px] text-on-surface-variant group-hover:text-primary transition-colors">content_copy</span>
           </div>
-          <p class="text-on-surface-variant text-body-md max-w-md">Managing your obsidian-tier wealth since August 2021. Your dedicated relationship manager is ready for assistance.</p>
+          <p class="text-on-surface-variant text-body-md">{{ request.user.email|default:"No email set" }}</p>
         </div>
+
+        <!-- Status Cards -->
         <div class="flex gap-stack-sm">
           <div class="bg-surface-container-low border border-surface-container-highest p-stack-md rounded-lg text-center min-w-[100px]">
-            <p class="text-[10px] text-on-surface-variant uppercase font-bold">Tier</p>
-            <p class="text-primary font-bold">Obsidian</p>
+            <p class="text-[10px] text-on-surface-variant uppercase font-bold mb-1">Status</p>
+            <p class="{% if request.user.account_activated %}text-primary{% else %}text-tertiary{% endif %} font-bold text-sm">
+              {% if request.user.account_activated %}Active{% else %}Pending{% endif %}
+            </p>
           </div>
           <div class="bg-surface-container-low border border-surface-container-highest p-stack-md rounded-lg text-center min-w-[100px]">
-            <p class="text-[10px] text-on-surface-variant uppercase font-bold">Status</p>
-            <p class="text-primary font-bold">Active</p>
+            <p class="text-[10px] text-on-surface-variant uppercase font-bold mb-1">Member</p>
+            <p class="text-primary font-bold text-sm">{{ request.user.date_joined|date:"Y" }}</p>
           </div>
         </div>
+
       </div>
     </section>
 
-    <!-- Toast Notifications -->
+    <!-- Save Toast -->
     <div id="save-toast" class="hidden fixed top-20 right-6 z-50 bg-primary-container text-on-primary-container px-gutter py-stack-md rounded-xl shadow-2xl font-label-sm text-label-sm flex items-center gap-base">
       <span class="material-symbols-outlined text-[18px]">check_circle</span>
       Profile saved successfully!
     </div>
-    <div id="discard-toast" class="hidden fixed top-20 right-6 z-50 bg-surface-container-highest text-on-surface px-gutter py-stack-md rounded-xl shadow-2xl font-label-sm text-label-sm flex items-center gap-base">
-      <span class="material-symbols-outlined text-[18px]">undo</span>
-      Changes discarded.
-    </div>
 
     <!-- Profile Form -->
-    <form id="profile-form" class="space-y-gutter" novalidate>
-      <input name="csrf_token" type="hidden" value="example_token_12345"/>
+    <form method="post" class="space-y-gutter" id="profile-form">
+      {% csrf_token %}
       <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
 
         <!-- Personal Information -->
@@ -157,50 +208,70 @@ tailwind.config = {
             <h3 class="font-headline-md text-headline-md">Personal Information</h3>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+
             <div class="space-y-stack-sm">
               <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="first_name">First Name</label>
-              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="first_name" name="first_name" type="text" value="Alex"/>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all"
+                id="first_name" name="first_name" type="text"
+                value="{{ request.user.first_name }}" placeholder="First name"/>
             </div>
+
             <div class="space-y-stack-sm">
               <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="last_name">Last Name</label>
-              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="last_name" name="last_name" type="text" value="Rivers"/>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all"
+                id="last_name" name="last_name" type="text"
+                value="{{ request.user.last_name }}" placeholder="Last name"/>
             </div>
+
             <div class="space-y-stack-sm md:col-span-2">
               <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="email">Email Address</label>
-              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="email" name="email" type="email" value="alex.rivers@obsidianforest.com"/>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all"
+                id="email" name="email" type="email"
+                value="{{ request.user.email }}" placeholder="your@email.com"/>
             </div>
+
             <div class="space-y-stack-sm">
               <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="dob">Date of Birth</label>
-              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="dob" name="dob" type="date" value="1988-11-24"/>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all"
+                id="dob" name="date_of_birth" type="date"
+                value="{{ request.user.date_of_birth|date:'Y-m-d' }}"/>
             </div>
+
             <div class="space-y-stack-sm">
               <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="phone">Phone Number</label>
-              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="phone" name="phone" type="tel" value="+1 (555) 982-4410"/>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all"
+                id="phone" name="phone" type="tel"
+                value="{{ request.user.phone }}" placeholder="+1 234 567 8900"/>
             </div>
+
           </div>
         </div>
 
-        <!-- Banking Card -->
+        <!-- Account Info Card -->
         <div class="bg-primary-container/20 border border-primary-container rounded-xl p-stack-lg space-y-gutter relative overflow-hidden group">
           <div class="absolute -top-12 -right-12 w-32 h-32 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-all"></div>
           <div class="flex items-center gap-base border-b border-primary/20 pb-stack-md">
-            <span class="material-symbols-outlined text-primary">account_balance</span>
-            <h3 class="font-headline-md text-headline-md">Banking</h3>
+            <span class="material-symbols-outlined text-primary">badge</span>
+            <h3 class="font-headline-md text-headline-md">Account Info</h3>
           </div>
           <div class="space-y-stack-lg py-stack-md">
             <div class="space-y-base">
-              <p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Primary Institution</p>
-              <div class="flex items-center gap-gutter bg-background/40 p-gutter rounded-lg border border-primary/10">
-                <div class="w-10 h-10 bg-white/5 rounded-md flex items-center justify-center">
-                  <span class="text-primary font-bold">S</span>
-                </div>
-                <span class="font-headline-md text-headline-md text-primary">Santander Bank</span>
+              <p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Account Number</p>
+              <div class="flex items-center gap-base bg-background/40 p-gutter rounded-lg border border-primary/10">
+                <span class="font-mono-data text-primary text-sm flex-1">{{ request.user.account_number|default:"Not assigned" }}</span>
+                <button type="button" onclick="copyAccountNumber()" class="text-on-surface-variant hover:text-primary transition-colors">
+                  <span class="material-symbols-outlined text-[18px]">content_copy</span>
+                </button>
               </div>
+              <p class="text-[10px] text-on-surface-variant">Cannot be changed — auto assigned</p>
             </div>
             <div class="space-y-base">
-              <p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Financial Advisor</p>
-              <p class="text-on-surface font-medium">Marcus Chen</p>
-              <p class="text-[10px] text-on-surface-variant">Global Private Banking Division</p>
+              <p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Member Since</p>
+              <p class="text-on-surface font-medium">{{ request.user.date_joined|date:"F Y" }}</p>
+            </div>
+            <div class="space-y-base">
+              <p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Username</p>
+              <p class="text-on-surface font-medium font-mono-data">{{ request.user.username }}</p>
             </div>
           </div>
         </div>
@@ -209,33 +280,27 @@ tailwind.config = {
         <div class="md:col-span-3 bg-surface-container border border-surface-container-highest rounded-xl p-stack-lg space-y-gutter">
           <div class="flex items-center gap-base border-b border-surface-container-highest pb-stack-md">
             <span class="material-symbols-outlined text-primary">location_on</span>
-            <h3 class="font-headline-md text-headline-md">Residential Address</h3>
+            <h3 class="font-headline-md text-headline-md">Address</h3>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
-            <div class="md:col-span-4 space-y-stack-sm">
-              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="address">Street Address</label>
-              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="address" name="address" type="text" value="882 Obsidian Ridge, High Plateau"/>
-            </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
             <div class="md:col-span-2 space-y-stack-sm">
-              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="city">City</label>
-              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="city" name="city" type="text" value="Grand Forest City"/>
-            </div>
-            <div class="space-y-stack-sm">
-              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="state">State/Province</label>
-              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="state" name="state" type="text" value="GF"/>
-            </div>
-            <div class="space-y-stack-sm">
-              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="zip">Postal Code</label>
-              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="zip" name="zip" type="text" value="50212"/>
+              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="address">Street Address</label>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all"
+                id="address" name="address" type="text"
+                value="{{ request.user.address }}" placeholder="Your full address"/>
             </div>
           </div>
         </div>
+
       </div>
 
       <!-- Action Footer -->
       <div class="flex items-center justify-end gap-gutter pt-stack-lg">
-        <button class="px-gutter py-stack-md text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface transition-colors" type="button" id="discard-btn">Discard Changes</button>
-        <button class="bg-primary hover:bg-primary-container text-on-primary hover:text-on-primary-container px-8 py-stack-md rounded-lg font-label-sm text-label-sm uppercase tracking-widest font-bold transition-all transform active:scale-95 shadow-[0_0_20px_rgba(45,90,67,0.3)]" type="submit" id="save-btn">
+        <a href="{% url 'dashboard' %}" class="px-gutter py-stack-md text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface transition-colors">
+          Cancel
+        </a>
+        <button class="bg-primary hover:bg-primary-container text-on-primary hover:text-on-primary-container px-8 py-stack-md rounded-lg font-label-sm text-label-sm uppercase tracking-widest font-bold transition-all transform active:scale-95 shadow-[0_0_20px_rgba(45,90,67,0.3)]"
+          type="submit" id="save-btn">
           Save Profile
         </button>
       </div>
@@ -244,147 +309,66 @@ tailwind.config = {
   </div>
 </main>
 
-<!-- Mobile Navigation (Bottom) -->
+<!-- Mobile Bottom Nav -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full glass-panel z-50 flex items-center justify-around h-16 border-t border-surface-container-highest">
-  <a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+  <a class="flex flex-col items-center gap-1 text-on-surface-variant" href="{% url 'dashboard' %}">
     <span class="material-symbols-outlined text-[20px]">dashboard</span>
-    <span class="text-[10px] font-bold uppercase">Dash</span>
+    <span class="text-[10px] font-bold uppercase">Home</span>
   </a>
-  <a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
-    <span class="material-symbols-outlined text-[20px]">account_balance</span>
-    <span class="text-[10px] font-bold uppercase">Accounts</span>
+  <a class="flex flex-col items-center gap-1 text-on-surface-variant" href="{% url 'request-withdrawal' %}">
+    <span class="material-symbols-outlined text-[20px]">payments</span>
+    <span class="text-[10px] font-bold uppercase">Withdraw</span>
   </a>
-  <div class="relative -top-6">
-    <div class="bg-primary text-on-primary w-14 h-14 rounded-full flex items-center justify-center shadow-2xl border-4 border-background">
-      <span class="material-symbols-outlined">qr_code_scanner</span>
-    </div>
-  </div>
-  <a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
-    <span class="material-symbols-outlined text-[20px]">receipt_long</span>
-    <span class="text-[10px] font-bold uppercase">History</span>
+  <a class="flex flex-col items-center gap-1 text-on-surface-variant" href="{% url 'notifications' %}">
+    <span class="material-symbols-outlined text-[20px]">notifications</span>
+    <span class="text-[10px] font-bold uppercase">Alerts</span>
   </a>
-  <a class="flex flex-col items-center gap-1 text-primary" href="#">
+  <a class="flex flex-col items-center gap-1 text-on-surface-variant" href="{% url 'support-list' %}">
+    <span class="material-symbols-outlined text-[20px]">contact_support</span>
+    <span class="text-[10px] font-bold uppercase">Support</span>
+  </a>
+  <a class="flex flex-col items-center gap-1 text-primary" href="{% url 'profile' %}">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">person</span>
     <span class="text-[10px] font-bold uppercase">Profile</span>
   </a>
 </nav>
 
-<!-- Mobile Sidebar Overlay -->
-<div class="fixed inset-0 bg-background/95 z-[60] -translate-x-full transition-transform duration-300 md:hidden p-gutter" id="mobile-sidebar">
-  <div class="flex justify-between items-center mb-stack-lg">
-    <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs">OF</div>
-    <button class="p-2" id="close-sidebar"><span class="material-symbols-outlined">close</span></button>
-  </div>
-  <div class="flex flex-col gap-gutter">
-    <a class="text-headline-md font-bold text-on-surface-variant" href="#">Dashboard</a>
-    <a class="text-headline-md font-bold text-on-surface-variant" href="#">Accounts</a>
-    <a class="text-headline-md font-bold text-on-surface-variant" href="#">Transactions</a>
-    <a class="text-headline-md font-bold text-on-surface-variant" href="#">Analytics</a>
-    <a class="text-headline-md font-bold text-primary" href="#">Settings</a>
-    <hr class="border-surface-container-highest my-stack-md"/>
-    <a class="text-body-md text-error flex items-center gap-base" href="#">
-      <span class="material-symbols-outlined">logout</span>
-      Logout
-    </a>
-  </div>
-</div>
-
 <script>
-  // Store original values for discard
-  const originalValues = {};
-  const inputs = document.querySelectorAll('input:not([type=hidden]):not([type=file])');
-  inputs.forEach(inp => { originalValues[inp.name] = inp.value; });
+  // Mobile sidebar
+  document.getElementById('mobile-menu-trigger').addEventListener('click', () => {
+    document.getElementById('mobile-sidebar').classList.remove('-translate-x-full');
+  });
+  document.getElementById('close-sidebar').addEventListener('click', () => {
+    document.getElementById('mobile-sidebar').classList.add('-translate-x-full');
+  });
 
-  // Toast helper
-  function showToast(id) {
-    const t = document.getElementById(id);
+  // Copy account number
+  function copyAccountNumber() {
+    const num = document.getElementById('account-num').textContent.trim();
+    navigator.clipboard.writeText(num).then(() => {
+      const el = document.getElementById('account-num');
+      const orig = el.textContent;
+      el.textContent = 'Copied!';
+      el.classList.add('text-white');
+      setTimeout(() => { el.textContent = orig; el.classList.remove('text-white'); }, 2000);
+    }).catch(() => {});
+  }
+
+  // Show toast on form submit
+  document.getElementById('profile-form').addEventListener('submit', () => {
+    const t = document.getElementById('save-toast');
     t.classList.remove('hidden');
     t.classList.add('flex');
     setTimeout(() => { t.classList.add('hidden'); t.classList.remove('flex'); }, 2500);
-  }
+  });
 
-  // Live name + initials sync
-  function updateDisplayName() {
-    const first = document.getElementById('first_name').value.trim();
-    const last = document.getElementById('last_name').value.trim();
-    const full = [first, last].filter(Boolean).join(' ') || 'User';
-    const initials = [first[0], last[0]].filter(Boolean).join('').toUpperCase() || 'U';
-    document.getElementById('display-name').textContent = full;
-    document.getElementById('avatar-initials').textContent = initials;
-    document.getElementById('sidebar-name').textContent = full;
-    document.getElementById('sidebar-avatar').textContent = initials;
-  }
-
-  document.getElementById('first_name').addEventListener('input', updateDisplayName);
-  document.getElementById('last_name').addEventListener('input', updateDisplayName);
-
-  // Save button pulse on input change
+  // Pulse save button on input change
   const saveBtn = document.getElementById('save-btn');
-  inputs.forEach(inp => {
+  document.querySelectorAll('input:not([type=hidden])').forEach(inp => {
     inp.addEventListener('input', () => {
       saveBtn.classList.add('scale-105');
       setTimeout(() => saveBtn.classList.remove('scale-105'), 150);
     });
-  });
-
-  // Form submit
-  document.getElementById('profile-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    inputs.forEach(inp => { originalValues[inp.name] = inp.value; });
-    showToast('save-toast');
-  });
-
-  // Discard changes
-  document.getElementById('discard-btn').addEventListener('click', () => {
-    inputs.forEach(inp => { if (originalValues[inp.name] !== undefined) inp.value = originalValues[inp.name]; });
-    updateDisplayName();
-    showToast('discard-toast');
-  });
-
-  // Copy account number
-  document.getElementById('copy-account').addEventListener('click', () => {
-    const el = document.getElementById('account-num');
-    const txt = el.textContent;
-    navigator.clipboard.writeText(txt).catch(() => {});
-    el.textContent = 'Copied!';
-    el.classList.add('text-white');
-    setTimeout(() => { el.textContent = txt; el.classList.remove('text-white'); }, 2000);
-  });
-
-  // Photo upload
-  document.getElementById('camera-btn').addEventListener('click', () => {
-    document.getElementById('photo-input').click();
-  });
-  document.getElementById('photo-input').addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const img = document.getElementById('avatar-img');
-      img.src = ev.target.result;
-      img.classList.remove('hidden');
-      document.getElementById('avatar-initials').classList.add('hidden');
-    };
-    reader.readAsDataURL(file);
-  });
-
-  // Mobile sidebar
-  const trigger = document.getElementById('mobile-menu-trigger');
-  const sidebar = document.getElementById('mobile-sidebar');
-  const closer = document.getElementById('close-sidebar');
-  trigger.addEventListener('click', () => sidebar.classList.remove('-translate-x-full'));
-  closer.addEventListener('click', () => sidebar.classList.add('-translate-x-full'));
-
-  // Notification dot toggle
-  document.getElementById('notif-btn').addEventListener('click', () => {
-    document.getElementById('notif-dot').classList.toggle('hidden');
-  });
-
-  // Theme toggle
-  document.getElementById('theme-toggle').addEventListener('click', () => {
-    document.documentElement.classList.toggle('dark');
-    const icon = document.querySelector('#theme-toggle .material-symbols-outlined');
-    icon.textContent = document.documentElement.classList.contains('dark') ? 'dark_mode' : 'light_mode';
   });
 </script>
 </body>

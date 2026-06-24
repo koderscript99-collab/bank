@@ -1,152 +1,341 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ticket #{{ ticket.id }}</title>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ticket Detail | Obsidian Forest</title>
+<!-- Google Fonts: Geist for data/utility, Hanken Grotesk for display -->
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#224f39",
+                        "on-tertiary-fixed-variant": "#254f3a",
+                        "on-secondary-fixed-variant": "#474746",
+                        "inverse-primary": "#3a674f",
+                        "tertiary": "#a4d1b6",
+                        "on-background": "#e2e2e2",
+                        "on-tertiary": "#0c3825",
+                        "tertiary-fixed-dim": "#a4d1b6",
+                        "surface-container-highest": "#353535",
+                        "primary-fixed": "#bceecf",
+                        "surface-variant": "#353535",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary": "#c8c6c5",
+                        "surface-container": "#1f1f1f",
+                        "error-container": "#93000a",
+                        "on-secondary": "#313030",
+                        "tertiary-container": "#305944",
+                        "inverse-surface": "#e2e2e2",
+                        "inverse-on-surface": "#303030",
+                        "on-error-container": "#ffdad6",
+                        "surface": "#131313",
+                        "secondary-container": "#474746",
+                        "on-primary-fixed": "#002112",
+                        "on-error": "#690005",
+                        "on-primary-container": "#9fcfb2",
+                        "outline-variant": "#414943",
+                        "primary-fixed-dim": "#a1d1b4",
+                        "surface-dim": "#131313",
+                        "on-surface-variant": "#c0c9c1",
+                        "on-tertiary-container": "#a1ceb3",
+                        "error": "#ffb4ab",
+                        "on-secondary-container": "#b7b5b4",
+                        "background": "#131313",
+                        "secondary-fixed": "#e5e2e1",
+                        "surface-tint": "#a1d1b4",
+                        "tertiary-fixed": "#bfedd1",
+                        "primary": "#a1d1b4",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "outline": "#8b938c",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "primary-container": "#2d5a43",
+                        "on-surface": "#e2e2e2",
+                        "surface-bright": "#393939",
+                        "on-primary": "#063824",
+                        "surface-container-low": "#1b1b1b",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-container-high": "#2a2a2a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "stack-lg": "32px",
+                        "stack-sm": "4px",
+                        "base": "8px",
+                        "stack-md": "12px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Geist"],
+                        "mono-data": ["Geist"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#f9fafb;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;--accent:#2563eb;--accent-dim:rgba(37,99,235,.08);--green:#16a34a;--green-dim:rgba(22,163,74,.08);--amber:#d97706;--amber-dim:rgba(217,119,6,.08);--red:#dc2626;--red-dim:rgba(220,38,38,.08);--sidebar-w:220px;--header-h:56px;--radius:10px}
-[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d27;--border:#2a2d3a;--text:#f3f4f6;--muted:#6b7280;--accent-dim:rgba(37,99,235,.15);--green-dim:rgba(22,163,74,.15);--amber-dim:rgba(217,119,6,.15);--red-dim:rgba(220,38,38,.15)}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s}
-.sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;transition:transform .3s}
-.logo{height:var(--header-h);display:flex;align-items:center;padding:0 18px;font-size:17px;font-weight:800;border-bottom:1px solid var(--border)}
-.logo span{color:var(--accent)}
-.nav{padding:12px 8px;flex:1}
-.nav a{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;font-size:13.5px;color:var(--muted);text-decoration:none;margin-bottom:2px;transition:background .15s,color .15s}
-.nav a:hover{background:var(--accent-dim);color:var(--text)}
-.nav a.active{background:var(--accent-dim);color:var(--accent);font-weight:600}
-.sidebar-foot{padding:12px;border-top:1px solid var(--border)}
-.ucard{display:flex;align-items:center;gap:9px;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:9px;margin-bottom:8px}
-.av{width:32px;height:32px;border-radius:50%;background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
-.signout{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:13px;color:var(--red);text-decoration:none}
-.signout:hover{background:var(--red-dim)}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:150}
-.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column}
-.topbar{height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:100}
-.menu-btn{display:none;background:none;border:none;cursor:pointer;color:var(--muted);padding:6px}
-.page-title{font-size:14px;font-weight:600}
-.tt{width:34px;height:34px;border-radius:50%;background:var(--bg);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted)}
-[data-theme="light"] .moon{display:none}
-[data-theme="dark"] .sun{display:none}
-.content{padding:24px;max-width:680px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px}
-.card-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border)}
-.card-title{font-size:14px;font-weight:600}
-.badge{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600}
-.badge-green{background:var(--green-dim);color:var(--green)}
-.badge-amber{background:var(--amber-dim);color:var(--amber)}
-.badge-red{background:var(--red-dim);color:var(--red)}
-.badge-muted{background:var(--bg);color:var(--muted);border:1px solid var(--border)}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:opacity .15s}
-.btn:hover{opacity:.9}
-.btn-accent{background:var(--accent);color:#fff}
-.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
-.msg-bubble{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;gap:12px}
-.msg-bubble:last-child{border-bottom:none}
-.bubble-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
-.form-group{margin-bottom:14px}
-.form-group textarea{width:100%;padding:11px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);font-size:14px;color:var(--text);outline:none;font-family:inherit;resize:vertical;min-height:100px;transition:border-color .2s}
-.form-group textarea:focus{border-color:var(--accent)}
-@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.overlay.open{display:block}.main{margin-left:0}.menu-btn{display:flex}.content{padding:14px}}
-</style>
-</head>
-<body>
-<div class="overlay" id="ov" onclick="closeSB()"></div>
-<aside class="sidebar" id="sb">
-  <div class="logo">My<span>Portal</span></div>
-  <nav class="nav">
-    <a href="{% url 'dashboard' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Dashboard</a>
-    <a href="{% url 'request-withdrawal' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Withdraw</a>
-    <a href="{% url 'notifications' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>Notifications</a>
-    <a href="{% url 'support-list' %}" class="active"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Support</a>
-    {% if not request.user.account_activated %}<a href="{% url 'activate-account' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Activate</a>{% endif %}
-    <a href="{% url 'profile' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
-  </nav>
-  <div class="sidebar-foot">
-    <div class="ucard">
-      <div class="av">{{ request.user.username|first|upper }}</div>
-      <div>
-        <div style="font-size:13px;font-weight:600">{{ request.user.username }}</div>
-        <div style="font-size:11px;color:var(--muted)">{% if request.user.account_activated %}<span style="color:var(--green)">● Active</span>{% else %}<span style="color:var(--amber)">● Pending</span>{% endif %}</div>
-      </div>
-    </div>
-    <a href="{% url 'logout' %}" class="signout"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</a>
-  </div>
+        body {
+            background-color: #000000;
+            color: #e2e2e2;
+            -webkit-font-smoothing: antialiased;
+        }
+        .obsidian-card {
+            background-color: #111111;
+            border: 1px solid #222222;
+            transition: border-color 0.3s ease;
+        }
+        .obsidian-card:hover {
+            border-color: #2D5A43;
+        }
+        .glass-header {
+            background-color: rgba(19, 19, 19, 0.8);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid #222222;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-glow {
+            box-shadow: 0 0 15px rgba(45, 90, 67, 0.4);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #333333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2D5A43; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md min-h-screen flex flex-col">
+<!-- Top AppBar (from JSON) -->
+<header class="fixed top-0 right-0 left-0 md:left-72 z-30 flex justify-between items-center px-stack-lg h-16 bg-background/80 backdrop-blur-xl border-b border-surface-container-highest">
+<div class="flex items-center gap-gutter">
+<a class="flex items-center gap-base text-on-surface-variant hover:text-primary transition-colors" href="/tickets/">
+<span class="material-symbols-outlined">arrow_back</span>
+<span class="font-label-sm text-label-sm">Back to tickets</span>
+</a>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Ticket #{{ ticket.id }}</h1>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="hover:bg-surface-container-high rounded-full p-2 transition-colors">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center border border-primary/20">
+<span class="text-[10px] font-bold text-on-primary-container">AR</span>
+</div>
+</div>
+</header>
+<!-- Side Navigation (Web) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full w-72 flex-col z-40 bg-background border-r border-surface-container-highest">
+<div class="p-gutter py-stack-lg">
+<div class="font-headline-lg text-headline-lg font-bold text-primary tracking-tighter">Obsidian</div>
+</div>
+<nav class="flex-1 px-base space-y-stack-sm">
+<a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="font-label-sm text-label-sm">Accounts</span>
+</a>
+<a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-sm text-label-sm">Transactions</span>
+</a>
+<a class="flex items-center gap-base px-gutter py-stack-md bg-primary-container text-on-primary-container rounded-lg" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-label-sm text-label-sm">Support</span>
+</a>
+<a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</nav>
+<div class="p-gutter border-t border-surface-container-highest">
+<div class="flex items-center gap-base">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<div class="font-label-sm text-label-sm text-on-surface truncate">Alex Rivers</div>
+<div class="text-[10px] text-on-surface-variant">Premium Member</div>
+</div>
+</div>
+</div>
 </aside>
-<div class="main">
-  <header class="topbar">
-    <div style="display:flex;align-items:center;gap:10px">
-      <button class="menu-btn" onclick="openSB()"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-      <span class="page-title">Ticket #{{ ticket.id }}</span>
-    </div>
-    <button class="tt" id="tt">
-      <svg class="sun" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg class="moon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-    </button>
-  </header>
-  <div class="content">
-    <a href="{% url 'support-list' %}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:16px">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-      Back to tickets
-    </a>
-
-    <!-- TICKET HEADER -->
-    <div class="card">
-      <div class="card-head">
-        <span class="card-title">{{ ticket.subject }}</span>
-        <span class="badge {% if ticket.status == 'open' %}badge-red{% elif ticket.status == 'pending' %}badge-amber{% else %}badge-muted{% endif %}">
-          {{ ticket.status }}
-        </span>
-      </div>
-      <div style="padding:0">
-        {% for msg in ticket.messages.all %}
-        <div class="msg-bubble" style="{% if msg.sender != ticket.user %}background:var(--accent-dim){% endif %}">
-          <div class="bubble-av" style="{% if msg.sender == ticket.user %}background:var(--accent-dim);color:var(--accent){% else %}background:var(--green-dim);color:var(--green){% endif %}">
-            {{ msg.sender.username|first|upper }}
-          </div>
-          <div style="flex:1">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
-              <span style="font-size:13px;font-weight:600">
-                {% if msg.sender == ticket.user %}You{% else %}Support Team{% endif %}
-              </span>
-              <span style="font-size:11.5px;color:var(--muted)">{{ msg.created_at|date:"M d, Y H:i" }}</span>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-16 md:ml-72 pb-24 md:pb-gutter p-gutter md:p-stack-lg max-w-5xl mx-auto w-full">
+<!-- Ticket Overview Card -->
+<div class="obsidian-card rounded-xl p-gutter md:p-stack-lg mb-gutter relative overflow-hidden">
+<div class="absolute top-0 right-0 p-gutter">
+                {% if ticket.status == 'open' %}
+                <span class="inline-flex items-center px-base py-1 rounded-full bg-error-container text-on-error-container text-[10px] font-bold uppercase tracking-widest border border-error/20">Open</span>
+                {% elif ticket.status == 'pending' %}
+                <span class="inline-flex items-center px-base py-1 rounded-full bg-amber-900/40 text-amber-200 text-[10px] font-bold uppercase tracking-widest border border-amber-500/20">Pending</span>
+                {% else %}
+                <span class="inline-flex items-center px-base py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-[10px] font-bold uppercase tracking-widest border border-outline/20">Closed</span>
+                {% endif %}
             </div>
-            <div style="font-size:13.5px;line-height:1.6;color:var(--text)">{{ msg.message|linebreaks }}</div>
-          </div>
-        </div>
-        {% empty %}
-        <div style="padding:30px;text-align:center;color:var(--muted)">No messages yet.</div>
-        {% endfor %}
-      </div>
-    </div>
+<div class="space-y-base">
+<div class="font-label-sm text-label-sm text-on-surface-variant/50 uppercase tracking-widest">Subject</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">{{ ticket.subject }}</h2>
+<div class="flex flex-wrap gap-gutter pt-base">
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-primary text-sm">calendar_today</span>
+<span class="text-on-surface-variant text-xs">Created: 24 Oct 2023</span>
+</div>
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-primary text-sm">category</span>
+<span class="text-on-surface-variant text-xs">Category: Billing</span>
+</div>
+<div class="flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-primary text-sm">priority_high</span>
+<span class="text-on-surface-variant text-xs">Priority: High</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Messages Loop -->
+<div class="space-y-gutter mb-stack-lg">
+            {% for msg in ticket.messages.all %}
+            <div class="flex {% if msg.is_support %}justify-start{% else %}justify-end{% endif %}">
+<div class="max-w-[85%] md:max-w-[70%] obsidian-card rounded-xl p-gutter {% if msg.is_support %}bg-surface-container border-l-4 border-l-primary{% else %}bg-surface-container-low{% endif %}">
+<div class="flex justify-between items-center mb-base">
+<span class="font-label-sm text-label-sm text-primary">
+                            {% if msg.is_support %}Support Agent{% else %}Alex Rivers{% endif %}
+                        </span>
+<span class="text-[10px] text-on-surface-variant/50 font-mono-data">14:32 PM</span>
+</div>
+<p class="text-on-surface leading-relaxed text-body-md">
+                        {{ msg.text|linebreaksbr }}
+                    </p>
+                    {% if msg.attachment %}
+                    <div class="mt-gutter pt-gutter border-t border-outline-variant/30">
+<a class="flex items-center gap-base text-xs text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">attachment</span>
+<span>view_attachment_id_882.pdf</span>
+</a>
+</div>
+                    {% endif %}
+                </div>
+</div>
+            {% endfor %}
 
-    <!-- REPLY FORM -->
-    {% if ticket.status != 'closed' %}
-    <div class="card">
-      <div class="card-head"><span class="card-title">Send a Reply</span></div>
-      <div style="padding:18px">
-        <form method="post">
-          {% csrf_token %}
-          <div class="form-group">
-            <textarea name="message" placeholder="Type your message..." required></textarea>
-          </div>
-          <button type="submit" class="btn btn-accent">Send Message</button>
-        </form>
-      </div>
-    </div>
-    {% else %}
-    <div style="text-align:center;padding:20px;color:var(--muted);font-size:13.5px;border:1px dashed var(--border);border-radius:10px">
-      This ticket is closed.
-    </div>
-    {% endif %}
-  </div>
+            <!-- Example Static Message for visual fidelity if loop is empty -->
+<div class="flex justify-start">
+<div class="max-w-[85%] md:max-w-[70%] obsidian-card rounded-xl p-gutter bg-surface-container border-l-4 border-l-primary">
+<div class="flex justify-between items-center mb-base">
+<span class="font-label-sm text-label-sm text-primary">Support Agent</span>
+<span class="text-[10px] text-on-surface-variant/50 font-mono-data">Oct 25, 10:15 AM</span>
+</div>
+<p class="text-on-surface leading-relaxed text-body-md">
+                        Hello Alex, I've reviewed your request regarding the recurring transaction issue. Our technical team is currently investigating the synchronization lag. We expect a resolution within 4 hours. Thank you for your patience.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Reply Form -->
+<div class="obsidian-card rounded-xl p-gutter md:p-stack-lg border-primary/20">
+<h3 class="font-label-sm text-label-sm text-on-surface uppercase tracking-widest mb-gutter">Send a Reply</h3>
+<form action="." class="space-y-gutter" method="post">
+                {% csrf_token %}
+                <div class="relative">
+<textarea class="w-full bg-black border border-surface-container-highest rounded-lg p-gutter text-on-surface focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all resize-none placeholder:text-on-surface-variant/30" name="message" placeholder="Type your message here..." rows="4"></textarea>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center gap-gutter">
+<div class="flex gap-base w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-base px-gutter py-base rounded border border-white/20 text-on-surface hover:bg-surface-container-high transition-colors text-label-sm font-label-sm" type="button">
+<span class="material-symbols-outlined text-sm">attach_file</span>
+                            Attach
+                        </button>
+</div>
+<button class="w-full md:w-auto px-stack-lg py-stack-md bg-primary text-on-primary font-label-sm text-label-sm rounded-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-base" type="submit">
+                        Send Message
+                        <span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</form>
+</div>
+</main>
+<!-- Mobile Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-background/90 backdrop-blur-xl border-t border-surface-container-highest flex items-center justify-around px-gutter z-50">
+<a class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium">Dashboard</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="text-[10px] font-medium">Accounts</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+<span class="text-[10px] font-medium">Support</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="text-[10px] font-medium">Analytics</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</a>
+</nav>
+<!-- Background Atmospheric Effect -->
+<div class="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+<div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[20%] -right-[5%] w-[30%] h-[30%] bg-primary/10 rounded-full blur-[100px]"></div>
 </div>
 <script>
-const h=document.documentElement;h.setAttribute('data-theme',localStorage.getItem('theme')||'light');
-document.getElementById('tt').onclick=()=>{const n=h.getAttribute('data-theme')==='light'?'dark':'light';h.setAttribute('data-theme',n);localStorage.setItem('theme',n)};
-function openSB(){document.getElementById('sb').classList.add('open');document.getElementById('ov').classList.add('open')}
-function closeSB(){document.getElementById('sb').classList.remove('open');document.getElementById('ov').classList.remove('open')}
-</script>
-</body>
-</html>
+        // Simple micro-interaction for the submit button
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Sending...';
+            btn.classList.add('opacity-80', 'pointer-events-none');
+        });
+
+        // Toggle active navigation highlighting (for demo purposes)
+        const navLinks = document.querySelectorAll('aside nav a, mobile-nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.forEach(l => {
+                    l.classList.remove('bg-primary-container', 'text-on-primary-container', 'text-primary');
+                    l.classList.add('text-on-surface-variant');
+                });
+                this.classList.add('bg-primary-container', 'text-on-primary-container');
+                this.classList.remove('text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html
