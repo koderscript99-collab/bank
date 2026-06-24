@@ -1,262 +1,391 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html class="dark" lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profile</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile | Obsidian Forest</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "on-tertiary-container": "#a1ceb3","surface-bright": "#393939","on-secondary-fixed-variant": "#474746","tertiary-fixed-dim": "#a4d1b6","error-container": "#93000a","inverse-surface": "#e2e2e2","secondary-fixed-dim": "#c8c6c5","surface-tint": "#a1d1b4","on-primary-fixed": "#002112","tertiary": "#a4d1b6","on-secondary": "#313030","on-tertiary": "#0c3825","secondary": "#c8c6c5","on-tertiary-fixed": "#002113","on-primary-fixed-variant": "#224f39","on-error-container": "#ffdad6","on-primary-container": "#9fcfb2","surface-container-low": "#1b1b1b","surface-dim": "#131313","on-background": "#e2e2e2","outline-variant": "#414943","error": "#ffb4ab","surface-variant": "#353535","surface-container-lowest": "#0e0e0e","surface-container-highest": "#353535","tertiary-fixed": "#bfedd1","primary-fixed-dim": "#a1d1b4","primary": "#a1d1b4","outline": "#8b938c","on-secondary-container": "#b7b5b4","surface-container": "#1f1f1f","on-surface-variant": "#c0c9c1","primary-container": "#2d5a43","on-error": "#690005","tertiary-container": "#305944","primary-fixed": "#bceecf","secondary-fixed": "#e5e2e1","inverse-primary": "#3a674f","on-surface": "#e2e2e2","on-primary": "#063824","background": "#131313","on-secondary-fixed": "#1c1b1b","inverse-on-surface": "#303030","surface-container-high": "#2a2a2a","secondary-container": "#474746","on-tertiary-fixed-variant": "#254f3a","surface": "#131313"
+      },
+      borderRadius: {"DEFAULT": "0.125rem","lg": "0.25rem","xl": "0.5rem","full": "0.75rem"},
+      spacing: {"stack-lg": "32px","stack-md": "12px","container-padding": "24px","base": "8px","stack-sm": "4px","gutter": "16px"},
+      fontFamily: {"body-md": ["Hanken Grotesk"],"label-sm": ["Geist"],"headline-lg": ["Hanken Grotesk"],"mono-data": ["Geist"],"body-lg": ["Hanken Grotesk"],"headline-xl": ["Hanken Grotesk"],"headline-md": ["Hanken Grotesk"]},
+      fontSize: {"body-md": ["16px", {"lineHeight": "24px","fontWeight": "400"}],"label-sm": ["12px", {"lineHeight": "16px","letterSpacing": "0.05em","fontWeight": "500"}],"headline-lg": ["32px", {"lineHeight": "40px","letterSpacing": "-0.01em","fontWeight": "600"}],"mono-data": ["14px", {"lineHeight": "20px","fontWeight": "400"}],"body-lg": ["18px", {"lineHeight": "28px","fontWeight": "400"}],"headline-xl": ["48px", {"lineHeight": "56px","letterSpacing": "-0.02em","fontWeight": "700"}],"headline-md": ["24px", {"lineHeight": "32px","fontWeight": "600"}]}
+    }
+  }
+}
+</script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#f9fafb;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;
-  --accent:#2563eb;--accent-dim:rgba(37,99,235,.08);--green:#16a34a;
-  --green-dim:rgba(22,163,74,.08);--amber:#d97706;--amber-dim:rgba(217,119,6,.08);
-  --red:#dc2626;--red-dim:rgba(220,38,38,.08);--sidebar-w:220px;--header-h:56px;--radius:10px;
-}
-[data-theme="dark"]{
-  --bg:#0f1117;--surface:#1a1d27;--border:#2a2d3a;--text:#f3f4f6;--muted:#6b7280;
-  --accent-dim:rgba(37,99,235,.15);--green-dim:rgba(22,163,74,.15);
-  --amber-dim:rgba(217,119,6,.15);--red-dim:rgba(220,38,38,.15);
-}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s}
-.sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;transition:transform .3s}
-.logo{height:var(--header-h);display:flex;align-items:center;padding:0 18px;font-size:17px;font-weight:800;border-bottom:1px solid var(--border)}
-.logo span{color:var(--accent)}
-.nav{padding:12px 8px;flex:1}
-.nav a{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;font-size:13.5px;color:var(--muted);text-decoration:none;margin-bottom:2px;transition:background .15s,color .15s}
-.nav a:hover{background:var(--accent-dim);color:var(--text)}
-.nav a.active{background:var(--accent-dim);color:var(--accent);font-weight:600}
-.sidebar-foot{padding:12px;border-top:1px solid var(--border)}
-.ucard{display:flex;align-items:center;gap:9px;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:9px;margin-bottom:8px}
-.av{width:32px;height:32px;border-radius:50%;background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
-.uname{font-size:13px;font-weight:600}
-.urole{font-size:11px;color:var(--muted)}
-.signout{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:13px;color:var(--red);text-decoration:none}
-.signout:hover{background:var(--red-dim)}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:150}
-.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column}
-.topbar{height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:100}
-.menu-btn{display:none;background:none;border:none;cursor:pointer;color:var(--muted);padding:6px;border-radius:7px}
-.page-title{font-size:14px;font-weight:600}
-.tt{width:34px;height:34px;border-radius:50%;background:var(--bg);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted)}
-[data-theme="light"] .moon{display:none}
-[data-theme="dark"] .sun{display:none}
-.content{padding:24px;max-width:640px;width:100%}
-/* PROFILE HERO */
-.profile-hero{background:linear-gradient(135deg,var(--accent),#1d4ed8);border-radius:14px;padding:28px;display:flex;align-items:center;gap:20px;margin-bottom:20px;color:#fff}
-.hero-av{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;flex-shrink:0;border:3px solid rgba(255,255,255,.4)}
-.hero-name{font-size:20px;font-weight:700;margin-bottom:4px}
-.hero-acc{font-size:13px;opacity:.85;display:flex;align-items:center;gap:8px}
-.copy-acc{background:rgba(255,255,255,.2);border:none;color:#fff;padding:3px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600;transition:background .15s}
-.copy-acc:hover{background:rgba(255,255,255,.3)}
-/* CARD */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px}
-.card-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
-.card-head h3{font-size:14px;font-weight:600}
-.card-body{padding:18px}
-/* FORM */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.form-group{display:flex;flex-direction:column;gap:6px}
-.form-group label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
-.form-group input,.form-group textarea{padding:11px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);font-size:14px;color:var(--text);outline:none;font-family:inherit;transition:border-color .2s;width:100%}
-.form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
-.form-group input:disabled{opacity:.6;cursor:not-allowed}
-.span-2{grid-column:span 2}
-.acc-field{display:flex;align-items:center;gap:8px;padding:11px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:monospace}
-.acc-copy{background:none;border:none;cursor:pointer;color:var(--accent);padding:2px;display:flex}
-.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:var(--radius);font-size:14px;font-weight:600;border:none;cursor:pointer;transition:opacity .15s}
-.btn:hover{opacity:.9}
-.btn-accent{background:var(--accent);color:#fff;width:100%;justify-content:center}
-/* NOTICE */
-.notice{display:flex;align-items:flex-start;gap:10px;padding:13px 16px;border-radius:9px;font-size:13px;border:1px solid;margin-top:14px}
-.notice-blue{background:var(--accent-dim);border-color:rgba(37,99,235,.2);color:var(--accent)}
-/* MSG */
-.msg{padding:11px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;border-left:3px solid}
-.msg.success{background:var(--green-dim);border-color:var(--green);color:var(--green)}
-.msg.error{background:var(--red-dim);border-color:var(--red);color:var(--red)}
-@media(max-width:768px){
-  .sidebar{transform:translateX(-100%)}
-  .sidebar.open{transform:translateX(0)}
-  .overlay.open{display:block}
-  .main{margin-left:0}
-  .menu-btn{display:flex}
-  .content{padding:14px}
-  .form-grid{grid-template-columns:1fr}
-  .span-2{grid-column:span 1}
-  .profile-hero{flex-direction:column;text-align:center}
-}
+  body { background-color: #0e0e0e; color: #e2e2e2; -webkit-font-smoothing: antialiased; }
+  .glass-panel { background: rgba(19,19,19,0.8); backdrop-filter: blur(12px); border-top: 1px solid rgba(45,90,67,0.3); }
+  .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: #0e0e0e; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: #2d5a43; border-radius: 10px; }
+  input:focus { box-shadow: 0 0 0 4px rgba(45,90,67,0.2); }
 </style>
 </head>
-<body>
-<div class="overlay" id="ov" onclick="closeSB()"></div>
+<body class="font-body-md text-body-md overflow-x-hidden">
 
-<aside class="sidebar" id="sb">
-  <div class="logo">My<span>Portal</span></div>
-  <nav class="nav">
-    <a href="{% url 'dashboard' %}">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Dashboard
+<!-- Navigation Drawer (Desktop) -->
+<aside class="fixed left-0 top-0 h-full w-72 flex flex-col z-40 border-r border-surface-container-highest bg-background hidden md:flex">
+  <div class="p-gutter flex items-center gap-base">
+    <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-sm">OF</div>
+    <span class="font-headline-lg text-headline-lg font-bold text-primary tracking-tighter">Obsidian</span>
+  </div>
+  <div class="flex-1 px-stack-md py-stack-lg flex flex-col gap-base custom-scrollbar overflow-y-auto">
+    <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span class="font-label-sm text-label-sm">Dashboard</span>
     </a>
-    <a href="{% url 'request-withdrawal' %}">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-      Withdraw
+    <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+      <span class="material-symbols-outlined">account_balance</span>
+      <span class="font-label-sm text-label-sm">Accounts</span>
     </a>
-    <a href="{% url 'notifications' %}">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-      Notifications
+    <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+      <span class="material-symbols-outlined">receipt_long</span>
+      <span class="font-label-sm text-label-sm">Transactions</span>
     </a>
-    {% if not request.user.account_activated %}
-    <a href="{% url 'activate-account' %}">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      Activate Account
+    <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+      <span class="material-symbols-outlined">monitoring</span>
+      <span class="font-label-sm text-label-sm">Analytics</span>
     </a>
-    {% endif %}
-    <a href="{% url 'profile' %}" class="active">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Profile
+    <a class="flex items-center gap-base px-gutter py-stack-md bg-primary-container text-on-primary-container rounded-lg active:scale-95 duration-150 ease-in-out" href="#">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">settings</span>
+      <span class="font-label-sm text-label-sm">Settings</span>
     </a>
-  </nav>
-  <div class="sidebar-foot">
-    <div class="ucard">
-      <div class="av">{{ request.user.initials }}</div>
+  </div>
+  <div class="p-gutter border-t border-surface-container-highest mt-auto">
+    <div class="flex items-center gap-base">
+      <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold" id="sidebar-avatar">AR</div>
       <div>
-        <div class="uname">{{ request.user.full_name }}</div>
-        <div class="urole">
-          {% if request.user.account_activated %}
-          <span style="color:var(--green)">● Active</span>
-          {% else %}
-          <span style="color:var(--amber)">● Pending</span>
-          {% endif %}
-        </div>
+        <p class="font-label-sm text-label-sm text-on-surface" id="sidebar-name">Alex Rivers</p>
+        <p class="text-[10px] text-on-surface-variant uppercase tracking-widest">Premium Member</p>
       </div>
     </div>
-    <a href="{% url 'logout' %}" class="signout">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      Sign out
-    </a>
   </div>
 </aside>
 
-<div class="main">
-  <header class="topbar">
-    <div style="display:flex;align-items:center;gap:10px">
-      <button class="menu-btn" onclick="openSB()">
-        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <span class="page-title">My Profile</span>
-    </div>
-    <button class="tt" id="tt">
-      <svg class="sun" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg class="moon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+<!-- Top App Bar -->
+<header class="fixed top-0 right-0 left-0 md:left-72 z-30 flex justify-between items-center px-stack-lg h-16 bg-background/80 backdrop-blur-xl border-b border-surface-container-highest">
+  <div class="flex items-center gap-base">
+    <button class="md:hidden p-2 hover:bg-surface-container-high rounded-full transition-colors" id="mobile-menu-trigger">
+      <span class="material-symbols-outlined">menu</span>
     </button>
-  </header>
+    <h1 class="font-headline-md text-headline-md font-bold text-primary">Profile Management</h1>
+  </div>
+  <div class="flex items-center gap-gutter">
+    <button class="hover:bg-surface-container-high rounded-full p-2 transition-colors" id="theme-toggle" title="Toggle theme">
+      <span class="material-symbols-outlined">dark_mode</span>
+    </button>
+    <button class="hover:bg-surface-container-high rounded-full p-2 transition-colors relative" id="notif-btn">
+      <span class="material-symbols-outlined">notifications</span>
+      <span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full" id="notif-dot"></span>
+    </button>
+  </div>
+</header>
 
-  <div class="content">
-    {% if messages %}
-      {% for m in messages %}
-      <div class="msg {{ m.tags }}">{{ m }}</div>
-      {% endfor %}
-    {% endif %}
+<!-- Main Content -->
+<main class="pt-24 pb-stack-lg px-container-padding md:ml-72 min-h-screen">
+  <div class="max-w-4xl mx-auto space-y-gutter">
 
-    <!-- PROFILE HERO -->
-    <div class="profile-hero">
-      <div class="hero-av">{{ request.user.initials }}</div>
-      <div>
-        <div class="hero-name">{{ request.user.full_name }}</div>
-        <div class="hero-acc">
-          Account #{{ request.user.account_number|default:"Not assigned" }}
-          <button class="copy-acc" onclick="cp('{{ request.user.account_number }}')">Copy</button>
+    <!-- Profile Hero -->
+    <section class="relative bg-surface-container-lowest border border-surface-container-highest rounded-xl overflow-hidden p-stack-lg">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/10 blur-[100px] -z-10 rounded-full"></div>
+      <div class="flex flex-col md:flex-row items-center gap-stack-lg">
+        <div class="relative group">
+          <div class="w-32 h-32 rounded-full bg-gradient-to-br from-primary-container to-surface-container-high flex items-center justify-center text-headline-xl font-bold text-on-primary-container shadow-2xl border-4 border-background overflow-hidden relative">
+            <span id="avatar-initials">AR</span>
+            <img id="avatar-img" class="hidden w-full h-full object-cover absolute inset-0" alt="Profile photo"/>
+          </div>
+          <button class="absolute bottom-1 right-1 bg-primary text-on-primary p-2 rounded-full shadow-lg hover:scale-110 transition-transform" id="camera-btn" title="Change photo">
+            <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+          </button>
+          <input type="file" id="photo-input" accept="image/*" class="hidden"/>
+        </div>
+        <div class="text-center md:text-left space-y-stack-sm flex-1">
+          <div class="flex items-center justify-center md:justify-start gap-base">
+            <h2 class="font-headline-lg text-headline-lg" id="display-name">Alex Rivers</h2>
+            <span class="bg-primary/10 text-primary px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-tighter border border-primary/20">Verified</span>
+          </div>
+          <div class="flex items-center justify-center md:justify-start gap-base group cursor-pointer" id="copy-account">
+            <span class="text-on-surface-variant font-label-sm text-label-sm uppercase tracking-widest">Account Number:</span>
+            <span class="font-mono-data text-mono-data text-primary" id="account-num">ACC-8829-5512</span>
+            <span class="material-symbols-outlined text-[16px] text-on-surface-variant group-hover:text-primary transition-colors">content_copy</span>
+          </div>
+          <p class="text-on-surface-variant text-body-md max-w-md">Managing your obsidian-tier wealth since August 2021. Your dedicated relationship manager is ready for assistance.</p>
+        </div>
+        <div class="flex gap-stack-sm">
+          <div class="bg-surface-container-low border border-surface-container-highest p-stack-md rounded-lg text-center min-w-[100px]">
+            <p class="text-[10px] text-on-surface-variant uppercase font-bold">Tier</p>
+            <p class="text-primary font-bold">Obsidian</p>
+          </div>
+          <div class="bg-surface-container-low border border-surface-container-highest p-stack-md rounded-lg text-center min-w-[100px]">
+            <p class="text-[10px] text-on-surface-variant uppercase font-bold">Status</p>
+            <p class="text-primary font-bold">Active</p>
+          </div>
         </div>
       </div>
+    </section>
+
+    <!-- Toast Notifications -->
+    <div id="save-toast" class="hidden fixed top-20 right-6 z-50 bg-primary-container text-on-primary-container px-gutter py-stack-md rounded-xl shadow-2xl font-label-sm text-label-sm flex items-center gap-base">
+      <span class="material-symbols-outlined text-[18px]">check_circle</span>
+      Profile saved successfully!
+    </div>
+    <div id="discard-toast" class="hidden fixed top-20 right-6 z-50 bg-surface-container-highest text-on-surface px-gutter py-stack-md rounded-xl shadow-2xl font-label-sm text-label-sm flex items-center gap-base">
+      <span class="material-symbols-outlined text-[18px]">undo</span>
+      Changes discarded.
     </div>
 
-    <!-- PROFILE FORM -->
-    <div class="card">
-      <div class="card-head">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <h3>Profile Information</h3>
-      </div>
-      <div class="card-body">
-        <form method="post">
-          {% csrf_token %}
-          <div class="form-grid">
+    <!-- Profile Form -->
+    <form id="profile-form" class="space-y-gutter" novalidate>
+      <input name="csrf_token" type="hidden" value="example_token_12345"/>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
 
-            <div class="form-group">
-              <label>First Name</label>
-              <input type="text" name="first_name" value="{{ request.user.first_name }}" placeholder="First name">
+        <!-- Personal Information -->
+        <div class="md:col-span-2 bg-surface-container border border-surface-container-highest rounded-xl p-stack-lg space-y-gutter">
+          <div class="flex items-center gap-base border-b border-surface-container-highest pb-stack-md">
+            <span class="material-symbols-outlined text-primary">person</span>
+            <h3 class="font-headline-md text-headline-md">Personal Information</h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+            <div class="space-y-stack-sm">
+              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="first_name">First Name</label>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="first_name" name="first_name" type="text" value="Alex"/>
             </div>
-
-            <div class="form-group">
-              <label>Last Name</label>
-              <input type="text" name="last_name" value="{{ request.user.last_name }}" placeholder="Last name">
+            <div class="space-y-stack-sm">
+              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="last_name">Last Name</label>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="last_name" name="last_name" type="text" value="Rivers"/>
             </div>
+            <div class="space-y-stack-sm md:col-span-2">
+              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="email">Email Address</label>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="email" name="email" type="email" value="alex.rivers@obsidianforest.com"/>
+            </div>
+            <div class="space-y-stack-sm">
+              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="dob">Date of Birth</label>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="dob" name="dob" type="date" value="1988-11-24"/>
+            </div>
+            <div class="space-y-stack-sm">
+              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="phone">Phone Number</label>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="phone" name="phone" type="tel" value="+1 (555) 982-4410"/>
+            </div>
+          </div>
+        </div>
 
-            <div class="form-group span-2">
-              <label>Account Number</label>
-              <div class="acc-field">
-                <span style="color:var(--muted);margin-right:4px">#</span>
-                <span style="flex:1;font-weight:600">{{ request.user.account_number|default:"Will be assigned" }}</span>
-                <button type="button" class="acc-copy" onclick="cp('{{ request.user.account_number }}')" title="Copy">
-                  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                </button>
+        <!-- Banking Card -->
+        <div class="bg-primary-container/20 border border-primary-container rounded-xl p-stack-lg space-y-gutter relative overflow-hidden group">
+          <div class="absolute -top-12 -right-12 w-32 h-32 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-all"></div>
+          <div class="flex items-center gap-base border-b border-primary/20 pb-stack-md">
+            <span class="material-symbols-outlined text-primary">account_balance</span>
+            <h3 class="font-headline-md text-headline-md">Banking</h3>
+          </div>
+          <div class="space-y-stack-lg py-stack-md">
+            <div class="space-y-base">
+              <p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Primary Institution</p>
+              <div class="flex items-center gap-gutter bg-background/40 p-gutter rounded-lg border border-primary/10">
+                <div class="w-10 h-10 bg-white/5 rounded-md flex items-center justify-center">
+                  <span class="text-primary font-bold">S</span>
+                </div>
+                <span class="font-headline-md text-headline-md text-primary">Santander Bank</span>
               </div>
-              <span style="font-size:11.5px;color:var(--muted)">Your unique account identifier</span>
             </div>
-
-            <div class="form-group span-2">
-              <label>Email Address</label>
-              <input type="email" name="email" value="{{ request.user.email }}" placeholder="your@email.com">
+            <div class="space-y-base">
+              <p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Financial Advisor</p>
+              <p class="text-on-surface font-medium">Marcus Chen</p>
+              <p class="text-[10px] text-on-surface-variant">Global Private Banking Division</p>
             </div>
-
-            <div class="form-group">
-              <label>Date of Birth</label>
-              <input type="date" name="date_of_birth" value="{{ request.user.date_of_birth|date:'Y-m-d' }}">
-            </div>
-
-            <div class="form-group">
-              <label>Phone Number</label>
-              <input type="tel" name="phone" value="{{ request.user.phone }}" placeholder="+1 234 567 8900">
-            </div>
-
-            <div class="form-group span-2">
-              <label>Address</label>
-              <input type="text" name="address" value="{{ request.user.address }}" placeholder="Your address">
-            </div>
-
           </div>
+        </div>
 
-          <div class="notice notice-blue" style="margin-bottom:16px">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            Account number is assigned automatically and cannot be changed.
+        <!-- Address -->
+        <div class="md:col-span-3 bg-surface-container border border-surface-container-highest rounded-xl p-stack-lg space-y-gutter">
+          <div class="flex items-center gap-base border-b border-surface-container-highest pb-stack-md">
+            <span class="material-symbols-outlined text-primary">location_on</span>
+            <h3 class="font-headline-md text-headline-md">Residential Address</h3>
           </div>
-
-          <button type="submit" class="btn btn-accent">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Save Profile
-          </button>
-        </form>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+            <div class="md:col-span-4 space-y-stack-sm">
+              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="address">Street Address</label>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="address" name="address" type="text" value="882 Obsidian Ridge, High Plateau"/>
+            </div>
+            <div class="md:col-span-2 space-y-stack-sm">
+              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="city">City</label>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="city" name="city" type="text" value="Grand Forest City"/>
+            </div>
+            <div class="space-y-stack-sm">
+              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="state">State/Province</label>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="state" name="state" type="text" value="GF"/>
+            </div>
+            <div class="space-y-stack-sm">
+              <label class="font-label-sm text-label-sm text-on-surface-variant uppercase ml-1" for="zip">Postal Code</label>
+              <input class="w-full bg-background border border-outline-variant rounded-lg px-gutter py-stack-md text-on-surface focus:border-primary focus:ring-0 outline-none transition-all" id="zip" name="zip" type="text" value="50212"/>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
+      <!-- Action Footer -->
+      <div class="flex items-center justify-end gap-gutter pt-stack-lg">
+        <button class="px-gutter py-stack-md text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface transition-colors" type="button" id="discard-btn">Discard Changes</button>
+        <button class="bg-primary hover:bg-primary-container text-on-primary hover:text-on-primary-container px-8 py-stack-md rounded-lg font-label-sm text-label-sm uppercase tracking-widest font-bold transition-all transform active:scale-95 shadow-[0_0_20px_rgba(45,90,67,0.3)]" type="submit" id="save-btn">
+          Save Profile
+        </button>
+      </div>
+    </form>
+
+  </div>
+</main>
+
+<!-- Mobile Navigation (Bottom) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full glass-panel z-50 flex items-center justify-around h-16 border-t border-surface-container-highest">
+  <a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+    <span class="material-symbols-outlined text-[20px]">dashboard</span>
+    <span class="text-[10px] font-bold uppercase">Dash</span>
+  </a>
+  <a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+    <span class="material-symbols-outlined text-[20px]">account_balance</span>
+    <span class="text-[10px] font-bold uppercase">Accounts</span>
+  </a>
+  <div class="relative -top-6">
+    <div class="bg-primary text-on-primary w-14 h-14 rounded-full flex items-center justify-center shadow-2xl border-4 border-background">
+      <span class="material-symbols-outlined">qr_code_scanner</span>
+    </div>
+  </div>
+  <a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+    <span class="material-symbols-outlined text-[20px]">receipt_long</span>
+    <span class="text-[10px] font-bold uppercase">History</span>
+  </a>
+  <a class="flex flex-col items-center gap-1 text-primary" href="#">
+    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">person</span>
+    <span class="text-[10px] font-bold uppercase">Profile</span>
+  </a>
+</nav>
+
+<!-- Mobile Sidebar Overlay -->
+<div class="fixed inset-0 bg-background/95 z-[60] -translate-x-full transition-transform duration-300 md:hidden p-gutter" id="mobile-sidebar">
+  <div class="flex justify-between items-center mb-stack-lg">
+    <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs">OF</div>
+    <button class="p-2" id="close-sidebar"><span class="material-symbols-outlined">close</span></button>
+  </div>
+  <div class="flex flex-col gap-gutter">
+    <a class="text-headline-md font-bold text-on-surface-variant" href="#">Dashboard</a>
+    <a class="text-headline-md font-bold text-on-surface-variant" href="#">Accounts</a>
+    <a class="text-headline-md font-bold text-on-surface-variant" href="#">Transactions</a>
+    <a class="text-headline-md font-bold text-on-surface-variant" href="#">Analytics</a>
+    <a class="text-headline-md font-bold text-primary" href="#">Settings</a>
+    <hr class="border-surface-container-highest my-stack-md"/>
+    <a class="text-body-md text-error flex items-center gap-base" href="#">
+      <span class="material-symbols-outlined">logout</span>
+      Logout
+    </a>
   </div>
 </div>
 
 <script>
-const h=document.documentElement;
-h.setAttribute('data-theme',localStorage.getItem('theme')||'light');
-document.getElementById('tt').onclick=()=>{
-  const n=h.getAttribute('data-theme')==='light'?'dark':'light';
-  h.setAttribute('data-theme',n);localStorage.setItem('theme',n);
-};
-function openSB(){document.getElementById('sb').classList.add('open');document.getElementById('ov').classList.add('open')}
-function closeSB(){document.getElementById('sb').classList.remove('open');document.getElementById('ov').classList.remove('open')}
-function cp(t){
-  navigator.clipboard.writeText(t).then(()=>{
-    const btn=event.target.closest('button');
-    const orig=btn.innerHTML;
-    btn.innerHTML='✓';
-    setTimeout(()=>btn.innerHTML=orig,2000);
+  // Store original values for discard
+  const originalValues = {};
+  const inputs = document.querySelectorAll('input:not([type=hidden]):not([type=file])');
+  inputs.forEach(inp => { originalValues[inp.name] = inp.value; });
+
+  // Toast helper
+  function showToast(id) {
+    const t = document.getElementById(id);
+    t.classList.remove('hidden');
+    t.classList.add('flex');
+    setTimeout(() => { t.classList.add('hidden'); t.classList.remove('flex'); }, 2500);
+  }
+
+  // Live name + initials sync
+  function updateDisplayName() {
+    const first = document.getElementById('first_name').value.trim();
+    const last = document.getElementById('last_name').value.trim();
+    const full = [first, last].filter(Boolean).join(' ') || 'User';
+    const initials = [first[0], last[0]].filter(Boolean).join('').toUpperCase() || 'U';
+    document.getElementById('display-name').textContent = full;
+    document.getElementById('avatar-initials').textContent = initials;
+    document.getElementById('sidebar-name').textContent = full;
+    document.getElementById('sidebar-avatar').textContent = initials;
+  }
+
+  document.getElementById('first_name').addEventListener('input', updateDisplayName);
+  document.getElementById('last_name').addEventListener('input', updateDisplayName);
+
+  // Save button pulse on input change
+  const saveBtn = document.getElementById('save-btn');
+  inputs.forEach(inp => {
+    inp.addEventListener('input', () => {
+      saveBtn.classList.add('scale-105');
+      setTimeout(() => saveBtn.classList.remove('scale-105'), 150);
+    });
   });
-}
+
+  // Form submit
+  document.getElementById('profile-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    inputs.forEach(inp => { originalValues[inp.name] = inp.value; });
+    showToast('save-toast');
+  });
+
+  // Discard changes
+  document.getElementById('discard-btn').addEventListener('click', () => {
+    inputs.forEach(inp => { if (originalValues[inp.name] !== undefined) inp.value = originalValues[inp.name]; });
+    updateDisplayName();
+    showToast('discard-toast');
+  });
+
+  // Copy account number
+  document.getElementById('copy-account').addEventListener('click', () => {
+    const el = document.getElementById('account-num');
+    const txt = el.textContent;
+    navigator.clipboard.writeText(txt).catch(() => {});
+    el.textContent = 'Copied!';
+    el.classList.add('text-white');
+    setTimeout(() => { el.textContent = txt; el.classList.remove('text-white'); }, 2000);
+  });
+
+  // Photo upload
+  document.getElementById('camera-btn').addEventListener('click', () => {
+    document.getElementById('photo-input').click();
+  });
+  document.getElementById('photo-input').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = document.getElementById('avatar-img');
+      img.src = ev.target.result;
+      img.classList.remove('hidden');
+      document.getElementById('avatar-initials').classList.add('hidden');
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Mobile sidebar
+  const trigger = document.getElementById('mobile-menu-trigger');
+  const sidebar = document.getElementById('mobile-sidebar');
+  const closer = document.getElementById('close-sidebar');
+  trigger.addEventListener('click', () => sidebar.classList.remove('-translate-x-full'));
+  closer.addEventListener('click', () => sidebar.classList.add('-translate-x-full'));
+
+  // Notification dot toggle
+  document.getElementById('notif-btn').addEventListener('click', () => {
+    document.getElementById('notif-dot').classList.toggle('hidden');
+  });
+
+  // Theme toggle
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+    const icon = document.querySelector('#theme-toggle .material-symbols-outlined');
+    icon.textContent = document.documentElement.classList.contains('dark') ? 'dark_mode' : 'light_mode';
+  });
 </script>
 </body>
 </html>
