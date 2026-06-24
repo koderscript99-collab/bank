@@ -1,525 +1,548 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
+<html class="dark" lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Obsidian Forest | Financial Dashboard</title>
+<title>Dashboard | Financial Overview</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "primary-fixed-dim": "#a1d1b4",
-                      "on-surface-variant": "#c0c9c1",
-                      "primary": "#a1d1b4",
-                      "surface-container-high": "#2a2a2a",
-                      "on-secondary-fixed-variant": "#474746",
-                      "tertiary-fixed-dim": "#a4d1b6",
-                      "tertiary": "#a4d1b6",
-                      "error-container": "#93000a",
-                      "secondary": "#c8c6c5",
-                      "primary-container": "#2d5a43",
-                      "on-error": "#690005",
-                      "secondary-container": "#474746",
-                      "background": "#131313",
-                      "surface-container-low": "#1b1b1b",
-                      "on-background": "#e2e2e2",
-                      "inverse-on-surface": "#303030",
-                      "inverse-primary": "#3a674f",
-                      "surface-tint": "#a1d1b4",
-                      "on-secondary-fixed": "#1c1b1b",
-                      "on-error-container": "#ffdad6",
-                      "surface": "#131313",
-                      "on-primary-fixed": "#002112",
-                      "on-surface": "#e2e2e2",
-                      "surface-container-lowest": "#0e0e0e",
-                      "tertiary-container": "#305944",
-                      "on-tertiary-fixed": "#002113",
-                      "primary-fixed": "#bceecf",
-                      "on-secondary-container": "#b7b5b4",
-                      "outline-variant": "#414943",
-                      "error": "#ffb4ab",
-                      "secondary-fixed": "#e5e2e1",
-                      "on-secondary": "#313030",
-                      "on-primary-container": "#9fcfb2",
-                      "on-primary": "#063824",
-                      "surface-dim": "#131313",
-                      "inverse-surface": "#e2e2e2",
-                      "surface-container": "#1f1f1f",
-                      "on-tertiary-container": "#a1ceb3",
-                      "outline": "#8b938c",
-                      "surface-bright": "#393939",
-                      "on-tertiary": "#0c3825",
-                      "on-primary-fixed-variant": "#224f39",
-                      "surface-variant": "#353535",
-                      "on-tertiary-fixed-variant": "#254f3a",
-                      "secondary-fixed-dim": "#c8c6c5",
-                      "tertiary-fixed": "#bfedd1",
-                      "surface-container-highest": "#353535"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "spacing": {
-                      "container-padding": "24px",
-                      "stack-md": "12px",
-                      "base": "8px",
-                      "gutter": "16px",
-                      "stack-sm": "4px",
-                      "stack-lg": "32px"
-              },
-              "fontFamily": {
-                      "headline-xl": ["Hanken Grotesk"],
-                      "body-md": ["Hanken Grotesk"],
-                      "mono-data": ["Geist"],
-                      "body-lg": ["Hanken Grotesk"],
-                      "headline-md": ["Hanken Grotesk"],
-                      "label-sm": ["Geist"],
-                      "headline-lg": ["Hanken Grotesk"]
-              },
-              "fontSize": {
-                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
-              }
-            },
-          },
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "primary-fixed-dim": "#a1d1b4",
+          "on-surface-variant": "#c0c9c1",
+          "primary": "#a1d1b4",
+          "surface-container-high": "#2a2a2a",
+          "on-secondary-fixed-variant": "#474746",
+          "tertiary-fixed-dim": "#a4d1b6",
+          "tertiary": "#a4d1b6",
+          "error-container": "#93000a",
+          "secondary": "#c8c6c5",
+          "primary-container": "#2d5a43",
+          "on-error": "#690005",
+          "secondary-container": "#474746",
+          "background": "#131313",
+          "surface-container-low": "#1b1b1b",
+          "on-background": "#e2e2e2",
+          "inverse-on-surface": "#303030",
+          "inverse-primary": "#3a674f",
+          "surface-tint": "#a1d1b4",
+          "on-secondary-fixed": "#1c1b1b",
+          "on-error-container": "#ffdad6",
+          "surface": "#131313",
+          "on-primary-fixed": "#002112",
+          "on-surface": "#e2e2e2",
+          "surface-container-lowest": "#0e0e0e",
+          "tertiary-container": "#305944",
+          "on-tertiary-fixed": "#002113",
+          "primary-fixed": "#bceecf",
+          "on-secondary-container": "#b7b5b4",
+          "outline-variant": "#414943",
+          "error": "#ffb4ab",
+          "secondary-fixed": "#e5e2e1",
+          "on-secondary": "#313030",
+          "on-primary-container": "#9fcfb2",
+          "on-primary": "#063824",
+          "surface-dim": "#131313",
+          "inverse-surface": "#e2e2e2",
+          "surface-container": "#1f1f1f",
+          "on-tertiary-container": "#a1ceb3",
+          "outline": "#8b938c",
+          "surface-bright": "#393939",
+          "on-tertiary": "#0c3825",
+          "on-primary-fixed-variant": "#224f39",
+          "surface-variant": "#353535",
+          "on-tertiary-fixed-variant": "#254f3a",
+          "secondary-fixed-dim": "#c8c6c5",
+          "tertiary-fixed": "#bfedd1",
+          "surface-container-highest": "#353535"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.125rem","lg": "0.25rem","xl": "0.5rem","full": "0.75rem"
+        },
+        "spacing": {
+          "container-padding": "24px","stack-md": "12px","base": "8px",
+          "gutter": "16px","stack-sm": "4px","stack-lg": "32px"
+        },
+        "fontFamily": {
+          "headline-xl": ["Hanken Grotesk"],"body-md": ["Hanken Grotesk"],
+          "mono-data": ["Geist"],"body-lg": ["Hanken Grotesk"],
+          "headline-md": ["Hanken Grotesk"],"label-sm": ["Geist"],
+          "headline-lg": ["Hanken Grotesk"]
+        },
+        "fontSize": {
+          "headline-xl": ["48px", {"lineHeight": "56px","letterSpacing": "-0.02em","fontWeight": "700"}],
+          "body-md": ["16px", {"lineHeight": "24px","fontWeight": "400"}],
+          "mono-data": ["14px", {"lineHeight": "20px","fontWeight": "400"}],
+          "body-lg": ["18px", {"lineHeight": "28px","fontWeight": "400"}],
+          "headline-md": ["24px", {"lineHeight": "32px","fontWeight": "600"}],
+          "label-sm": ["12px", {"lineHeight": "16px","letterSpacing": "0.05em","fontWeight": "500"}],
+          "headline-lg": ["32px", {"lineHeight": "40px","letterSpacing": "-0.01em","fontWeight": "600"}]
         }
-    </script>
+      },
+    },
+  }
+</script>
 <style>
-        body {
-            background-color: #000000;
-            color: #e2e2e2;
-        }
-        .glass-card {
-            background: #111111;
-            border: 1px solid #222222;
-            transition: border-color 0.3s ease;
-        }
-        .glass-card:hover {
-            border-color: #2D5A43;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #0e0e0e;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #2d5a43;
-            border-radius: 10px;
-        }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .sidebar-active {
-            background: #2d5a43;
-            color: #9fcfb2;
-        }
-        @keyframes subtle-glow {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-        .glow-effect {
-            animation: subtle-glow 4s infinite ease-in-out;
-        }
-    </style>
+  body { background-color: #000000; color: #e2e2e2; }
+  .glass-card {
+    background: #111111;
+    border: 1px solid #222222;
+    transition: border-color 0.3s ease;
+  }
+  .glass-card:hover { border-color: #2D5A43; }
+  .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: #0e0e0e; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: #2d5a43; border-radius: 10px; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .sidebar-active { background: #2d5a43; color: #9fcfb2; }
+  @keyframes subtle-glow { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
+  .glow-effect { animation: subtle-glow 4s infinite ease-in-out; }
+</style>
 </head>
 <body class="font-body-md text-body-md antialiased overflow-x-hidden">
+
 <!-- Mobile Sidebar Overlay -->
 <div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden md:hidden" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
 <!-- Navigation Drawer (Sidebar) -->
 <aside class="fixed left-0 top-0 h-full w-72 flex flex-col z-50 border-r border-surface-container-highest bg-background transform -translate-x-full transition-transform duration-300 md:translate-x-0" id="sidebar">
-<!-- Logo Section -->
-<div class="px-gutter py-stack-lg flex flex-col items-center border-b border-surface-container-highest">
-<img alt="Obsidian Forest Logo" class="w-16 h-16 rounded-xl mb-base glow-effect" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAgXcVzCq6nGkIVjDuWdEjUxSMX4D-Ip4HOzy5avSsBj7KkBpsidAF7gah4YEG5k3xmD62oFvPdrETknsPLG3aKqqR6DfybMLKWh7rIx7h9S1vvwtyl1wcZNdrNfGRtrYhaTDSO41vFDXPLrFWVnfwf44XdLgK05sX6aQuXr_emROZWul9U8PIz0bGNTF_zo5jUs-5KbI-KEZFGTo24E_PlbhcsVg9nP0m8CwmVfTFBumFTsiqJX0F3ZivtAvHcdZWmgoMSRB4_kY"/>
-<span class="font-headline-md text-headline-md font-bold text-primary tracking-tighter">Obsidian Forest</span>
-</div>
-<!-- Scrollable Navigation Area -->
-<div class="flex-1 overflow-y-auto custom-scrollbar px-stack-md py-stack-md space-y-1">
-<nav class="space-y-1">
-<a class="sidebar-active flex items-center gap-base px-gutter py-stack-md rounded-lg transition-all duration-200" href="#">
-<span class="material-symbols-outlined">dashboard</span>
-<span class="font-label-sm text-label-sm uppercase tracking-widest">Dashboard</span>
-</a>
-<a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="#">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span class="font-label-sm text-label-sm uppercase tracking-widest">Deposit</span>
-</a>
-<a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="#">
-<span class="material-symbols-outlined">payments</span>
-<span class="font-label-sm text-label-sm uppercase tracking-widest">Withdraw</span>
-</a>
-<a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="#">
-<span class="material-symbols-outlined">notifications</span>
-<span class="font-label-sm text-label-sm uppercase tracking-widest">Notifications</span>
-                    
-                    <span class="ml-auto bg-primary text-on-primary px-1.5 py-0.5 rounded-full text-[10px] font-bold">{{ notification_count }}</span>
-                    
-                </a>
-</nav>
-<div class="mt-stack-lg pt-stack-lg border-t border-surface-container-highest">
-<div class="px-gutter mb-base">
-<span class="text-[10px] text-on-surface-variant opacity-50 uppercase tracking-widest font-bold">Preferences</span>
-</div>
-<a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="font-label-sm text-label-sm uppercase tracking-widest">Profile</span>
-</a>
-<a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="#">
-<span class="material-symbols-outlined">contact_support</span>
-<span class="font-label-sm text-label-sm uppercase tracking-widest">Support</span>
-</a>
-</div>
-<!-- Conditional Activation Card -->
-            {% if user.status == 'pending' %}
-            <div class="mt-stack-lg px-gutter">
-<div class="bg-primary-container/20 border border-primary/30 rounded-xl p-stack-md">
-<p class="text-[11px] text-primary mb-2 font-medium">Your account activation is currently pending approval.</p>
-<button class="w-full bg-primary text-on-primary text-[11px] font-bold py-1.5 rounded uppercase tracking-tighter hover:opacity-90 transition-opacity">Contact Sales</button>
-</div>
-</div>
-            {% endif %}
+
+  <!-- Logo Section -->
+  <div class="px-gutter py-stack-lg flex flex-col items-center border-b border-surface-container-highest">
+    <div class="w-16 h-16 rounded-xl mb-base glow-effect bg-primary-container flex items-center justify-content:center">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
+        <path d="M20 4L4 12l16 8 16-8L20 4zM4 28l16 8 16-8M4 20l16 8 16-8" stroke="#a1d1b4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="font-headline-md text-headline-md font-bold text-primary tracking-tighter mt-2">MyPortal</span>
+  </div>
+
+  <!-- Scrollable Navigation Area -->
+  <div class="flex-1 overflow-y-auto custom-scrollbar px-stack-md py-stack-md space-y-1">
+    <nav class="space-y-1">
+
+      <!-- Dashboard -->
+      <a class="sidebar-active flex items-center gap-base px-gutter py-stack-md rounded-lg transition-all duration-200" href="{% url 'dashboard' %}">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="font-label-sm text-label-sm uppercase tracking-widest">Dashboard</span>
+      </a>
+
+      <!-- Deposit -->
+      <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="{% url 'deposit-request' %}">
+        <span class="material-symbols-outlined">account_balance_wallet</span>
+        <span class="font-label-sm text-label-sm uppercase tracking-widest">Deposit</span>
+      </a>
+
+      <!-- Withdraw -->
+      <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="{% url 'request-withdrawal' %}">
+        <span class="material-symbols-outlined">payments</span>
+        <span class="font-label-sm text-label-sm uppercase tracking-widest">Withdraw</span>
+      </a>
+
+      <!-- Notifications -->
+      <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="{% url 'notifications' %}">
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="font-label-sm text-label-sm uppercase tracking-widest">Notifications</span>
+        {% if unread_notifications > 0 %}
+        <span class="ml-auto bg-primary text-on-primary px-1.5 py-0.5 rounded-full text-[10px] font-bold">{{ unread_notifications }}</span>
+        {% endif %}
+      </a>
+
+      <!-- Support -->
+      <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="{% url 'support-list' %}">
+        <span class="material-symbols-outlined">contact_support</span>
+        <span class="font-label-sm text-label-sm uppercase tracking-widest">Support</span>
+      </a>
+
+    </nav>
+
+    <div class="mt-stack-lg pt-stack-lg border-t border-surface-container-highest">
+      <div class="px-gutter mb-base">
+        <span class="text-[10px] text-on-surface-variant opacity-50 uppercase tracking-widest font-bold">Preferences</span>
+      </div>
+
+      <!-- Profile -->
+      <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="{% url 'profile' %}">
+        <span class="material-symbols-outlined">person</span>
+        <span class="font-label-sm text-label-sm uppercase tracking-widest">Profile</span>
+      </a>
+
+    </div>
+
+    <!-- Activation Banner if not active -->
+    {% if not request.user.account_activated %}
+    <div class="mt-stack-lg px-gutter">
+      <div class="bg-primary-container/20 border border-primary/30 rounded-xl p-stack-md">
+        <p class="text-[11px] text-primary mb-2 font-medium">Your account is pending activation.</p>
+        <a href="{% url 'activate-account' %}" class="block w-full bg-primary text-on-primary text-[11px] font-bold py-1.5 rounded uppercase tracking-tighter hover:opacity-90 transition-opacity text-center">Activate Now</a>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+
+  <!-- User Profile Card (Bottom) -->
+  <div class="mt-auto border-t border-surface-container-highest bg-surface-container-lowest p-gutter">
+    <div class="flex items-center gap-base mb-stack-md">
+      <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary font-bold text-lg">
+        {{ request.user.username|first|upper }}
+      </div>
+      <div class="flex flex-col">
+        <span class="font-headline-md text-[14px] text-on-surface truncate w-32">
+          {% if request.user.first_name %}{{ request.user.first_name }} {{ request.user.last_name }}{% else %}{{ request.user.username }}{% endif %}
+        </span>
+        <div class="flex items-center gap-1">
+          <span class="w-1.5 h-1.5 {% if request.user.account_activated %}bg-primary{% else %}bg-yellow-500{% endif %} rounded-full"></span>
+          <span class="text-[10px] text-on-surface-variant font-mono-data">
+            {% if request.user.account_activated %}Active Member{% else %}Pending Activation{% endif %}
+          </span>
         </div>
-<!-- User Profile Card (Bottom) -->
-<div class="mt-auto border-t border-surface-container-highest bg-surface-container-lowest p-gutter">
-<div class="flex items-center gap-base mb-stack-md">
-<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary font-bold">
-                    {{ user.username|slice:":1"|upper }}
-                </div>
-<div class="flex flex-col">
-<span class="font-headline-md text-[14px] text-on-surface truncate w-32">Alex Rivers</span>
-<div class="flex items-center gap-1">
-<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-<span class="text-[10px] text-on-surface-variant font-mono-data">Premium Member</span>
-</div>
-</div>
-</div>
-<button class="flex items-center gap-base w-full px-base py-stack-sm text-error hover:bg-error-container/10 rounded transition-colors group">
-<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">logout</span>
-<span class="font-label-sm text-label-sm uppercase tracking-widest">Sign Out</span>
-</button>
-</div>
+      </div>
+    </div>
+    <a href="{% url 'logout' %}" class="flex items-center gap-base w-full px-base py-stack-sm text-error hover:bg-error-container/10 rounded transition-colors group">
+      <span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">logout</span>
+      <span class="font-label-sm text-label-sm uppercase tracking-widest">Sign Out</span>
+    </a>
+  </div>
+
 </aside>
+
 <!-- Top App Bar -->
 <header class="fixed top-0 right-0 md:left-72 left-0 h-16 z-30 flex justify-between items-center px-gutter md:px-stack-lg border-b border-surface-container-highest bg-background/80 backdrop-blur-xl">
-<div class="flex items-center gap-base">
-<button class="md:hidden p-2 text-on-surface hover:bg-surface-container-high rounded-full" onclick="toggleSidebar()">
-<span class="material-symbols-outlined">menu</span>
-</button>
-<h1 class="font-headline-md text-headline-md font-bold text-primary">Financial Overview</h1>
-</div>
-<div class="flex items-center gap-stack-md">
-<button class="p-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-full transition-all">
-<span class="material-symbols-outlined">dark_mode</span>
-</button>
-<button class="p-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-full transition-all relative">
-<span class="material-symbols-outlined">notifications</span>
-<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
-</button>
-</div>
+  <div class="flex items-center gap-base">
+    <button class="md:hidden p-2 text-on-surface hover:bg-surface-container-high rounded-full" onclick="toggleSidebar()">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <h1 class="font-headline-md text-headline-md font-bold text-primary">Financial Overview</h1>
+  </div>
+  <div class="flex items-center gap-stack-md">
+    <a href="{% url 'notifications' %}" class="p-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-full transition-all relative">
+      <span class="material-symbols-outlined">notifications</span>
+      {% if unread_notifications > 0 %}
+      <span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
+      {% endif %}
+    </a>
+  </div>
 </header>
+
 <!-- Main Content Canvas -->
 <main class="pt-24 pb-12 px-gutter md:px-stack-lg md:ml-72 min-h-screen">
-<div class="max-w-7xl mx-auto space-y-gutter">
-<!-- Conditional Banners -->
-            {% if account_frozen %}
-            <div class="glass-card bg-error-container/10 border-error/20 p-gutter rounded-xl flex items-center gap-gutter animate-pulse">
-<div class="p-3 bg-error-container text-on-error-container rounded-full">
-<span class="material-symbols-outlined">ac_unit</span>
-</div>
-<div>
-<h4 class="font-bold text-error">Account Frozen</h4>
-<p class="text-sm text-on-surface-variant">Your account has been restricted. Please contact our support team immediately to resolve security issues.</p>
-</div>
-</div>
+  <div class="max-w-7xl mx-auto space-y-gutter">
+
+    <!-- Django Messages -->
+    {% if messages %}
+    {% for m in messages %}
+    <div class="glass-card p-gutter rounded-xl flex items-center gap-gutter
+      {% if m.tags == 'success' %}border-primary/30 bg-primary-container/10{% elif m.tags == 'error' %}border-error/30 bg-error-container/10{% else %}border-tertiary/30 bg-tertiary-container/10{% endif %}">
+      <span class="material-symbols-outlined {% if m.tags == 'success' %}text-primary{% elif m.tags == 'error' %}text-error{% else %}text-tertiary{% endif %}">
+        {% if m.tags == 'success' %}check_circle{% elif m.tags == 'error' %}error{% else %}info{% endif %}
+      </span>
+      <p class="text-sm text-on-surface">{{ m }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <!-- Account Frozen Banner -->
+    {% if wallet.is_frozen %}
+    <div class="glass-card bg-error-container/10 border-error/20 p-gutter rounded-xl flex items-center gap-gutter">
+      <div class="p-3 bg-error-container text-on-error-container rounded-full">
+        <span class="material-symbols-outlined">ac_unit</span>
+      </div>
+      <div>
+        <h4 class="font-bold text-error">Wallet Frozen</h4>
+        <p class="text-sm text-on-surface-variant">Your wallet has been restricted. Please contact our support team immediately.</p>
+      </div>
+      <a href="{% url 'support-create' %}" class="ml-auto px-4 py-2 bg-error text-on-error text-xs font-bold rounded uppercase tracking-widest hover:opacity-90">Contact Support</a>
+    </div>
+    {% endif %}
+
+    <!-- Not Activated Banner -->
+    {% if not request.user.account_activated %}
+    <div class="glass-card bg-primary-container/10 border-primary/20 p-gutter rounded-xl flex items-center gap-gutter">
+      <div class="p-3 bg-primary-container text-on-primary-container rounded-full">
+        <span class="material-symbols-outlined">verified_user</span>
+      </div>
+      <div>
+        <h4 class="font-bold text-primary">Account Not Activated</h4>
+        <p class="text-sm text-on-surface-variant">Activate your account to unlock withdrawals and full access.</p>
+      </div>
+      <a href="{% url 'activate-account' %}" class="ml-auto px-4 py-2 bg-primary text-on-primary text-xs font-bold rounded uppercase tracking-widest hover:opacity-90">Activate Now</a>
+    </div>
+    {% endif %}
+
+    <!-- Stats Bento Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+
+      <!-- Wallet Balance -->
+      <div class="glass-card p-gutter rounded-xl relative overflow-hidden group">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full group-hover:scale-150 transition-transform duration-500"></div>
+        <span class="text-[10px] text-white/50 uppercase font-mono-data tracking-widest mb-base block">Wallet Balance</span>
+        <div class="flex items-baseline gap-2">
+          <span class="font-headline-lg text-headline-lg text-primary">$</span>
+          <span class="font-headline-xl text-headline-xl text-on-surface tabular-nums">{{ wallet.balance }}</span>
+        </div>
+        <div class="mt-stack-md flex items-center gap-1 text-[12px] {% if wallet.is_frozen %}text-error{% else %}text-primary{% endif %}">
+          <span class="material-symbols-outlined text-[14px]">{% if wallet.is_frozen %}ac_unit{% else %}account_balance_wallet{% endif %}</span>
+          <span>{% if wallet.is_frozen %}Wallet frozen{% else %}Available to withdraw{% endif %}</span>
+        </div>
+      </div>
+
+      <!-- Account Status -->
+      <div class="glass-card p-gutter rounded-xl">
+        <span class="text-[10px] text-white/50 uppercase font-mono-data tracking-widest mb-base block">Account Status</span>
+        <div class="flex items-center gap-gutter mt-2">
+          <div class="flex-1">
+            {% if request.user.account_activated %}
+            <span class="px-stack-md py-1 bg-primary/10 text-primary border border-primary/20 rounded-full text-xs font-bold uppercase tracking-widest">✓ Active</span>
+            {% else %}
+            <span class="px-stack-md py-1 bg-tertiary/10 text-tertiary border border-tertiary/20 rounded-full text-xs font-bold uppercase tracking-widest">Pending</span>
             {% endif %}
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] text-on-surface-variant block uppercase tracking-tighter">Account No.</span>
+            <span class="font-mono-data text-[13px] text-on-surface">{{ request.user.account_number|default:"—" }}</span>
+          </div>
+        </div>
+        <div class="mt-stack-md">
+          {% if not request.user.account_activated %}
+          <a href="{% url 'activate-account' %}" class="text-[11px] text-primary hover:underline">Activate now →</a>
+          {% else %}
+          <span class="text-[11px] text-on-surface-variant">Full access enabled</span>
+          {% endif %}
+        </div>
+      </div>
 
-            <!-- Stats Bento Grid -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-<div class="glass-card p-gutter rounded-xl relative overflow-hidden group">
-<div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full group-hover:scale-150 transition-transform duration-500"></div>
-<span class="text-[10px] text-white/50 uppercase font-mono-data tracking-widest mb-base block">Wallet Balance</span>
-<div class="flex items-baseline gap-2">
-<span class="font-headline-lg text-headline-lg text-primary">$</span>
-<span class="font-headline-xl text-headline-xl text-on-surface tabular-nums">42,850.25</span>
-</div>
-<div class="mt-stack-md flex items-center gap-1 text-[12px] text-primary">
-<span class="material-symbols-outlined text-[14px]">trending_up</span>
-<span>+12.4% from last month</span>
-</div>
-</div>
-<div class="glass-card p-gutter rounded-xl">
-<span class="text-[10px] text-white/50 uppercase font-mono-data tracking-widest mb-base block">Account Status</span>
-<div class="flex items-center gap-gutter mt-2">
-<div class="flex-1">
-<span class="px-stack-md py-1 bg-primary/10 text-primary border border-primary/20 rounded-full text-xs font-bold uppercase tracking-widest">Active</span>
-</div>
-<div class="text-right">
-<span class="text-[10px] text-on-surface-variant block uppercase tracking-tighter">Tier Level</span>
-<span class="font-headline-md text-headline-md text-on-surface">Tier 3 VIP</span>
-</div>
-</div>
-</div>
-<div class="glass-card p-gutter rounded-xl">
-<span class="text-[10px] text-white/50 uppercase font-mono-data tracking-widest mb-base block">Total Transactions</span>
-<div class="flex items-baseline gap-2">
-<span class="font-headline-xl text-headline-xl text-on-surface tabular-nums">1,284</span>
-<span class="text-on-surface-variant text-sm">lifetime</span>
-</div>
-<div class="mt-stack-md flex items-center gap-gutter">
-<div class="flex-1 h-1 bg-surface-container rounded-full overflow-hidden">
-<div class="bg-primary h-full w-[65%]"></div>
-</div>
-<span class="text-[10px] font-mono-data text-on-surface-variant">65% of limit</span>
-</div>
-</div>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
-<!-- Payment Accounts Card -->
-<div class="lg:col-span-2 glass-card p-gutter rounded-xl space-y-gutter">
-<div class="flex justify-between items-center">
-<h3 class="font-headline-md text-headline-md text-on-surface">Payment Accounts</h3>
-<button class="text-xs text-primary hover:underline uppercase tracking-widest font-bold">+ Add Account</button>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-base">
-<!-- Account Item -->
-<div class="bg-surface-container-low border border-surface-container-highest p-stack-md rounded-lg group hover:border-primary/50 transition-colors">
-<div class="flex justify-between items-start mb-stack-md">
-<div class="flex items-center gap-base">
-<div class="w-8 h-8 rounded bg-primary/20 flex items-center justify-center">
-<span class="material-symbols-outlined text-primary text-[18px]">account_balance</span>
-</div>
-<div>
-<span class="text-[12px] font-bold block text-on-surface">Main Savings</span>
-<span class="text-[10px] text-on-surface-variant uppercase">JP Morgan Chase</span>
-</div>
-</div>
-<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="copyToClipboard('4829391022', this)">
-<span class="material-symbols-outlined text-[18px]">content_copy</span>
-</button>
-</div>
-<div class="font-mono-data text-on-surface-variant tracking-widest text-[13px]">
-                                ** ** ** 4829
-                            </div>
-</div>
-<!-- Account Item Crypto -->
-<div class="bg-surface-container-low border border-surface-container-highest p-stack-md rounded-lg group hover:border-primary/50 transition-colors">
-<div class="flex justify-between items-start mb-stack-md">
-<div class="flex items-center gap-base">
-<div class="w-8 h-8 rounded bg-tertiary/20 flex items-center justify-center">
-<span class="material-symbols-outlined text-tertiary text-[18px]">currency_bitcoin</span>
-</div>
-<div>
-<span class="text-[12px] font-bold block text-on-surface">USDT Vault</span>
-<span class="text-[10px] text-on-surface-variant uppercase">ERC-20 Network</span>
-</div>
-</div>
-<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="copyToClipboard('0x71C7656EC7ab88b098defB751B7401B5f6d8976F', this)">
-<span class="material-symbols-outlined text-[18px]">content_copy</span>
-</button>
-</div>
-<div class="font-mono-data text-on-surface-variant truncate text-[13px] tracking-tight">
-                                0x71C7656EC7ab88b098...976F
-                            </div>
-</div>
-</div>
-</div>
-<!-- Notifications Card -->
-<div class="glass-card p-gutter rounded-xl flex flex-col">
-<h3 class="font-headline-md text-headline-md text-on-surface mb-gutter">Notifications</h3>
-<div class="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-2">
-<!-- Notification Item -->
-<div class="relative pl-gutter py-1">
-<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-full"></div>
-<div class="flex justify-between items-start mb-1">
-<span class="text-[12px] font-bold text-on-surface">Withdrawal Successful</span>
-<span class="text-[10px] text-on-surface-variant">2m ago</span>
-</div>
-<p class="text-[11px] text-on-surface-variant leading-relaxed">Your withdrawal request for $1,200.00 has been processed to your bank.</p>
-</div>
-<div class="relative pl-gutter py-1 opacity-60">
-<div class="flex justify-between items-start mb-1">
-<span class="text-[12px] font-bold text-on-surface">Security Alert</span>
-<span class="text-[10px] text-on-surface-variant">4h ago</span>
-</div>
-<p class="text-[11px] text-on-surface-variant leading-relaxed">New login detected from a Chrome browser on Windows 11.</p>
-</div>
-<div class="relative pl-gutter py-1 opacity-60">
-<div class="flex justify-between items-start mb-1">
-<span class="text-[12px] font-bold text-on-surface">System Update</span>
-<span class="text-[10px] text-on-surface-variant">1d ago</span>
-</div>
-<p class="text-[11px] text-on-surface-variant leading-relaxed">Maintenance completed on our Ethereum transaction node.</p>
-</div>
-</div>
-<button class="mt-gutter w-full py-stack-md border border-surface-container-highest text-[10px] uppercase tracking-widest font-bold hover:bg-surface-container transition-colors rounded-lg">View All</button>
-</div>
-</div>
-<!-- Recent Transactions Table -->
-<div class="glass-card rounded-xl overflow-hidden">
-<div class="px-gutter py-stack-lg border-b border-surface-container-highest flex justify-between items-center">
-<h3 class="font-headline-md text-headline-md text-on-surface">Recent Transactions</h3>
-<div class="flex gap-base">
-<button class="px-gutter py-1.5 bg-surface-container text-on-surface-variant text-[11px] font-bold rounded-lg hover:text-on-surface transition-colors">Export CSV</button>
-<button class="px-gutter py-1.5 bg-surface-container text-on-surface-variant text-[11px] font-bold rounded-lg hover:text-on-surface transition-colors">Filter</button>
-</div>
-</div>
-<div class="overflow-x-auto">
+      <!-- Total Transactions -->
+      <div class="glass-card p-gutter rounded-xl">
+        <span class="text-[10px] text-white/50 uppercase font-mono-data tracking-widest mb-base block">Total Transactions</span>
+        <div class="flex items-baseline gap-2">
+          <span class="font-headline-xl text-headline-xl text-on-surface tabular-nums">{{ transactions|length }}</span>
+          <span class="text-on-surface-variant text-sm">lifetime</span>
+        </div>
+        <div class="mt-stack-md flex items-center gap-gutter">
+          <div class="flex-1 h-1 bg-surface-container rounded-full overflow-hidden">
+            <div class="bg-primary h-full" style="width:{% if transactions %}65%{% else %}0%{% endif %}"></div>
+          </div>
+          <span class="text-[10px] font-mono-data text-on-surface-variant">All time</span>
+        </div>
+      </div>
 
-                            {% for transaction in transactions %}
-                            
-                            {% empty %}
-                            
-                            {% endfor %}
-                            
-                            <table class="w-full text-left">
-<thead>
-<tr class="bg-surface-container-low/50">
-<th class="px-gutter py-stack-md text-[10px] font-bold text-white/50 uppercase tracking-widest">Type</th>
-<th class="px-gutter py-stack-md text-[10px] font-bold text-white/50 uppercase tracking-widest">Description</th>
-<th class="px-gutter py-stack-md text-[10px] font-bold text-white/50 uppercase tracking-widest">Amount</th>
-<th class="px-gutter py-stack-md text-[10px] font-bold text-white/50 uppercase tracking-widest">Status</th>
-<th class="px-gutter py-stack-md text-[10px] font-bold text-white/50 uppercase tracking-widest text-right">Date</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-surface-container-highest"><tr class="hover:bg-white/5 transition-colors group">
-<td class="px-gutter py-gutter">
-<div class="flex items-center gap-stack-md">
-                                        {% if transaction.type == 'Deposit' %}
-                                        <div class="p-2 bg-primary/10 text-primary rounded-lg">
-<span class="material-symbols-outlined text-[20px]">add_circle</span>
-</div>
-                                        {% else %}
-                                        <div class="p-2 bg-error/10 text-error rounded-lg">
-<span class="material-symbols-outlined text-[20px]">remove_circle</span>
-</div>
-                                        {% endif %}
-                                        <span class="font-bold text-sm text-on-surface">{{ transaction.type }}</span>
-</div>
-</td>
-<td class="px-gutter py-gutter text-sm text-on-surface-variant">{{ transaction.description|default:"No description provided" }}</td>
-<td class="px-gutter py-gutter">
-<span class="font-mono-data font-bold {% if transaction.type == 'Deposit' %}text-primary{% else %}text-on-surface{% endif %}">
-                                        {% if transaction.type == 'Deposit' %}+{% else %}-{% endif %}${{ transaction.amount|floatformat:2 }}
-                                    </span>
-</td>
-<td class="px-gutter py-gutter">
-<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter {% if transaction.status == 'completed' %}bg-primary/20 text-primary{% elif transaction.status == 'pending' %}bg-tertiary/20 text-tertiary{% else %}bg-surface-container text-on-surface-variant{% endif %}">
-                                        {{ transaction.status }}
-                                    </span>
-</td>
-<td class="px-gutter py-gutter text-right text-[12px] text-on-surface-variant font-mono-data">
-                                    {{ transaction.date|date:"M d, Y" }}
-                                </td>
-</tr><tr>
-<td class="px-gutter py-24 text-center" colspan="5">
-<div class="flex flex-col items-center opacity-30">
-<span class="material-symbols-outlined text-[64px] mb-base">history</span>
-<p class="font-headline-md">No transaction records found</p>
-</div>
-</td>
-</tr><!-- Static fallback rows for demonstration -->
-<tr class="hover:bg-white/5 transition-colors group">
-<td class="px-gutter py-gutter">
-<div class="flex items-center gap-stack-md">
-<div class="p-2 bg-primary/10 text-primary rounded-lg">
-<span class="material-symbols-outlined text-[20px]">add_circle</span>
-</div>
-<span class="font-bold text-sm text-on-surface">Deposit</span>
-</div>
-</td>
-<td class="px-gutter py-gutter text-sm text-on-surface-variant">Bank Transfer from Savings</td>
-<td class="px-gutter py-gutter">
-<span class="font-mono-data font-bold text-primary">+$12,500.00</span>
-</td>
-<td class="px-gutter py-gutter">
-<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter bg-primary/20 text-primary">Completed</span>
-</td>
-<td class="px-gutter py-gutter text-right text-[12px] text-on-surface-variant font-mono-data">Oct 24, 2023</td>
-</tr>
-<tr class="hover:bg-white/5 transition-colors group">
-<td class="px-gutter py-gutter">
-<div class="flex items-center gap-stack-md">
-<div class="p-2 bg-error/10 text-error rounded-lg">
-<span class="material-symbols-outlined text-[20px]">remove_circle</span>
-</div>
-<span class="font-bold text-sm text-on-surface">Withdrawal</span>
-</div>
-</td>
-<td class="px-gutter py-gutter text-sm text-on-surface-variant">Crypto Wallet Payout</td>
-<td class="px-gutter py-gutter">
-<span class="font-mono-data font-bold text-on-surface">-$1,200.00</span>
-</td>
-<td class="px-gutter py-gutter">
-<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter bg-tertiary/20 text-tertiary">Pending</span>
-</td>
-<td class="px-gutter py-gutter text-right text-[12px] text-on-surface-variant font-mono-data">Oct 23, 2023</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
+    </div>
+
+    <!-- Payment Accounts + Notifications Row -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+
+      <!-- Payment Accounts -->
+      <div class="lg:col-span-2 glass-card p-gutter rounded-xl space-y-gutter">
+        <div class="flex justify-between items-center">
+          <h3 class="font-headline-md text-headline-md text-on-surface">Payment Accounts</h3>
+          <span class="text-xs text-on-surface-variant">{{ payment_accounts|length }} account{{ payment_accounts|length|pluralize }}</span>
+        </div>
+
+        {% if payment_accounts %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-base">
+          {% for acc in payment_accounts %}
+          <div class="bg-surface-container-low border border-surface-container-highest p-stack-md rounded-lg group hover:border-primary/50 transition-colors">
+            <div class="flex justify-between items-start mb-stack-md">
+              <div class="flex items-center gap-base">
+                <div class="w-8 h-8 rounded {% if acc.account_type == 'bank' %}bg-primary/20{% else %}bg-tertiary/20{% endif %} flex items-center justify-center">
+                  <span class="material-symbols-outlined {% if acc.account_type == 'bank' %}text-primary{% else %}text-tertiary{% endif %} text-[18px]">
+                    {% if acc.account_type == 'bank' %}account_balance{% else %}currency_bitcoin{% endif %}
+                  </span>
+                </div>
+                <div>
+                  <span class="text-[12px] font-bold block text-on-surface">
+                    {% if acc.account_type == 'bank' %}{{ acc.account_name|default:"Bank Account" }}{% else %}{{ acc.crypto_currency }} Wallet{% endif %}
+                  </span>
+                  <span class="text-[10px] text-on-surface-variant uppercase">
+                    {% if acc.account_type == 'bank' %}{{ acc.bank_name }}{% else %}{{ acc.crypto_network }}{% endif %}
+                  </span>
+                </div>
+              </div>
+              {% if acc.account_type == 'bank' and acc.account_number %}
+              <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="copyToClipboard('{{ acc.account_number }}', this)">
+                <span class="material-symbols-outlined text-[18px]">content_copy</span>
+              </button>
+              {% elif acc.wallet_address %}
+              <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="copyToClipboard('{{ acc.wallet_address }}', this)">
+                <span class="material-symbols-outlined text-[18px]">content_copy</span>
+              </button>
+              {% endif %}
+            </div>
+            <div class="font-mono-data text-on-surface-variant tracking-widest text-[13px]">
+              {% if acc.account_type == 'bank' %}
+                {% if acc.account_number %}** ** {{ acc.account_number|slice:"-4:" }}{% else %}—{% endif %}
+              {% else %}
+                {% if acc.wallet_address %}{{ acc.wallet_address|slice:":6" }}...{{ acc.wallet_address|slice:"-4:" }}{% else %}—{% endif %}
+              {% endif %}
+            </div>
+            {% if acc.bank_country %}
+            <div class="text-[10px] text-on-surface-variant mt-1">{{ acc.bank_country }}</div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+
+        {% else %}
+        <div class="flex flex-col items-center py-8 opacity-40">
+          <span class="material-symbols-outlined text-[48px] mb-2">account_balance</span>
+          <p class="text-sm text-on-surface-variant">No payment accounts assigned yet</p>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Notifications Card -->
+      <div class="glass-card p-gutter rounded-xl flex flex-col">
+        <div class="flex justify-between items-center mb-gutter">
+          <h3 class="font-headline-md text-headline-md text-on-surface">Notifications</h3>
+          {% if unread_notifications > 0 %}
+          <span class="bg-primary text-on-primary px-2 py-0.5 rounded-full text-[10px] font-bold">{{ unread_notifications }} new</span>
+          {% endif %}
+        </div>
+        <div class="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-2">
+          {% for n in notifications %}
+          <div class="relative pl-gutter py-1 {% if not n.is_read %}opacity-100{% else %}opacity-60{% endif %}">
+            {% if not n.is_read %}
+            <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-full"></div>
+            {% endif %}
+            <div class="flex justify-between items-start mb-1">
+              <span class="text-[12px] font-bold text-on-surface">{{ n.title }}</span>
+              <span class="text-[10px] text-on-surface-variant">{{ n.created_at|timesince }} ago</span>
+            </div>
+            <p class="text-[11px] text-on-surface-variant leading-relaxed">{{ n.message }}</p>
+          </div>
+          {% empty %}
+          <div class="flex flex-col items-center py-8 opacity-40">
+            <span class="material-symbols-outlined text-[48px] mb-2">notifications_none</span>
+            <p class="text-sm">No notifications</p>
+          </div>
+          {% endfor %}
+        </div>
+        <a href="{% url 'notifications' %}" class="mt-gutter w-full py-stack-md border border-surface-container-highest text-[10px] uppercase tracking-widest font-bold hover:bg-surface-container transition-colors rounded-lg text-center text-on-surface-variant">View All</a>
+      </div>
+
+    </div>
+
+    <!-- Recent Transactions Table -->
+    <div class="glass-card rounded-xl overflow-hidden">
+      <div class="px-gutter py-stack-lg border-b border-surface-container-highest flex justify-between items-center">
+        <h3 class="font-headline-md text-headline-md text-on-surface">Recent Transactions</h3>
+        <div class="flex gap-base">
+          <span class="px-gutter py-1.5 bg-surface-container text-on-surface-variant text-[11px] font-bold rounded-lg">Last 10</span>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        {% if transactions %}
+        <table class="w-full text-left">
+          <thead>
+            <tr class="bg-surface-container-low/50">
+              <th class="px-gutter py-stack-md text-[10px] font-bold text-white/50 uppercase tracking-widest">Type</th>
+              <th class="px-gutter py-stack-md text-[10px] font-bold text-white/50 uppercase tracking-widest">Description</th>
+              <th class="px-gutter py-stack-md text-[10px] font-bold text-white/50 uppercase tracking-widest">Amount</th>
+              <th class="px-gutter py-stack-md text-[10px] font-bold text-white/50 uppercase tracking-widest">Status</th>
+              <th class="px-gutter py-stack-md text-[10px] font-bold text-white/50 uppercase tracking-widest text-right">Date</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-surface-container-highest">
+            {% for t in transactions %}
+            <tr class="hover:bg-white/5 transition-colors group">
+              <td class="px-gutter py-gutter">
+                <div class="flex items-center gap-stack-md">
+                  {% if t.transaction_type == 'admin_deposit' %}
+                  <div class="p-2 bg-primary/10 text-primary rounded-lg">
+                    <span class="material-symbols-outlined text-[20px]">add_circle</span>
+                  </div>
+                  {% elif t.transaction_type == 'withdrawal' %}
+                  <div class="p-2 bg-error/10 text-error rounded-lg">
+                    <span class="material-symbols-outlined text-[20px]">remove_circle</span>
+                  </div>
+                  {% elif t.transaction_type == 'activation_fee' %}
+                  <div class="p-2 bg-tertiary/10 text-tertiary rounded-lg">
+                    <span class="material-symbols-outlined text-[20px]">verified_user</span>
+                  </div>
+                  {% else %}
+                  <div class="p-2 bg-secondary/10 text-secondary rounded-lg">
+                    <span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+                  </div>
+                  {% endif %}
+                  <span class="font-bold text-sm text-on-surface">{{ t.get_transaction_type_display }}</span>
+                </div>
+              </td>
+              <td class="px-gutter py-gutter text-sm text-on-surface-variant">{{ t.description|default:"—" }}</td>
+              <td class="px-gutter py-gutter">
+                <span class="font-mono-data font-bold {% if t.transaction_type == 'admin_deposit' %}text-primary{% elif t.transaction_type == 'withdrawal' or t.transaction_type == 'activation_fee' %}text-error{% else %}text-on-surface{% endif %}">
+                  {% if t.transaction_type == 'admin_deposit' %}+{% else %}-{% endif %}${{ t.amount }}
+                </span>
+              </td>
+              <td class="px-gutter py-gutter">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter
+                  {% if t.status == 'success' %}bg-primary/20 text-primary
+                  {% elif t.status == 'pending' %}bg-tertiary/20 text-tertiary
+                  {% else %}bg-surface-container text-on-surface-variant{% endif %}">
+                  {{ t.status }}
+                </span>
+              </td>
+              <td class="px-gutter py-gutter text-right text-[12px] text-on-surface-variant font-mono-data">
+                {{ t.created_at|date:"M d, Y" }}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <div class="px-gutter py-24 text-center">
+          <div class="flex flex-col items-center opacity-30">
+            <span class="material-symbols-outlined text-[64px] mb-base">history</span>
+            <p class="font-headline-md">No transaction records found</p>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
 </main>
+
 <script>
-        /**
-         * Toggle Sidebar Visibility for Mobile
-         */
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            const isHidden = sidebar.classList.contains('-translate-x-full');
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const isHidden = sidebar.classList.contains('-translate-x-full');
+    if (isHidden) {
+      sidebar.classList.remove('-translate-x-full');
+      overlay.classList.remove('hidden');
+    } else {
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden');
+    }
+  }
 
-            if (isHidden) {
-                sidebar.classList.remove('-translate-x-full');
-                overlay.classList.remove('hidden');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-            }
-        }
+  function copyToClipboard(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      const icon = btn.querySelector('.material-symbols-outlined');
+      const originalIcon = icon.textContent;
+      icon.textContent = 'check';
+      icon.classList.add('text-primary');
+      setTimeout(() => {
+        icon.textContent = originalIcon;
+        icon.classList.remove('text-primary');
+      }, 2000);
+    }).catch(err => console.error('Failed to copy:', err));
+  }
 
-        /**
-         * Copy text to clipboard and show feedback
-         */
-        function copyToClipboard(text, btn) {
-            navigator.clipboard.writeText(text).then(() => {
-                const icon = btn.querySelector('.material-symbols-outlined');
-                const originalIcon = icon.textContent;
-                
-                icon.textContent = 'check';
-                icon.classList.add('text-primary');
-                
-                setTimeout(() => {
-                    icon.textContent = originalIcon;
-                    icon.classList.remove('text-primary');
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
-        }
-
-        // Handle window resizing
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) {
-                document.getElementById('sidebar').classList.remove('-translate-x-full');
-                document.getElementById('sidebar-overlay').classList.add('hidden');
-            } else {
-                document.getElementById('sidebar').classList.add('-translate-x-full');
-            }
-        });
-    </script>
-</body></html>
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) {
+      document.getElementById('sidebar').classList.remove('-translate-x-full');
+      document.getElementById('sidebar-overlay').classList.add('hidden');
+    } else {
+      document.getElementById('sidebar').classList.add('-translate-x-full');
+    }
+  });
+</script>
+</body>
+</html>
