@@ -1,500 +1,371 @@
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Santander Bank - Secure Digital Banking</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OBSIDIAN FOREST | Navigate the Future of Wealth</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1b1b1b",
+                        "on-surface": "#e2e2e2",
+                        "error-container": "#93000a",
+                        "surface-tint": "#a1d1b4",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-primary": "#063824",
+                        "secondary-container": "#474746",
+                        "primary": "#a1d1b4",
+                        "on-secondary": "#313030",
+                        "background": "#131313",
+                        "surface-dim": "#131313",
+                        "primary-fixed-dim": "#a1d1b4",
+                        "secondary": "#c8c6c5",
+                        "outline-variant": "#414943",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-container": "#305944",
+                        "surface-bright": "#393939",
+                        "on-secondary-container": "#b7b5b4",
+                        "on-error": "#690005",
+                        "surface-container": "#1f1f1f",
+                        "on-primary-fixed": "#002112",
+                        "secondary-fixed": "#e5e2e1",
+                        "inverse-primary": "#3a674f",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-fixed": "#bceecf",
+                        "on-background": "#e2e2e2",
+                        "inverse-surface": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#254f3a",
+                        "primary-container": "#2d5a43",
+                        "on-tertiary-container": "#a1ceb3",
+                        "on-surface-variant": "#c0c9c1",
+                        "tertiary-fixed": "#bfedd1",
+                        "on-secondary-fixed-variant": "#474746",
+                        "on-primary-container": "#9fcfb2",
+                        "surface-container-lowest": "#0e0e0e",
+                        "outline": "#8b938c",
+                        "surface": "#131313",
+                        "surface-container-highest": "#353535",
+                        "on-primary-fixed-variant": "#224f39",
+                        "tertiary": "#a4d1b6",
+                        "tertiary-fixed-dim": "#a4d1b6",
+                        "on-tertiary-fixed": "#002113",
+                        "inverse-on-surface": "#303030",
+                        "surface-variant": "#353535",
+                        "on-tertiary": "#0c3825",
+                        "on-secondary-fixed": "#1c1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-sm": "4px",
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "stack-md": "12px",
+                        "stack-lg": "32px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Hanken Grotesk"],
+                        "mono-data": ["Geist"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-sm": ["Geist"],
+                        "body-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
 <style>
-,::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --green:#16a34a;--green-light:#22c55e;--green-dark:#15803d;
-  --black:#0a0a0a;--black-soft:#111111;--black-card:#1a1a1a;
-  --white:#ffffff;--gray:#9ca3af;--gray-dark:#4b5563;
-  --glass:rgba(255,255,255,0.05);--glass-border:rgba(255,255,255,0.1);
-  --glow:0 0 40px rgba(22,163,74,0.3);--glow-soft:0 0 20px rgba(22,163,74,0.15);
-}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;line-height:1.6}
+        body {
+            background-color: #131313;
+            color: #e2e2e2;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(65, 73, 67, 0.3);
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: #2d5a43;
+            transform: translateY(-4px);
+        }
+        .forest-glow {
+            box-shadow: 0 0 40px -10px rgba(45, 90, 67, 0.4);
+        }
+        .hero-gradient-overlay {
+            background: linear-gradient(to bottom, rgba(19, 19, 19, 0.4), #131313);
+        }
+        .token-glow {
+            text-shadow: 0 0 10px rgba(161, 209, 180, 0.5);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 dark:bg-background/80 backdrop-blur-xl border-b border-outline-variant/30">
+<div class="flex justify-between items-center px-container-padding h-20 max-w-7xl mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="token">token</span>
+<span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface">OBSIDIAN FOREST</span>
+</div>
+<div class="hidden md:flex items-center gap-stack-lg">
+<a class="text-primary font-semibold hover:text-primary transition-colors duration-300" href="#">Terminal</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Vault</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Protocols</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-300" href="#">Insight</a>
+</div>
+<button class="bg-primary text-on-primary font-mono-data px-gutter py-2.5 rounded-lg font-bold tracking-tight hover:scale-[1.02] active:scale-95 transition-all">
+                ACCESS TERMINAL
+            </button>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative min-h-screen flex items-center justify-center pt-20">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida/AP1WRLv5AALzVibv8L-RgPBUdSiWJRdOljRiIItZRN2vag-KU6svdmYCnbbTtXbl-6tX_sggeCidzPxAJxPQMthay1mZm9wm5WasJn1SW-w4WZj02Nb2IAe49IoKZh79ePeynCZb8okVcb-fMJxgqQVHp9e3Ax3ZnTnoZyDDZnZpGAGJA_rh-1NZnnUEygJ30lNmbwOOkG21vEnaZberNpuBK51_ngaTV3AOpgJv9NniDIjsT4nBtRKycNuMgg"/>
+<div class="absolute inset-0 hero-gradient-overlay"></div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto px-container-padding text-center">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-stack-lg animate-pulse">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-sm text-primary uppercase tracking-widest">Global Liquidity Active</span>
+</div>
+<h1 class="font-headline-xl text-[clamp(40px,8vw,72px)] leading-[1.1] mb-stack-md max-w-4xl mx-auto">
+                Navigate the <span class="text-primary token-glow italic">Future</span> of Wealth.
+            </h1>
+<p class="font-body-lg text-on-surface-variant max-w-2xl mx-auto mb-stack-lg opacity-80">
+                Deep-tier liquidity and encrypted asset architecture for the global elite. Experience banking re-engineered for the modern sovereign entity.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-gutter">
+<button class="w-full sm:w-auto bg-primary text-on-primary px-stack-lg py-4 rounded-xl font-bold font-headline-md hover:shadow-lg hover:shadow-primary/20 transition-all">
+                    Access Terminal
+                </button>
+<button class="w-full sm:w-auto px-stack-lg py-4 rounded-xl border border-on-surface/20 font-bold font-headline-md hover:bg-on-surface/5 transition-all">
+                    Institutional Inquiry
+                </button>
+</div>
+</div>
+</header>
+<!-- Features Bento Grid -->
+<section class="py-stack-lg max-w-7xl mx-auto px-container-padding">
+<div class="mb-stack-lg">
+<span class="font-label-sm text-primary uppercase tracking-widest block mb-2">Core Competencies</span>
+<h2 class="font-headline-lg text-on-surface">Architectural Precision</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Deep Liquidity -->
+<div class="glass-card p-stack-lg rounded-xl flex flex-col gap-4 group">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary border border-outline-variant/30 group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="water_drop">water_drop</span>
+</div>
+<h3 class="font-headline-md text-on-surface">Deep Liquidity</h3>
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+                    Access global markets with zero-latency execution. Our pooled depth ensures consistent pricing for high-volume transactions across all asset classes.
+                </p>
+<div class="mt-auto pt-4 border-t border-outline-variant/20 flex items-center justify-between">
+<span class="font-mono-data text-xs text-primary">LATENCY: &lt; 2ms</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="trending_up">trending_up</span>
+</div>
+</div>
+<!-- Encrypted Assets -->
+<div class="glass-card p-stack-lg rounded-xl flex flex-col gap-4 group forest-glow">
+<div class="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="encrypted">encrypted</span>
+</div>
+<h3 class="font-headline-md text-on-surface">Encrypted Assets</h3>
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+                    Military-grade protection for your digital and fiat reserves. Proprietary Obsidian hardware security modules (HSM) safeguard every interaction.
+                </p>
+<div class="mt-auto pt-4 border-t border-outline-variant/20 flex items-center justify-between">
+<span class="font-mono-data text-xs text-primary">AES-256 QUANTUM-RESISTANT</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="shield">shield</span>
+</div>
+</div>
+<!-- Elite Performance -->
+<div class="glass-card p-stack-lg rounded-xl flex flex-col gap-4 group">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary border border-outline-variant/30 group-hover:border-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+</div>
+<h3 class="font-headline-md text-on-surface">Elite Performance</h3>
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+                    Algorithmic precision tailored to your portfolio's unique needs. Real-time predictive analytics drive superior capital allocation strategies.
+                </p>
+<div class="mt-auto pt-4 border-t border-outline-variant/20 flex items-center justify-between">
+<span class="font-mono-data text-xs text-primary">ALPHA-TIER ANALYTICS</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="rocket_launch">rocket_launch</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Security Section - Obsidian Protocol -->
+<section class="py-24 bg-surface-container-lowest relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1/2 h-full opacity-10">
 
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:var(--black-soft)}
-::-webkit-scrollbar-thumb{background:var(--green);border-radius:3px}
+</div>
+<div class="max-w-7xl mx-auto px-container-padding relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div>
+<span class="font-label-sm text-primary uppercase tracking-widest block mb-4">Foundation</span>
+<h2 class="font-headline-xl text-on-surface mb-6">The Obsidian Protocol</h2>
+<p class="font-body-lg text-on-surface-variant mb-8 leading-relaxed">
+                        Our proprietary multi-sig encryption and cold-storage infrastructure is the gold standard for institutional asset management. We don't just secure your wealth; we isolate it from the noise of the global grid.
+                    </p>
+<div class="space-y-6">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary mt-1" data-icon="hub">hub</span>
+<div>
+<h4 class="font-headline-md text-on-surface text-lg">Decentralized Governance</h4>
+<p class="text-on-surface-variant font-body-md opacity-70">No single point of failure. Assets require multi-nodal verification for movement.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary mt-1" data-icon="ac_unit">ac_unit</span>
+<div>
+<h4 class="font-headline-md text-on-surface text-lg">Deep Cold Storage</h4>
+<p class="text-on-surface-variant font-body-md opacity-70">Air-gapped vaults located in geopolitically neutral subterranean facilities.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute inset-0 bg-primary/5 rounded-full blur-3xl scale-125"></div>
+<div class="relative glass-card aspect-square rounded-full border-primary/20 flex items-center justify-center overflow-hidden">
+<div class="text-center p-12">
+<span class="material-symbols-outlined text-primary text-8xl mb-4" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+<div class="font-mono-data text-primary text-xl tracking-widest">PROTOCOL VERIFIED</div>
+<div class="text-on-surface-variant text-sm mt-2 opacity-50 uppercase">Active Monitoring 24/7</div>
+</div>
+<div class="absolute inset-0 border-2 border-primary/10 rounded-full animate-[spin_20s_linear_infinite]"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Institutional Services -->
+<section class="py-24 max-w-7xl mx-auto px-container-padding">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-on-surface mb-4">Institutional Ecosystem</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto">Tailored financial vehicles for single-family offices, corporate treasuries, and sovereign wealth entities.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<div class="p-10 border border-outline-variant/30 rounded-lg hover:bg-surface-container-low transition-colors group">
+<div class="font-label-sm text-primary mb-2 opacity-50">01</div>
+<h4 class="font-headline-md text-on-surface mb-4 group-hover:text-primary transition-colors">Private Banking</h4>
+<p class="text-on-surface-variant font-body-md leading-relaxed">Dedicated wealth managers and 24/7 priority terminal access for all global jurisdictions.</p>
+</div>
+<div class="p-10 border border-outline-variant/30 rounded-lg hover:bg-surface-container-low transition-colors group">
+<div class="font-label-sm text-primary mb-2 opacity-50">02</div>
+<h4 class="font-headline-md text-on-surface mb-4 group-hover:text-primary transition-colors">Family Office</h4>
+<p class="text-on-surface-variant font-body-md leading-relaxed">Integrated reporting and multi-generational trust structures managed through a single dashboard.</p>
+</div>
+<div class="p-10 border border-outline-variant/30 rounded-lg hover:bg-surface-container-low transition-colors group">
+<div class="font-label-sm text-primary mb-2 opacity-50">03</div>
+<h4 class="font-headline-md text-on-surface mb-4 group-hover:text-primary transition-colors">Global Treasury</h4>
+<p class="text-on-surface-variant font-body-md leading-relaxed">Optimized cash flow management across multiple fiat and digital asset pairs with instant settlements.</p>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="relative py-32 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="bg-cover bg-center w-full h-full opacity-30" data-alt="A macro close-up of dark obsidian rock texture with soft, cinematic green forest lighting hitting the sharp edges, creating a luxurious and moody atmosphere. The background is deep black with ethereal green bokeh light particles floating in the air. The overall mood is silent, exclusive, and technologically sophisticated." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCKno0SIebyubxAozI3Y1uERdHovGQFMpA6rLxkU3lrP8hwqtbCoOHu-rjvR0bayvw3k7OPtaJhNH-z8zN36lCgvjlI7zjXERzNDVD8vfsIjmcH9Fumk-F9q39JggcsfBX56NJojgEC7EybAIaQVIRF2ClrKpsXVvGDJLBUXPT9pQ1F905anc7B17YYI3JggmaGs4QQk67ibPLGvlfABTBmBuKwlKnlB2DXKo0WcKK64rVC91gItGS80Y8RSwQ5hLkRlt6XWm25Nqs')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background"></div>
+</div>
+<div class="relative z-10 text-center max-w-4xl mx-auto px-container-padding">
+<h2 class="font-headline-xl text-on-surface mb-stack-lg">Step Into the Forest.</h2>
+<p class="font-body-lg text-on-surface-variant mb-stack-lg opacity-80 leading-relaxed">
+                The terminal is ready for your inquiry. Begin the onboarding process to unlock institutional-grade liquidity and unmatched security protocols.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-gutter">
+<button class="bg-primary text-on-primary px-12 py-5 rounded-full font-bold font-headline-md text-xl hover:scale-105 transition-all shadow-2xl shadow-primary/30">
+                    Apply for Access
+                </button>
+</div>
+<div class="mt-12 flex justify-center gap-8 text-on-surface-variant opacity-40">
+<div class="flex items-center gap-2"><span class="material-symbols-outlined text-sm" data-icon="lock">lock</span> 256-bit SSL</div>
+<div class="flex items-center gap-2"><span class="material-symbols-outlined text-sm" data-icon="verified_user">verified_user</span> ISO 27001</div>
+<div class="flex items-center gap-2"><span class="material-symbols-outlined text-sm" data-icon="public">public</span> Global Reach</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant/20 w-full py-stack-lg">
+<div class="flex flex-col md:flex-row justify-between items-center px-container-padding gap-stack-md max-w-7xl mx-auto">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tighter">OBSIDIAN FOREST</span>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-60 text-center md:text-left">
+                    © 2024 OBSIDIAN FOREST. ALL RIGHTS RESERVED. PRIVATE BANKING FOR THE DISCERNING.
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-gutter">
+<a class="text-on-surface-variant font-body-md hover:text-on-surface underline transition-all" href="#">Institutional</a>
+<a class="text-on-surface-variant font-body-md hover:text-on-surface underline transition-all" href="#">Security Protocols</a>
+<a class="text-on-surface-variant font-body-md hover:text-on-surface underline transition-all" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant font-body-md hover:text-on-surface underline transition-all" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions and Atmospheric Effects
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if(x > 0 && x < rect.width && y > 0 && y < rect.height) {
+                    card.style.background = radial-gradient(circle at ${x}px ${y}px, rgba(45, 90, 67, 0.15), rgba(17, 17, 17, 0.8));
+                } else {
+                    card.style.background = rgba(17, 17, 17, 0.7);
+                }
+            });
+        });
 
-@keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes slideInLeft{from{opacity:0;transform:translateX(-60px)}to{opacity:1;transform:translateX(0)}}
-@keyframes slideInRight{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
-@keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(22,163,74,0.3)}50%{box-shadow:0 0 40px rgba(22,163,74,0.6)}}
-@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+        // Scroll reveal logic
+        const reveal = () => {
+            const reveals = document.querySelectorAll('.glass-card, section h2, section p');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('opacity-100');
+                    reveals[i].classList.remove('opacity-0', 'translate-y-10');
+                }
+            }
+        };
 
-.animate-fade-up{opacity:0;animation:fadeInUp 0.8s ease forwards}
-.animate-fade{opacity:0;animation:fadeIn 1s ease forwards}
-.animate-slide-left{opacity:0;animation:slideInLeft 0.8s ease forwards}
-.animate-slide-right{opacity:0;animation:slideInRight 0.8s ease forwards}
-.delay-1{animation-delay:0.1s}
-.delay-2{animation-delay:0.2s}
-.delay-3{animation-delay:0.3s}
-.delay-4{animation-delay:0.4s}
-
-.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;transition:all 0.4s ease;background:transparent}
-.navbar.scrolled{background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-border);padding:12px 40px}
-.nav-left{display:flex;align-items:center;gap:12px}
-.nav-logo{width:40px;height:40px;display:flex;align-items:center;justify-content:center}
-.nav-logo svg{width:100%;height:100%}
-.nav-brand{font-size:20px;font-weight:800;letter-spacing:-0.5px}
-.nav-brand span{color:var(--green-light)}
-.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
-.nav-links a{color:var(--gray);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.3s;position:relative}
-.nav-links a:hover{color:var(--white)}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--green);transition:width 0.3s}
-.nav-links a:hover::after{width:100%}
-.nav-right{display:flex;align-items:center;gap:16px}
-
-.lang-selector{position:relative}
-.lang-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:var(--glass);border:1px solid var(--glass-border);color:var(--white);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.3s}
-.lang-btn:hover{background:rgba(22,163,74,0.1);border-color:var(--green)}
-.lang-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--black-card);border:1px solid var(--glass-border);border-radius:12px;padding:8px;min-width:160px;opacity:0;visibility:hidden;transform:translateY(-10px);transition:all 0.3s;z-index:100}
-.lang-dropdown.active{opacity:1;visibility:visible;transform:translateY(0)}
-.lang-option{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:all 0.2s;font-size:13px;color:var(--gray)}
-.lang-option:hover{background:var(--green-dark);color:var(--white)}
-
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
-.btn-primary{background:var(--green);color:var(--white);box-shadow:var(--glow-soft)}
-.btn-primary:hover{background:var(--green-light);transform:translateY(-2px);box-shadow:var(--glow)}
-.btn-outline{background:transparent;color:var(--white);border:1px solid var(--glass-border)}
-.btn-outline:hover{border-color:var(--green);background:rgba(22,163,74,0.1)}
-.btn-glow{animation:glowPulse 2s ease infinite}
-.btn-login{padding:10px 24px;background:var(--green);color:var(--white);border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.3s;display:inline-flex;align-items:center;gap:8px}
-.btn-login:hover{background:var(--green-light);transform:translateY(-2px);box-shadow:var(--glow)}
-
-.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 40px 80px}
-.hero-bg{position:absolute;inset:0;z-index:0}
-.hero-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(22,163,74,0.15) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(22,163,74,0.08) 0%,transparent 50%);z-index:1}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(22,163,74,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(22,163,74,0.03) 1px,transparent 1px);background-size:60px 60px;z-index:0}
-.hero-content{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:2;width:100%}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:50px;background:var(--glass);border:1px solid var(--glass-border);font-size:13px;color:var(--green-light);margin-bottom:24px;backdrop-filter:blur(10px)}
-.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s ease infinite}
-.hero-title{font-size:64px;font-weight:900;line-height:1.1;letter-spacing:-2px;margin-bottom:24px;background:linear-gradient(135deg,var(--white) 0%,var(--gray) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-title span{color:var(--green-light);-webkit-text-fill-color:var(--green-light)}
-.hero-desc{font-size:18px;color:var(--gray);max-width:520px;margin-bottom:40px;line-height:1.7}
-.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
-.hero-stats{display:flex;gap:48px;margin-top:60px;padding-top:40px;border-top:1px solid var(--glass-border)}
-.stat-item{text-align:center}
-.stat-num{font-size:36px;font-weight:800;color:var(--green-light);display:block}
-.stat-label{font-size:13px;color:var(--gray);margin-top:4px}
-
-.hero-visual{position:relative;display:flex;justify-content:center;align-items:center}
-.phone-mockup{width:280px;height:560px;background:var(--black-card);border-radius:40px;border:2px solid var(--glass-border);padding:12px;position:relative;animation:float 6s ease-in-out infinite;box-shadow:0 40px 80px rgba(0,0,0,0.6),0 0 60px rgba(22,163,74,0.1)}
-.phone-screen{width:100%;height:100%;background:linear-gradient(180deg,#1a1a1a 0%,#0a0a0a 100%);border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column}
-.phone-notch{width:120px;height:24px;background:var(--black);border-radius:0 0 16px 16px;position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:10}
-.phone-header{padding:40px 20px 20px;text-align:center}
-.phone-balance{font-size:32px;font-weight:800;color:var(--white)}
-.phone-balance-label{font-size:12px;color:var(--gray);margin-top:4px}
-.phone-card{width:85%;margin:0 auto;height:140px;background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:16px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
-.phone-card::before{content:'';position:absolute;top:-50%;right:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 70%);animation:rotate 20s linear infinite}
-.phone-card-num{font-size:14px;font-weight:600;letter-spacing:2px;color:rgba(255,255,255,0.9);font-family:monospace}
-.phone-card-name{font-size:12px;color:rgba(255,255,255,0.7)}
-.phone-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px}
-.phone-action{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px;border-radius:12px;background:var(--glass);border:1px solid var(--glass-border);transition:all 0.3s}
-.phone-action:hover{background:rgba(22,163,74,0.1);border-color:var(--green)}
-.phone-action-icon{width:40px;height:40px;border-radius:12px;background:var(--green-dark);display:flex;align-items:center;justify-content:center;color:var(--white);font-size:18px}
-.phone-action-label{font-size:11px;color:var(--gray)}
-.phone-transactions{padding:0 20px;flex:1;overflow:hidden}
-.phone-tx-title{font-size:12px;font-weight:600;color:var(--gray);margin-bottom:12px}
-.phone-tx-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--glass-border)}
-.phone-tx-icon{width:36px;height:36px;border-radius:10px;background:var(--green-dark);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--white)}
-.phone-tx-info{flex:1}
-.phone-tx-name{font-size:13px;font-weight:600;color:var(--white)}
-.phone-tx-date{font-size:11px;color:var(--gray)}
-.phone-tx-amount{font-size:13px;font-weight:700;color:var(--green-light)}
-.glow-orb{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(22,163,74,0.2) 0%,transparent 70%);filter:blur(40px);animation:float 8s ease-in-out infinite}
-.glow-orb-1{top:10%;right:10%;animation-delay:0s}
-.glow-orb-2{bottom:20%;left:5%;width:200px;height:200px;background:radial-gradient(circle,rgba(22,163,74,0.1) 0%,transparent 70%);animation-delay:-4s}
-
-.features{padding:120px 40px;background:var(--black-soft);position:relative}
-.features::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent)}
-.section-header{text-align:center;max-width:600px;margin:0 auto 80px}
-.section-label{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:50px;background:var(--glass);border:1px solid var(--glass-border);font-size:12px;color:var(--green-light);margin-bottom:20px;text-transform:uppercase;letter-spacing:1px;font-weight:600}
-.section-title{font-size:42px;font-weight:800;letter-spacing:-1px;margin-bottom:16px}
-.section-desc{font-size:17px;color:var(--gray);line-height:1.7}
-.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1280px;margin:0 auto}
-.feature-card{padding:40px 32px;border-radius:20px;background:var(--black-card);border:1px solid var(--glass-border);transition:all 0.4s ease;position:relative;overflow:hidden}
-.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--green-light));transform:scaleX(0);transition:transform 0.4s ease}
-.feature-card:hover{transform:translateY(-8px);border-color:var(--green);box-shadow:0 20px 40px rgba(0,0,0,0.4),var(--glow-soft)}
-.feature-card:hover::before{transform:scaleX(1)}
-.feature-icon{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--green-dark),var(--green));display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:24px;color:var(--white);box-shadow:var(--glow-soft)}
-.feature-title{font-size:20px;font-weight:700;margin-bottom:12px}
-.feature-desc{font-size:14px;color:var(--gray);line-height:1.7}
-
-.security{padding:120px 40px;position:relative;overflow:hidden}
-.security-content{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.security-visual{position:relative}
-.security-card{width:100%;max-width:480px;background:var(--black-card);border:1px solid var(--glass-border);border-radius:24px;padding:40px;position:relative;overflow:hidden}
-.security-card::after{content:'';position:absolute;inset:0;border-radius:24px;padding:1px;background:linear-gradient(135deg,var(--green),transparent,transparent);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
-.security-shield{width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,var(--green),var(--green-light));display:flex;align-items:center;justify-content:center;margin-bottom:24px;font-size:36px;color:var(--white);box-shadow:var(--glow)}
-.security-list{list-style:none;display:flex;flex-direction:column;gap:16px}
-.security-list li{display:flex;align-items:center;gap:14px;font-size:15px;color:var(--gray)}
-.security-check{width:24px;height:24px;border-radius:50%;background:var(--green-dark);display:flex;align-items:center;justify-content:center;color:var(--white);font-size:12px}
-
-.testimonials{padding:120px 40px;background:var(--black-soft);position:relative}
-.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1280px;margin:0 auto}
-.testimonial-card{padding:32px;border-radius:20px;background:var(--black-card);border:1px solid var(--glass-border);transition:all 0.4s}
-.testimonial-card:hover{border-color:var(--green);transform:translateY(-4px)}
-.testimonial-stars{display:flex;gap:4px;margin-bottom:16px;color:var(--green-light);font-size:16px}
-.testimonial-text{font-size:15px;color:var(--gray);line-height:1.8;margin-bottom:24px;font-style:italic}
-.testimonial-author{display:flex;align-items:center;gap:14px}
-.testimonial-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--green-dark),var(--green));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--white)}
-.testimonial-name{font-size:15px;font-weight:600;color:var(--white)}
-.testimonial-role{font-size:13px;color:var(--gray)}
-
-.cta{padding:100px 40px;position:relative;overflow:hidden}
-.cta-inner{max-width:900px;margin:0 auto;text-align:center;padding:80px 40px;border-radius:32px;background:linear-gradient(135deg,var(--green-dark),var(--green));position:relative;overflow:hidden}
-.cta-inner::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");opacity:0.5}
-.cta-title{font-size:42px;font-weight:800;color:var(--white);margin-bottom:16px;position:relative;z-index:1}
-.cta-desc{font-size:18px;color:rgba(255,255,255,0.8);margin-bottom:40px;position:relative;z-index:1;max-width:500px;margin-left:auto;margin-right:auto}
-.cta-btns{display:flex;gap:16px;justify-content:center;position:relative;z-index:1;flex-wrap:wrap}
-.cta-btn-white{background:var(--white);color:var(--black);padding:14px 32px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.3s;display:inline-flex;align-items:center;gap:8px}
-.cta-btn-white:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,0.3)}
-.cta-btn-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.3);padding:14px 32px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:all 0.3s;display:inline-flex;align-items:center;gap:8px}
-.cta-btn-outline:hover{background:rgba(255,255,255,0.1);border-color:var(--white)}
-
-.footer{padding:60px 40px 30px;background:var(--black);border-top:1px solid var(--glass-border)}
-.footer-content{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px}
-.footer-brand{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-.footer-brand .nav-logo{width:36px;height:36px}
-.footer-brand-text{font-size:18px;font-weight:800}
-.footer-brand-text span{color:var(--green-light)}
-.footer-desc{font-size:14px;color:var(--gray);line-height:1.7;max-width:300px}
-.footer-title{font-size:14px;font-weight:700;color:var(--white);margin-bottom:20px;text-transform:uppercase;letter-spacing:1px}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:12px}
-.footer-links a{color:var(--gray);text-decoration:none;font-size:14px;transition:color 0.3s}
-.footer-links a:hover{color:var(--green-light)}
-.footer-bottom{margin-top:50px;padding-top:30px;border-top:1px solid var(--glass-border);display:flex;justify-content:space-between;align-items:center;max-width:1280px;margin-left:auto;margin-right:auto}
-.footer-copy{font-size:13px;color:var(--gray-dark)}
-.footer-socials{display:flex;gap:16px}
-.footer-socials a{width:40px;height:40px;border-radius:10px;background:var(--glass);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;color:var(--gray);transition:all 0.3s;text-decoration:none}
-.footer-socials a:hover{background:var(--green-dark);color:var(--white);border-color:var(--green)}
-
-.mobile-menu-btn{display:none;width:40px;height:40px;border-radius:10px;background:var(--glass);border:1px solid var(--glass-border);align-items:center;justify-content:center;color:var(--white);cursor:pointer}
-.mobile-menu{position:fixed;inset:0;background:var(--black);z-index:999;display:flex;flex-direction:column;padding:80px 40px 40px;transform:translateX(100%);transition:transform 0.4s ease}
-.mobile-menu.active{transform:translateX(0)}
-.mobile-menu-close{position:absolute;top:20px;right:20px;width:40px;height:40px;border-radius:10px;background:var(--glass);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;color:var(--white);cursor:pointer;font-size:20px}
-.mobile-menu-links{list-style:none;display:flex;flex-direction:column;gap:24px}
-.mobile-menu-links a{color:var(--white);text-decoration:none;font-size:24px;font-weight:700}
-.mobile-menu-links a:hover{color:var(--green-light)}
-.mobile-menu-footer{margin-top:auto}
-
-@media(max-width:1024px){
-  .hero-content{grid-template-columns:1fr;gap:60px;text-align:center}
-  .hero-title{font-size:48px}
-  .hero-desc{margin:0 auto 40px}
-  .hero-btns{justify-content:center}
-  .hero-stats{justify-content:center}
-  .features-grid{grid-template-columns:repeat(2,1fr)}
-  .security-content{grid-template-columns:1fr;gap:60px}
-  .testimonials-grid{grid-template-columns:repeat(2,1fr)}
-  .footer-content{grid-template-columns:1fr 1fr;gap:40px}
-}
-@media(max-width:768px){
-  .navbar{padding:12px 20px}
-  .nav-links,.nav-right .btn-login{display:none}
-  .mobile-menu-btn{display:flex}
-  .hero{padding:100px 20px 60px}
-  .hero-title{font-size:36px}
-  .hero-desc{font-size:16px}
-  .hero-stats{flex-direction:column;gap:24px}
-  .features{padding:80px 20px}
-  .features-grid{grid-template-columns:1fr}
-  .section-title{font-size:32px}
-  .testimonials{padding:80px 20px}
-  .testimonials-grid{grid-template-columns:1fr}
-  .cta{padding:60px 20px}
-  .cta-title{font-size:28px}
-  .footer-content{grid-template-columns:1fr;gap:40px}
-  .footer-bottom{flex-direction:column;gap:20px;text-align:center}
-}
-
-.reveal{opacity:0;transform:translateY(40px);transition:all 0.8s ease}
-.reveal.active{opacity:1;transform:translateY(0)}
-[2:06 PM, 6/23/2026] Tochukwu: 
-part2 = '''
-<nav class="navbar" id="navbar">
-  <div class="nav-left">
-    <div class="nav-logo">
-      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M100 20 C100 20, 40 50, 40 100 C40 150, 100 180, 100 180 C100 180, 160 150, 160 100 C160 50, 100 20, 100 20 Z" fill="#1a1a1a" stroke="#16a34a" stroke-width="3"/>
-        <path d="M100 40 C100 40, 55 65, 55 100 C55 135, 100 160, 100 160 C100 160, 145 135, 145 100 C145 65, 100 40, 100 40 Z" fill="#1a1a1a" stroke="#22c55e" stroke-width="2" opacity="0.8"/>
-        <path d="M100 60 C100 60, 70 80, 70 100 C70 120, 100 140, 100 140 C100 140, 130 120, 130 100 C130 80, 100 60, 100 60 Z" fill="#1a1a1a" stroke="#16a34a" stroke-widt…
-[2:06 PM, 6/23/2026] Tochukwu: # Write Part 3 - Testimonials, CTA, Footer, and JavaScript
-
-part3 = '''
-<section class="testimonials" id="testimonials">
-  <div class="section-header reveal">
-    <div class="section-label">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-      <span data-i18n="reviews_label">Testimonials</span>
-    </div>
-    <h2 class="section-title" data-i18n="reviews_title">Loved by Millions</h2>
-    <p class="section-desc" data-i18n="reviews_desc">See what our customers have to say about their experience with Santander Ban…
-[2:07 PM, 6/23/2026] Tochukwu: # Write Part 4 - JavaScript translations and closing tags
-
-part4 = r'''
-const translations = {
-  en: {
-    nav_features: "Features", nav_security: "Security", nav_reviews: "Reviews", nav_contact: "Contact",
-    login: "Login", hero_badge: "Trusted by 2M+ customers worldwide",
-    hero_title: "Banking Made Simple, Secure & Smart",
-    hero_desc: "Experience the future of digital banking with Santander. Send money instantly, track spending in real-time, and grow your wealth.",
-    get_started: "Get Started", watch_demo: "Watch Demo",
-    stat_users: "Active Users", stat_uptime: "Uptime", stat_countries: "Countries",
-    total_balance: "Total Balance", send: "Send", request: "Request", exchange: "Exchange", recent: "Recent",
-    features_label: "Why Choose Us", features_title: "Powerful Features for Modern Banking",
-    features_desc: "Everything you need to manage your money, all in one place. Built for speed, security, and simplicity.",
-    feat_1_title: "Instant Transfers", feat_1_desc: "Send money to anyone, anywhere in the world in seconds. Zero delays, zero hassle. Real-time processing 24/7.",
-    feat_2_title: "Bank-Grade Security", feat_2_desc: "256-bit encryption, biometric authentication, and real-time fraud monitoring keep your funds safe around the clock.",
-    feat_3_title: "Smart Analytics", feat_3_desc: "Track spending patterns, set budgets, and get personalized insights to help you save more and spend smarter.",
-    feat_4_title: "Multi-Currency", feat_4_desc: "Hold, exchange, and spend in 50+ currencies with competitive rates. Perfect for travelers and global businesses.",
-    feat_5_title: "Virtual Cards", feat_5_desc: "Create unlimited virtual cards for online shopping. Freeze, unfreeze, or delete anytime with a single tap.",
-    feat_6_title: "Savings Goals", feat_6_desc: "Set custom savings targets, automate deposits, and watch your money grow with competitive interest rates.",
-    security_label: "Your Security", security_title: "Protected at Every Level",
-    security_desc: "We employ military-grade security protocols to ensure your data and funds are always protected. Sleep easy knowing your money is in safe hands.",
-    sec_1: "End-to-end 256-bit AES encryption", sec_2: "Biometric & two-factor authentication",
-    sec_3: "Real-time AI fraud detection", sec_4: "FDIC insured up to $250,000", sec_5: "24/7 security monitoring center",
-    security_card_title: "Security First", security_card_desc: "Your account is protected by multiple layers of security",
-    reviews_label: "Testimonials", reviews_title: "Loved by Millions",
-    reviews_desc: "See what our customers have to say about their experience with Santander Bank.",
-    review_1: "Santander Bank completely transformed how I manage my finances. The instant transfers and smart analytics have saved me hours every month. Absolutely love it!",
-    review_2: "The security features give me peace of mind. I travel frequently and the multi-currency support is a game changer. Best banking app I have ever used.",
-    review_3: "I switched from a traditional bank and never looked back. The interface is beautiful, transfers are instant, and customer support is actually helpful. 10/10.",
-    cta_title: "Ready to Take Control?", cta_desc: "Join over 2 million users who trust Santander Bank for their daily financial needs. Sign up in under 2 minutes.",
-    login_now: "Login Now", learn_more: "Learn More",
-    footer_desc: "The future of digital banking. Secure, fast, and built for the modern world. Manage your money with confidence.",
-    footer_product: "Product", footer_features: "Features", footer_security: "Security", footer_pricing: "Pricing", footer_api: "API",
-    footer_company: "Company", footer_about: "About", footer_careers: "Careers", footer_press: "Press", footer_blog: "Blog",
-    footer_support: "Support", footer_help: "Help Center", footer_contact: "Contact", footer_privacy: "Privacy", footer_terms: "Terms"
-  },
-  es: {
-    nav_features: "Caracteristicas", nav_security: "Seguridad", nav_reviews: "Resenas", nav_contact: "Contacto",
-    login: "Iniciar Sesion", hero_badge: "Confiado por mas de 2M de clientes en todo el mundo",
-    hero_title: "Banca Simple, Segura e Inteligente",
-    hero_desc: "Experimenta el futuro de la banca digital con Santander. Envia dinero al instante, rastrea gastos en tiempo real y haz crecer tu patrimonio.",
-    get_started: "Comenzar", watch_demo: "Ver Demo",
-    stat_users: "Usuarios Activos", stat_uptime: "Disponibilidad", stat_countries: "Paises",
-    total_balance: "Saldo Total", send: "Enviar", request: "Solicitar", exchange: "Cambiar", recent: "Recientes",
-    features_label: "Por Que Elegirnos", features_title: "Funciones Potentes para la Banca Moderna",
-    features_desc: "Todo lo que necesitas para administrar tu dinero, en un solo lugar. Construido para velocidad, seguridad y simplicidad.",
-    feat_1_title: "Transferencias Instantaneas", feat_1_desc: "Envia dinero a cualquier persona, en cualquier lugar del mundo en segundos. Sin demoras, sin complicaciones. Procesamiento 24/7.",
-    feat_2_title: "Seguridad Bancaria", feat_2_desc: "Encriptacion de 256 bits, autenticacion biometrica y monitoreo de fraude en tiempo real mantienen tus fondos seguros las 24 horas.",
-    feat_3_title: "Analiticas Inteligentes", feat_3_desc: "Rastrea patrones de gasto, establece presupuestos y obten insights personalizados para ahorrar mas y gastar mejor.",
-    feat_4_title: "Multi-Moneda", feat_4_desc: "Manten, cambia y gasta en mas de 50 monedas con tasas competitivas. Perfecto para viajeros y negocios globales.",
-    feat_5_title: "Tarjetas Virtuales", feat_5_desc: "Crea tarjetas virtuales ilimitadas para compras online. Congela, descongela o elimina en cualquier momento con un toque.",
-    feat_6_title: "Metas de Ahorro", feat_6_desc: "Establece objetivos de ahorro personalizados, automatiza depositos y observa como crece tu dinero con tasas de interes competitivas.",
-    security_label: "Tu Seguridad", security_title: "Protegido en Cada Nivel",
-    security_desc: "Empleamos protocolos de seguridad de grado militar para garantizar que tus datos y fondos esten siempre protegidos. Duerme tranquilo.",
-    sec_1: "Encriptacion AES de 256 bits de extremo a extremo", sec_2: "Autenticacion biometrica y de dos factores",
-    sec_3: "Deteccion de fraude con IA en tiempo real", sec_4: "Asegurado por FDIC hasta $250,000", sec_5: "Centro de monitoreo de seguridad 24/7",
-    security_card_title: "Seguridad Primero", security_card_desc: "Tu cuenta esta protegida por multiples capas de seguridad",
-    reviews_label: "Testimonios", reviews_title: "Amado por Millones",
-    reviews_desc: "Mira lo que nuestros clientes dicen sobre su experiencia con Santander Bank.",
-    review_1: "Santander Bank transformo completamente como administro mis finanzas. Las transferencias instantaneas y las analiticas inteligentes me han ahorrado horas cada mes. Me encanta!",
-    review_2: "Las funciones de seguridad me dan tranquilidad. Viajo frecuentemente y el soporte multi-moneda es un cambio de juego. La mejor app bancaria que he usado.",
-    review_3: "Cambie de un banco tradicional y nunca mire atras. La interfaz es hermosa, las transferencias son instantaneas y el soporte al cliente realmente ayuda. 10/10.",
-    cta_title: "Listo para Tomar el Control?", cta_desc: "Unete a mas de 2 millones de usuarios que confian en Santander Bank. Registrate en menos de 2 minutos.",
-    login_now: "Iniciar Sesion", learn_more: "Saber Mas",
-    footer_desc: "El futuro de la banca digital. Segura, rapida y construida para el mundo moderno. Administra tu dinero con confianza.",
-    footer_product: "Producto", footer_features: "Caracteristicas", footer_security: "Seguridad", footer_pricing: "Precios", footer_api: "API",
-    footer_company: "Empresa", footer_about: "Nosotros", footer_careers: "Carreras", footer_press: "Prensa", footer_blog: "Blog",
-    footer_support: "Soporte", footer_help: "Centro de Ayuda", footer_contact: "Contacto", footer_privacy: "Privacidad", footer_terms: "Terminos"
-  },
-  fr: {
-    nav_features: "Fonctionnalites", nav_security: "Securite", nav_reviews: "Avis", nav_contact: "Contact",
-    login: "Connexion", hero_badge: "Fait confiance par plus de 2M de clients dans le monde",
-    hero_title: "Banque Simple, Sure et Intelligente",
-    hero_desc: "Decouvrez l'avenir de la banque numerique avec Santander. Envoyez de l'argent instantanement, suivez vos depenses en temps reel.",
-    get_started: "Commencer", watch_demo: "Voir la Demo",
-    stat_users: "Utilisateurs Actifs", stat_uptime: "Disponibilite", stat_countries: "Pays",
-    total_balance: "Solde Total", send: "Envoyer", request: "Demander", exchange: "Echanger", recent: "Recents",
-    features_label: "Pourquoi Nous Choisir", features_title: "Fonctionnalites Puissantes pour la Banque Moderne",
-    features_desc: "Tout ce dont vous avez besoin pour gerer votre argent, au meme endroit. Concu pour la vitesse, la securite et la simplicite.",
-    feat_1_title: "Transferts Instantanes", feat_1_desc: "Envoyez de l'argent a n'importe qui, n'importe ou dans le monde en quelques secondes. Zero delai, zero tracas. Traitement 24/7.",
-    feat_2_title: "Securite Bancaire", feat_2_desc: "Chiffrement 256 bits, authentification biometrique et surveillance anti-fraude en temps reel protegent vos fonds 24h/24.",
-    feat_3_title: "Analyses Intelligentes", feat_3_desc: "Suivez vos habitudes de depenses, fixez des budgets et obtenez des insights personnalises pour economiser plus et depenser mieux.",
-    feat_4_title: "Multi-Devises", feat_4_desc: "Detenez, echangez et depensez en plus de 50 devises avec des taux competitifs. Parfait pour les voyageurs et les entreprises mondiales.",
-    feat_5_title: "Cartes Virtuelles", feat_5_desc: "Creez des cartes virtuelles illimitees pour les achats en ligne. Gelez, degelez ou supprimez a tout moment d'un seul toucher.",
-    feat_6_title: "Objectifs d'Epargne", feat_6_desc: "Fixez des objectifs d'epargne personnalises, automatisez les depots et regardez votre argent croitre avec des taux d'interet competitifs.",
-    security_label: "Votre Securite", security_title: "Protege a Chaque Niveau",
-    security_desc: "Nous employons des protocoles de securite de grade militaire pour garantir que vos donnees et fonds sont toujours proteges.",
-    sec_1: "Chiffrement AES 256 bits de bout en bout", sec_2: "Authentification biometrique et a deux facteurs",
-    sec_3: "Detection de fraude IA en temps reel", sec_4: "Assure FDIC jusqu'a 250 000 $", sec_5: "Centre de surveillance de securite 24/7",
-    security_card_title: "Securite d'Abord", security_card_desc: "Votre compte est protege par plusieurs couches de securite",
-    reviews_label: "Temoignages", reviews_title: "Aime par des Millions",
-    reviews_desc: "Voyez ce que nos clients disent de leur experience avec Santander Bank.",
-    review_1: "Santander Bank a completement transforme ma facon de gerer mes finances. Les transferts instantanes et les analyses intelligentes m'ont economise des heures chaque mois. J'adore!",
-    review_2: "Les fonctionnalites de securite me donnent la tranquillite d'esprit. Je voyage frequemment et le support multi-devises est un changement de jeu. La meilleure app bancaire que j'ai utilisee.",
-    review_3: "J'ai change d'une banque traditionnelle et je ne me suis jamais retourne. L'interface est belle, les transferts sont instantanes et le support client est reellement utile. 10/10.",
-    cta_title: "Pret a Prendre le Controle?", cta_desc: "Rejoignez plus de 2 millions d'utilisateurs qui font confiance a Santander Bank. Inscrivez-vous en moins de 2 minutes.",
-    login_now: "Connexion", learn_more: "En Savoir Plus",
-    footer_desc: "L'avenir de la banque numerique. Securisee, rapide et construite pour le monde moderne. Gerez votre argent en toute confiance.",
-    footer_product: "Produit", footer_features: "Fonctionnalites", footer_security: "Securite", footer_pricing: "Tarification", footer_api: "API",
-    footer_company: "Entreprise", footer_about: "A Propos", footer_careers: "Carrieres", footer_press: "Presse", footer_blog: "Blog",
-    footer_support: "Support", footer_help: "Centre d'Aide", footer_contact: "Contact", footer_privacy: "Confidentialite", footer_terms: "Conditions"
-  },
-  de: {
-    nav_features: "Funktionen", nav_security: "Sicherheit", nav_reviews: "Bewertungen", nav_contact: "Kontakt",
-    login: "Anmelden", hero_badge: "Von uber 2M Kunden weltweit vertraut",
-    hero_title: "Banking Einfach, Sicher und Intelligent",
-    hero_desc: "Erleben Sie die Zukunft des digitalen Bankings mit Santander. Senden Sie Geld sofort, verfolgen Sie Ausgaben in Echtzeit und lassen Sie Ihr Vermogen wachsen.",
-    get_started: "Loslegen", watch_demo: "Demo Ansehen",
-    stat_users: "Aktive Nutzer", stat_uptime: "Verfugbarkeit", stat_countries: "Lander",
-    total_balance: "Gesamtsaldo", send: "Senden", request: "Anfordern", exchange: "Tauschen", recent: "Kurzlich",
-    features_label: "Warum Wir", features_title: "Leistungsstarke Funktionen fur Modernes Banking",
-    features_desc: "Alles, was Sie brauchen, um Ihr Geld zu verwalten, an einem Ort. Entwickelt fur Geschwindigkeit, Sicherheit und Einfachheit.",
-    feat_1_title: "Sofortige Uberweisungen", feat_1_desc: "Senden Sie Geld an jeden, uberall auf der Welt in Sekunden. Keine Verzogerungen, kein Arger. Echtzeit-Verarbeitung 24/7.",
-    feat_2_title: "Bank-Level Sicherheit", feat_2_desc: "256-Bit-Verschlusselung, biometrische Authentifizierung und Echtzeit-Betrugsuberwachung halten Ihr Geld rund um die Uhr sicher.",
-    feat_3_title: "Intelligente Analytik", feat_3_desc: "Verfolgen Sie Ausgabenmuster, setzen Sie Budgets und erhalten Sie personalisierte Einblicke, um mehr zu sparen und intelligenter auszugeben.",
-    feat_4_title: "Multi-Wahrung", feat_4_desc: "Halten, tauschen und ausgeben in uber 50 Wahrungen mit wettbewerbsfahigen Kursen. Perfekt fur Reisende und globale Unternehmen.",
-    feat_5_title: "Virtuelle Karten", feat_5_desc: "Erstellen Sie unbegrenzte virtuelle Karten fur Online-Einkaufe. Einfrieren, auftauen oder loschen Sie jederzeit mit einem einzigen Tippen.",
-    feat_6_title: "Sparziele", feat_6_desc: "Setzen Sie individuelle Sparziele, automatisieren Sie Einzahlungen und sehen Sie zu, wie Ihr Geld mit wettbewerbsfahigen Zinssatzen wachst.",
-    security_label: "Ihre Sicherheit", security_title: "Auf Jeder Ebene Geschutzt",
-    security_desc: "Wir verwenden militarische Sicherheitsprotokolle, um sicherzustellen, dass Ihre Daten und Gelder immer geschutzt sind. Schlafen Sie ruhig.",
-    sec_1: "Ende-zu-Ende 256-Bit AES-Verschlusselung", sec_2: "Biometrische und Zwei-Faktor-Authentifizierung",
-    sec_3: "KI-Betrugserkennung in Echtzeit", sec_4: "FDIC versichert bis zu 250.000 $", sec_5: "24/7 Sicherheitsuberwachungszentrum",
-    security_card_title: "Sicherheit Zuerst", security_card_desc: "Ihr Konto ist durch mehrere Sicherheitsebenen geschutzt",
-    reviews_label: "Erfahrungsberichte", reviews_title: "Von Millionen Geliebt",
-    reviews_desc: "Sehen Sie, was unsere Kunden uber ihre Erfahrung mit Santander Bank sagen.",
-    review_1: "Santander Bank hat meine Art, meine Finanzen zu verwalten, komplett verandert. Die sofortigen Uberweisungen und die intelligente Analytik haben mir jeden Monat Stunden erspart. Absolut liebenswert!",
-    review_2: "Die Sicherheitsfunktionen geben mir Seelenfrieden. Ich reise haufig und die Multi-Wahrungsunterstutzung ist ein Game Changer. Die beste Banking-App, die ich je verwendet habe.",
-    review_3: "Ich habe von einer traditionellen Bank gewechselt und nie zuruckgeschaut. Die Oberflache ist wunderschon, Uberweisungen sind sofortig und der Kundensupport ist wirklich hilfreich. 10/10.",
-    cta_title: "Bereit, die Kontrolle zu Ubernehmen?", cta_desc: "Schliessen Sie sich uber 2 Millionen Nutzern an, die Santander Bank vertrauen. Melden Sie sich in unter 2 Minuten an.",
-    login_now: "Anmelden", learn_more: "Mehr Erfahren",
-    footer_desc: "Die Zukunft des digitalen Bankings. Sicher, schnell und fur die moderne Welt gebaut. Verwalten Sie Ihr Geld mit Zuversicht.",
-    footer_product: "Produkt", footer_features: "Funktionen", footer_security: "Sicherheit", footer_pricing: "Preise", footer_api: "API",
-    footer_company: "Unternehmen", footer_about: "Uber Uns", footer_careers: "Karriere", footer_press: "Presse", footer_blog: "Blog",
-    footer_support: "Support", footer_help: "Hilfezentrum", footer_contact: "Kontakt", footer_privacy: "Datenschutz", footer_terms: "Bedingungen"
-  },
-  pt: {
-    nav_features: "Recursos", nav_security: "Seguranca", nav_reviews: "Avaliacoes", nav_contact: "Contato",
-    login: "Entrar", hero_badge: "Confiado por mais de 2M de clientes em todo o mundo",
-    hero_title: "Banco Simples, Seguro e Inteligente",
-    hero_desc: "Experimente o futuro do banco digital com Santander. Envie dinheiro instantaneamente, acompanhe gastos em tempo real e faca seu patrimonio crescer.",
-    get_started: "Comecar", watch_demo: "Ver Demo",
-    stat_users: "Usuarios Ativos", stat_uptime: "Disponibilidade", stat_countries: "Paises",
-    total_balance: "Saldo Total", send: "Enviar", request: "Solicitar", exchange: "Trocar", recent: "Recentes",
-    features_label: "Por Que Nos Escolher", features_title: "Recursos Poderosos para Banco Moderno",
-    features_desc: "Tudo que voce precisa para gerenciar seu dinheiro, em um so lugar. Construido para velocidade, seguranca e simplicidade.",
-    feat_1_title: "Transferencias Instantaneas", feat_1_desc: "Envie dinheiro para qualquer pessoa, em qualquer lugar do mundo em segundos. Sem atrasos, sem complicacoes. Processamento 24/7.",
-    feat_2_title: "Seguranca de Nivel Bancario", feat_2_desc: "Criptografia de 256 bits, autenticacao biometrica e monitoramento de fraude em tempo real mantem seus fundos seguros 24 horas.",
-    feat_3_title: "Analises Inteligentes", feat_3_desc: "Acompanhe padroes de gastos, defina orcamentos e obtenha insights personalizados para ajudar a economizar mais e gastar melhor.",
-    feat_4_title: "Multi-Moeda", feat_4_desc: "Mantenha, troque e gaste em mais de 50 moedas com taxas competitivas. Perfeito para viajantes e negocios globais.",
-    feat_5_title: "Cartoes Virtuais", feat_5_desc: "Crie cartoes virtuais ilimitados para compras online. Congele, descongele ou exclua a qualquer momento com um toque.",
-    feat_6_title: "Metas de Economia", feat_6_desc: "Defina metas de economia personalizadas, automatize depositos e observe seu dinheiro crescer com taxas de juros competitivas.",
-    security_label: "Sua Seguranca", security_title: "Protegido em Cada Nivel",
-    security_desc: "Empregamos protocolos de seguranca de nivel militar para garantir que seus dados e fundos estejam sempre protegidos. Durma tranquilo.",
-    sec_1: "Criptografia AES de 256 bits de ponta a ponta", sec_2: "Autenticacao biometrica e de dois fatores",
-    sec_3: "Deteccao de fraude com IA em tempo real", sec_4: "Segurado pela FDIC ate $250.000", sec_5: "Centro de monitoramento de seguranca 24/7",
-    security_card_title: "Seguranca em Primeiro Lugar", security_card_desc: "Sua conta e protegida por multiplas camadas de seguranca",
-    reviews_label: "Depoimentos", reviews_title: "Amado por Milhoes",
-    reviews_desc: "Veja o que nossos clientes dizem sobre sua experiencia com o Santander Bank.",
-    review_1: "O Santander Bank transformou completamente como eu gerencio minhas financas. As transferencias instantaneas e as analises inteligentes me economizaram horas todo mes. Adoro!",
-    review_2: "Os recursos de seguranca me dao tranquilidade. Viajo frequentemente e o suporte multi-moeda e um divisor de aguas. O melhor app bancario que ja usei.",
-    review_3: "Mudei de um banco tradicional e nunca olhei para tras. A interface e linda, as transferencias sao instantaneas e o suporte ao cliente e realmente util. 10/10.",
-    cta_title: "Pronto para Assumir o Controle?", cta_desc: "Junte-se a mais de 2 milhoes de usuarios que confiam no Santander Bank. Cadastre-se em menos de 2 minutos.",
-    login_now: "Entrar Agora", learn_more: "Saiba Mais",
-    footer_desc: "O futuro do banco digital. Seguro, rapido e construido para o mundo moderno. Gerencie seu dinheiro com confianca.",
-    footer_product: "Produto", footer_features: "Recursos", footer_security: "Seguranca", footer_pricing: "Precos", footer_api: "API",
-    footer_company: "Empresa", footer_about: "Sobre", footer_careers: "Carreiras", footer_press: "Imprensa", footer_blog: "Blog",
-    footer_support: "Suporte", footer_help: "Central de Ajuda", footer_contact: "Contato", footer_privacy: "Privacidade", footer_terms: "Termos"
-  },
-  zh: {
-    nav_features: "功能", nav_security: "安全", nav_reviews: "评价", nav_contact: "联系",
-    login: "登录", hero_badge: "全球超过200万客户信赖",
-    hero_title: "简单、安全、智能的银行服务",
-    hero_desc: "体验Santander数字银行的未来。即时汇款，实时追踪支出，让您的财富增长。",
-    get_started: "立即开始", watch_demo: "观看演示",
-    stat_users: "活跃用户", stat_uptime: "正常运行时间", stat_countries: "国家",
-    total_balance: "总余额", send: "发送", request: "请求", exchange: "兑换", recent: "最近",
-    features_label: "为什么选择我们", features_title: "现代银行的强大功能",
-    features_desc: "管理资金所需的一切，尽在一处。为速度、安全和简单而生。",
-    feat_1_title: "即时转账", feat_1_desc: "几秒钟内将资金发送给世界各地的任何人。零延迟，零麻烦。24/7实时处理。",
-    feat_2_title: "银行级安全", feat_2_desc: "256位加密、生物识别认证和实时欺诈监控，全天候保护您的资金安全。",
-    feat_3_title: "智能分析", feat_3_desc: "追踪支出模式，设定预算，获取个性化洞察，帮助您多存钱、更聪明地消费。",
-    feat_4_title: "多币种", feat_4_desc: "以有竞争力的汇率持有、兑换和消费50多种货币。非常适合旅行者和全球企业。",
-    feat_5_title: "虚拟卡", feat_5_desc: "创建无限虚拟卡用于网上购物。随时一键冻结、解冻或删除。",
-    feat_6_title: "储蓄目标", feat_6_desc: "设定自定义储蓄目标，自动化存款，在有竞争力的利率下看着您的钱增长。",
-    security_label: "您的安全", security_title: "每个层级都受到保护",
-    security_desc: "我们采用军用级安全协议，确保您的数据和资金始终受到保护。安心入睡。",
-    sec_1: "端到端256位AES加密", sec_2: "生物识别和双因素认证",
-    sec_3: "实时AI欺诈检测", sec_4: "FDIC保险高达25万美元", sec_5: "24/7安全监控中心",
-    security_card_title: "安全至上", security_card_desc: "您的账户受到多层安全保护",
-    reviews_label: "客户评价", reviews_title: "深受数百万人喜爱",
-    reviews_desc: "看看我们的客户对Santander Bank的体验有何评价。",
-    review_1: "Santander Bank彻底改变了我管理财务的方式。即时转账和智能分析每月为我节省了数小时。太喜欢了！",
-    review_2: "安全功能让我安心。我经常旅行，多币种支持是一个改变游戏规则的功能。我用过的最好的银行应用。",
-    review_3: "我从传统银行转过来，从未回头。界面美观，转账即时，客户支持确实有帮助。满分10分。",
-    cta_title: "准备好掌控一切了吗？", cta_desc: "加入超过200万信任Santander Bank的用户。不到2分钟即可注册。",
-    login_now: "立即登录", learn_more: "了解更多",
-    footer_desc: "数字银行的未来。安全、快速，为现代世界而建。自信地管理您的资金。",
-    footer_product: "产品", footer_features: "功能", footer_security: "安全", footer_pricing: "定价", footer_api: "API",
-    footer_company: "公司", footer_about: "关于我们", footer_careers: "职业", footer_press: "新闻", footer_blog: "博客",
-    footer_support: "支持", footer_help: "帮助中心", footer_contact: "联系", footer_privacy: "隐私", footer_terms: "条款"
-  }
-};
-
-let currentLang = 'en';
-
-function setLanguage(lang) {
-  currentLang = lang;
-  const t = translations[lang];
-  if (!t) return;
-  
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (t[key] !== undefined) {
-      el.textContent = t[key];
-    }
-  });
-  
-  const langLabels = { en: 'EN', es: 'ES', fr: 'FR', de: 'DE', pt: 'PT', zh: 'ZH' };
-  document.getElementById('currentLang').textContent = langLabels[lang] || 'EN';
-  document.getElementById('langDropdown').classList.remove('active');
-}
-
-function toggleLang() {
-  document.getElementById('langDropdown').classList.toggle('active');
-}
-
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.lang-selector')) {
-    document.getElementById('langDropdown').classList.remove('active');
-  }
-});
-
-function toggleMobileMenu() {
-  document.getElementById('mobileMenu').classList.toggle('active');
-}
-
-window.addEventListener('scroll', function() {
-  const navbar = document.getElementById('navbar');
-  if (window.scrollY > 50) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
-  }
-});
-
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.reveal').forEach(el => {
-  revealObserver.observe(el);
-});
-</script>
-</body>
-</html>
+        window.addEventListener('scroll', reveal);
+        // Set initial state
+        document.querySelectorAll('.glass-card, section h2, section p').forEach(el => {
+            el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+        });
+        reveal(); // Run once on load
+    </script>
+</body></html>
