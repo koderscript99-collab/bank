@@ -1,59 +1,232 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign In</title>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SANTANDER BANK | Secure Access</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/font/sans.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#c8c6c5",
+                        "primary-container": "#2d5a43",
+                        "error": "#ffb4ab",
+                        "primary": "#a1d1b4",
+                        "on-primary-container": "#9fcfb2",
+                        "on-tertiary-fixed-variant": "#254f3a",
+                        "secondary-fixed": "#e5e2e1",
+                        "inverse-on-surface": "#303030",
+                        "tertiary-fixed-dim": "#a4d1b6",
+                        "surface-container-low": "#1b1b1b",
+                        "on-secondary": "#313030",
+                        "on-primary-fixed": "#002112",
+                        "inverse-primary": "#3a674f",
+                        "primary-fixed": "#bceecf",
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#e2e2e2",
+                        "tertiary-container": "#305944",
+                        "outline": "#8b938c",
+                        "outline-variant": "#414943",
+                        "tertiary": "#a4d1b6",
+                        "on-surface-variant": "#c0c9c1",
+                        "on-background": "#e2e2e2",
+                        "surface-container-high": "#2a2a2a",
+                        "error-container": "#93000a",
+                        "surface-tint": "#a1d1b4",
+                        "on-primary-fixed-variant": "#224f39",
+                        "surface-variant": "#353535",
+                        "on-secondary-fixed-variant": "#474746",
+                        "on-primary": "#063824",
+                        "background": "#000000",
+                        "on-tertiary-container": "#a1ceb3",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-dim": "#131313",
+                        "surface-container-highest": "#353535",
+                        "on-tertiary-fixed": "#002113",
+                        "on-surface": "#e2e2e2",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-container": "#1f1f1f",
+                        "primary-fixed-dim": "#a1d1b4",
+                        "on-tertiary": "#0c3825",
+                        "tertiary-fixed": "#bfedd1",
+                        "surface": "#131313",
+                        "surface-bright": "#393939",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-error": "#690005",
+                        "secondary-container": "#474746",
+                        "on-secondary-container": "#b7b5b4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-lg": "32px",
+                        "container-padding": "24px",
+                        "gutter": "16px",
+                        "stack-sm": "4px",
+                        "stack-md": "12px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Hanken Grotesk"],
+                        "label-sm": ["Geist"],
+                        "body-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "mono-data": ["Geist"],
+                        "headline-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        };
+    </script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#f9fafb;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;--accent:#2563eb;--accent-dim:rgba(37,99,235,.08);--red:#dc2626;--red-dim:rgba(220,38,38,.08);--radius:10px}
-[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d27;--border:#2a2d3a;--text:#f3f4f6;--muted:#6b7280;--accent-dim:rgba(37,99,235,.15)}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;transition:background .3s}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:36px;width:100%;max-width:400px}
-.brand{font-size:22px;font-weight:800;margin-bottom:6px}
-.brand span{color:var(--accent)}
-.sub{font-size:13.5px;color:var(--muted);margin-bottom:28px}
-.form-group{margin-bottom:16px}
-label{display:block;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
-input{width:100%;padding:11px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius);font-size:14px;color:var(--text);outline:none;font-family:inherit;transition:border-color .2s}
-input:focus{border-color:var(--accent)}
-.btn{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;margin-top:6px;transition:opacity .15s}
-.btn:hover{opacity:.9}
-.err{background:var(--red-dim);border:1px solid var(--red);color:var(--red);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:16px}
-.footer{text-align:center;margin-top:18px;font-size:13px;color:var(--muted)}
-.footer a{color:var(--accent);text-decoration:none;font-weight:600}
-.theme-toggle{position:fixed;top:16px;right:16px;background:var(--surface);border:1px solid var(--border);border-radius:50%;width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted)}
-[data-theme="light"] .moon{display:none}
-[data-theme="dark"] .sun{display:none}
-</style>
+        body {
+            background-color: #000000;
+            color: #e2e2e2;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(24px);
+            border: 1px solid #222222;
+            border-top: 1px solid #2d5a43;
+        }
+        .input-glow:focus {
+            border-color: #2d5a43;
+            box-shadow: 0 0 10px rgba(45, 90, 67, 0.3);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
 </head>
-<body>
-<button class="theme-toggle" id="tt">
-  <svg class="sun" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-  <svg class="moon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-</button>
-<div class="card">
-  <div class="brand">My<span>Portal</span></div>
-  <div class="sub">Sign in to your account</div>
-  {% if messages %}{% for m in messages %}<div class="err">{{ m }}</div>{% endfor %}{% endif %}
-  <form method="post">
-    {% csrf_token %}
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" name="username" autofocus required placeholder="Enter username">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" name="password" required placeholder="Enter password">
-    </div>
-    <button class="btn" type="submit">Sign In</button>
-  </form>
-  <div class="footer">Admin? <a href="{% url 'admin-pin-login' %}">PIN Login →</a></div>
+<body class="font-body-md text-body-md overflow-hidden h-screen w-full flex items-center justify-center p-container-padding">
+<!-- Background Shader Layer -->
+<div class="fixed inset-0 z-0">
+
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background"></div>
 </div>
+<!-- Login Container -->
+<main class="relative z-10 w-full max-w-md animate-fade-in">
+<!-- Header / Logo Area -->
+<div class="flex flex-col items-center mb-stack-lg">
+<div class="w-16 h-16 mb-stack-md rounded-full overflow-hidden border border-outline-variant/30 bg-surface-container">
+<img alt="Santander Logo" class="w-full h-full object-contain p-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAH0yu3s5fqfygHqj9feKvD5RpFAiv73V4eT1NmSIz4ORES2wZtfsjSmqXuyp7JkTAHl3wnBHqSL3dthMEgas_Qnj8z0p-N5Zlevjnp6m8lbolU75EQETlZ_KQwxHgCnBRrWzKBxU8lsq15aqe6cCKjKIRBQGApbtN6AijJbXlxNeDAONPdhejucUjNYMnZhUJkLXU6yy6TywPr5JcBrdC_0ehiqcRlRnv2lCgwNid8-cLsIxmiMrXIHXjYSGM1tux_B_VLqesoacI"/>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight">SANTANDER BANK</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mt-1 opacity-60">Private Banking Terminal</p>
+</div>
+<!-- Glassmorphism Login Card -->
+<div class="glass-card rounded-xl p-stack-lg shadow-2xl">
+<header class="mb-stack-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-base">Sign in to your account</h2>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-70">Enter your credentials to access the obsidian network.</p>
+</header>
+<!-- Error Messages Handling -->
+            {% if messages %}
+            <div class="mb-stack-md p-stack-md bg-error-container/20 border border-error/30 rounded-lg">
+                {% for message in messages %}
+                <div class="flex items-center gap-base text-error">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+<p class="font-label-sm text-label-sm">{{ message }}</p>
+</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form action="" class="space-y-stack-md" method="POST">
+                {% csrf_token %}
+                
+                <!-- Username Field -->
+<div class="space-y-base">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase opacity-50 block ml-1" for="username">Account Identifier</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant text-[20px]">person</span>
+<input class="w-full bg-background border border-outline-variant py-3 pl-10 pr-4 rounded-lg font-mono-data text-mono-data focus:outline-none input-glow transition-all duration-300 placeholder:text-on-surface-variant/30" id="username" name="username" placeholder="e.g. OBSIDIAN-7742" required="" type="text"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-base">
+<div class="flex justify-between items-center px-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase opacity-50" for="password">Access Protocol</label>
+<a class="font-label-sm text-label-sm text-primary hover:underline transition-all" href="#">Reset?</a>
+</div>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant text-[20px]">lock</span>
+<input class="w-full bg-background border border-outline-variant py-3 pl-10 pr-4 rounded-lg font-mono-data text-mono-data focus:outline-none input-glow transition-all duration-300 placeholder:text-on-surface-variant/30" id="password" name="password" placeholder="••••••••••••" required="" type="password"/>
+</div>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center gap-base py-base">
+<input class="w-4 h-4 rounded border-outline-variant bg-background text-primary-container focus:ring-primary-container" id="remember" type="checkbox"/>
+<label class="font-label-sm text-label-sm text-on-surface-variant cursor-pointer" for="remember">Trust this secure terminal</label>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-headline-md py-4 rounded-lg transition-all active:scale-[0.98] flex items-center justify-center gap-base shadow-lg shadow-primary-container/20" type="submit">
+                    ACCESS TERMINAL
+                    <span class="material-symbols-outlined">login</span>
+</button>
+</form>
+</div>
+<!-- Footer / Home Link -->
+<footer class="mt-stack-lg flex flex-col items-center gap-stack-md text-center">
+<div class="flex items-center gap-stack-md font-label-sm text-label-sm text-on-surface-variant opacity-40 uppercase tracking-widest">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="/">
+<span class="material-symbols-outlined text-[16px]">home</span>
+                    RETURN TO DOMAIN
+                </a>
+<span class="block w-1 h-1 bg-outline-variant rounded-full"></span>
+<a class="hover:text-primary transition-colors" href="#">SECURITY PROTOCOLS</a>
+</div>
+<p class="font-label-sm text-[10px] text-on-surface-variant/30 max-w-xs uppercase">
+                Obsidian Forest v4.2.1 | Encrypted Session Required | Unauthorized Access is Logged
+            </p>
+</footer>
+</main>
+<!-- Subtle atmospheric light flare -->
+<div class="fixed top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[120px] pointer-events-none"></div>
+<div class="fixed bottom-0 left-0 w-1/4 h-1/4 bg-primary-container/10 blur-[100px] pointer-events-none"></div>
 <script>
-const h=document.documentElement;
-h.setAttribute('data-theme',localStorage.getItem('theme')||'light');
-document.getElementById('tt').onclick=()=>{const n=h.getAttribute('data-theme')==='light'?'dark':'light';h.setAttribute('data-theme',n);localStorage.setItem('theme',n)};
-</script>
-</body>
-</html>
+        // Micro-interaction for input fields
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.parentElement.classList.add('opacity-100');
+            });
+        });
+
+        // Simple Fade-in animation class replacement
+        document.addEventListener('DOMContentLoaded', () => {
+            const main = document.querySelector('main');
+            main.style.opacity = '0';
+            main.style.transform = 'translateY(10px)';
+            main.style.transition = 'all 0.8s ease-out';
+            
+            setTimeout(() => {
+                main.style.opacity = '1';
+                main.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body></html>

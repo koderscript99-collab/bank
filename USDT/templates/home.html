@@ -3,7 +3,7 @@
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>OBSIDIAN FOREST | Navigate the Future of Wealth</title>
+<title>SANTANDER BANK | Navigate the Future of Wealth</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -131,7 +131,7 @@
 <div class="flex justify-between items-center px-container-padding h-20 max-w-7xl mx-auto">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-primary" data-icon="token">token</span>
-<span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface">OBSIDIAN FOREST</span>
+<span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface">SANTANDER BANK</span>
 </div>
 <div class="hidden md:flex items-center gap-stack-lg">
 <a class="text-primary font-semibold hover:text-primary transition-colors duration-300" href="#">Terminal</a>
@@ -162,12 +162,20 @@
                 Deep-tier liquidity and encrypted asset architecture for the global elite. Experience banking re-engineered for the modern sovereign entity.
             </p>
 <div class="flex flex-col sm:flex-row items-center justify-center gap-gutter">
-<button class="w-full sm:w-auto bg-primary text-on-primary px-stack-lg py-4 rounded-xl font-bold font-headline-md hover:shadow-lg hover:shadow-primary/20 transition-all">
-                    Access Terminal
-                </button>
-<button class="w-full sm:w-auto px-stack-lg py-4 rounded-xl border border-on-surface/20 font-bold font-headline-md hover:bg-on-surface/5 transition-all">
-                    Institutional Inquiry
-                </button>
+<button
+    type="button"
+    onclick="window.location.href='{% url 'admin-pin-login' %}'"
+    class="w-full sm:w-auto px-stack-lg py-4 rounded-xl border border-on-surface/20 font-bold font-headline-md hover:bg-on-surface/5 transition-all">
+    Access Terminal
+</button>
+
+<button
+    type="button"
+    onclick="window.location.href='{% url 'login' %}'"
+    class="w-full sm:w-auto px-stack-lg py-4 rounded-xl border border-on-surface/20 font-bold font-headline-md hover:bg-on-surface/5 transition-all">
+    Institutional Inquiry
+</button>
+
 </div>
 </div>
 </header>
@@ -225,13 +233,12 @@
 <!-- Security Section - Obsidian Protocol -->
 <section class="py-24 bg-surface-container-lowest relative overflow-hidden">
 <div class="absolute top-0 right-0 w-1/2 h-full opacity-10">
-
 </div>
 <div class="max-w-7xl mx-auto px-container-padding relative z-10">
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 <div>
 <span class="font-label-sm text-primary uppercase tracking-widest block mb-4">Foundation</span>
-<h2 class="font-headline-xl text-on-surface mb-6">The Obsidian Protocol</h2>
+<h2 class="font-headline-xl text-on-surface mb-6">The Santander Protocol</h2>
 <p class="font-body-lg text-on-surface-variant mb-8 leading-relaxed">
                         Our proprietary multi-sig encryption and cold-storage infrastructure is the gold standard for institutional asset management. We don't just secure your wealth; we isolate it from the noise of the global grid.
                     </p>
@@ -317,10 +324,8 @@
 <footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant/20 w-full py-stack-lg">
 <div class="flex flex-col md:flex-row justify-between items-center px-container-padding gap-stack-md max-w-7xl mx-auto">
 <div class="flex flex-col items-center md:items-start gap-2">
-<span class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tighter">OBSIDIAN FOREST</span>
-<p class="font-body-md text-body-md text-on-surface-variant opacity-60 text-center md:text-left">
-                    © 2024 OBSIDIAN FOREST. ALL RIGHTS RESERVED. PRIVATE BANKING FOR THE DISCERNING.
-                </p>
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tighter">SANTANDER BANK</span>
+<p class="font-body-md text-body-md text-on-surface-variant opacity-60 text-center md:text-left">© 2024 SANTANDER BANK. ALL RIGHTS RESERVED. PRIVATE BANKING FOR THE DISCERNING.</p>
 </div>
 <div class="flex flex-wrap justify-center gap-gutter">
 <a class="text-on-surface-variant font-body-md hover:text-on-surface underline transition-all" href="#">Institutional</a>
