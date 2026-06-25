@@ -1150,6 +1150,8 @@ def admin_user_detail(request, user_id):
     transactions = Transaction.objects.filter(user=target)[:20]
     control_logs = AccountControlLog.objects.filter(target_user=target)[:20]
     withdrawals = WithdrawalRequest.objects.filter(user=target)
+    notifications = Notification.objects.filter(user=target).order_by('-created_at')
+    unread_count = notifications.filter(is_read=False).count()
 
     # get activation payment if exists
     activation_payment = ActivationPayment.objects.filter(user=target).first()

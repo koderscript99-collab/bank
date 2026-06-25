@@ -1,324 +1,243 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
+<html class="dark" lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>SANTANDER | Account Management</title>
-<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        body {
-            background-color: #000000;
-            color: #e2e2e2;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .glass-card {
-            background: rgba(17, 17, 17, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid #222222;
-        }
-        .glass-card:hover {
-            border-color: #2d5a43;
-        }
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #000000;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2d5a43;
-            border-radius: 10px;
-        }
-    </style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  body {
+    background-color: #000000;
+    color: #e2e2e2;
+    -webkit-tap-highlight-color: transparent;
+    min-height: max(884px, 100dvh);
+  }
+  .glass-card {
+    background: rgba(17, 17, 17, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid #222222;
+  }
+  .glass-card:hover { border-color: #2d5a43; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #000000; }
+  ::-webkit-scrollbar-thumb { background: #2d5a43; border-radius: 10px; }
+</style>
 <script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "outline-variant": "#414943",
-                      "surface-container-low": "#1b1b1b",
-                      "on-primary-fixed-variant": "#224f39",
-                      "surface-variant": "#353535",
-                      "on-primary-fixed": "#002112",
-                      "primary-fixed-dim": "#a1d1b4",
-                      "inverse-surface": "#e2e2e2",
-                      "on-tertiary": "#0c3825",
-                      "surface-bright": "#393939",
-                      "outline": "#8b938c",
-                      "tertiary": "#a4d1b6",
-                      "surface": "#131313",
-                      "on-secondary-container": "#b7b5b4",
-                      "error-container": "#93000a",
-                      "on-surface": "#e2e2e2",
-                      "on-surface-variant": "#c0c9c1",
-                      "on-error-container": "#ffdad6",
-                      "secondary": "#c8c6c5",
-                      "secondary-fixed-dim": "#c8c6c5",
-                      "primary": "#a1d1b4",
-                      "surface-container-highest": "#353535",
-                      "surface-container-high": "#2a2a2a",
-                      "tertiary-container": "#305944",
-                      "primary-container": "#2d5a43",
-                      "tertiary-fixed": "#bfedd1",
-                      "on-tertiary-fixed-variant": "#254f3a",
-                      "on-secondary": "#313030",
-                      "on-tertiary-container": "#a1ceb3",
-                      "tertiary-fixed-dim": "#a4d1b6",
-                      "secondary-container": "#474746",
-                      "primary-fixed": "#bceecf",
-                      "on-error": "#690005",
-                      "on-tertiary-fixed": "#002113",
-                      "on-secondary-fixed": "#1c1b1b",
-                      "secondary-fixed": "#e5e2e1",
-                      "on-primary-container": "#9fcfb2",
-                      "on-secondary-fixed-variant": "#474746",
-                      "background": "#131313",
-                      "surface-dim": "#131313",
-                      "error": "#ffb4ab",
-                      "surface-tint": "#a1d1b4",
-                      "on-primary": "#063824",
-                      "inverse-primary": "#3a674f",
-                      "on-background": "#e2e2e2",
-                      "surface-container": "#1f1f1f",
-                      "inverse-on-surface": "#303030",
-                      "surface-container-lowest": "#0e0e0e"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "spacing": {
-                      "stack-md": "12px",
-                      "stack-lg": "32px",
-                      "container-padding": "24px",
-                      "gutter": "16px",
-                      "stack-sm": "4px",
-                      "base": "8px"
-              },
-              "fontFamily": {
-                      "mono-data": ["Geist"],
-                      "headline-xl": ["Hanken Grotesk"],
-                      "body-md": ["Hanken Grotesk"],
-                      "label-sm": ["Geist"],
-                      "headline-lg": ["Hanken Grotesk"],
-                      "headline-md": ["Hanken Grotesk"],
-                      "body-lg": ["Hanken Grotesk"]
-              },
-              "fontSize": {
-                      "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
-              }
-            },
-          },
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "outline-variant": "#414943", "surface-container-low": "#1b1b1b",
+          "on-primary-fixed-variant": "#224f39", "surface-variant": "#353535",
+          "on-primary-fixed": "#002112", "primary-fixed-dim": "#a1d1b4",
+          "inverse-surface": "#e2e2e2", "on-tertiary": "#0c3825",
+          "surface-bright": "#393939", "outline": "#8b938c",
+          "tertiary": "#a4d1b6", "surface": "#131313",
+          "on-secondary-container": "#b7b5b4", "error-container": "#93000a",
+          "on-surface": "#e2e2e2", "on-surface-variant": "#c0c9c1",
+          "on-error-container": "#ffdad6", "secondary": "#c8c6c5",
+          "secondary-fixed-dim": "#c8c6c5", "primary": "#a1d1b4",
+          "surface-container-highest": "#353535", "surface-container-high": "#2a2a2a",
+          "tertiary-container": "#305944", "primary-container": "#2d5a43",
+          "tertiary-fixed": "#bfedd1", "on-tertiary-fixed-variant": "#254f3a",
+          "on-secondary": "#313030", "on-tertiary-container": "#a1ceb3",
+          "tertiary-fixed-dim": "#a4d1b6", "secondary-container": "#474746",
+          "primary-fixed": "#bceecf", "on-error": "#690005",
+          "on-tertiary-fixed": "#002113", "on-secondary-fixed": "#1c1b1b",
+          "secondary-fixed": "#e5e2e1", "on-primary-container": "#9fcfb2",
+          "on-secondary-fixed-variant": "#474746", "background": "#131313",
+          "surface-dim": "#131313", "error": "#ffb4ab",
+          "surface-tint": "#a1d1b4", "on-primary": "#063824",
+          "inverse-primary": "#3a674f", "on-background": "#e2e2e2",
+          "surface-container": "#1f1f1f", "inverse-on-surface": "#303030",
+          "surface-container-lowest": "#0e0e0e"
+        },
+        borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+        spacing: { "stack-md": "12px", "stack-lg": "32px", "container-padding": "24px", "gutter": "16px", "stack-sm": "4px", "base": "8px" },
+        fontFamily: { "mono-data": ["Geist"], "headline-xl": ["Hanken Grotesk"], "body-md": ["Hanken Grotesk"], "label-sm": ["Geist"], "headline-lg": ["Hanken Grotesk"], "headline-md": ["Hanken Grotesk"], "body-lg": ["Hanken Grotesk"] },
+        fontSize: {
+          "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+          "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+          "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+          "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+          "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+          "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+          "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
         }
-    </script>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
+      }
     }
-  </style>
-  </head>
+  }
+</script>
+</head>
 <body class="font-body-md text-on-surface">
+
 <!-- Top AppBar -->
 <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 flex justify-between items-center px-container-padding h-16">
-<div class="flex items-center gap-4">
-<a class="active:scale-95 transition-transform duration-200 text-primary" href="javascript:history.back()">
-<span class="material-symbols-outlined">arrow_back</span>
-</a>
-<h1 class="font-headline-md text-headline-md font-bold tracking-tighter text-primary">SANTANDER</h1>
-</div>
-<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container text-xs font-bold">
-            {{ target.username|slice:":1"|upper }}
-        </div>
+  <div class="flex items-center gap-4">
+    <a class="active:scale-95 transition-transform duration-200 text-primary" href="javascript:history.back()">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </a>
+    <h1 class="font-headline-md text-headline-md font-bold tracking-tighter text-primary">SANTANDER</h1>
+  </div>
+  <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container text-xs font-bold">
+    {{ target.username|slice:":1"|upper }}
+  </div>
 </header>
+
 <main class="pt-20 pb-32 px-4 max-w-lg mx-auto space-y-6">
-<!-- User Snapshot Card -->
-<section class="glass-card rounded-xl p-6 relative overflow-hidden">
-<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
-<div class="relative z-10">
-<div class="flex justify-between items-start mb-6">
-<div>
-<p class="font-label-sm text-label-sm text-on-surface-variant/50 uppercase tracking-widest mb-1">Account Holder</p>
-<h2 class="font-headline-md text-headline-md text-primary">{{ target.username }}</h2>
-</div>
-<span class="px-2 py-1 rounded bg-primary-container/20 text-primary text-[10px] font-bold uppercase tracking-tighter">
-                        {% if target.is_active %}Active{% else %}Inactive{% endif %}
-                    </span>
-</div>
-<div class="grid grid-cols-2 gap-4">
-<div>
-<p class="font-label-sm text-label-sm text-on-surface-variant/50 mb-1">Available Balance</p>
-<p class="font-mono-data text-xl text-on-surface">${{ target.wallet.balance|default:"0.00" }}</p>
-</div>
-<div class="text-right">
-<p class="font-label-sm text-label-sm text-on-surface-variant/50 mb-1">Notifications</p>
-<p class="font-mono-data text-xl text-primary">{{ notifications.count|default:"0" }} <span class="text-sm opacity-50">unread</span></p>
-</div>
-</div>
-</div>
-</section>
-<!-- Send Notification Form -->
-<section class="space-y-4">
-<h3 class="font-label-sm text-label-sm text-on-surface-variant/50 uppercase tracking-widest px-1">Broadcast Message</h3>
-<div class="glass-card rounded-xl p-6">
 
+  <!-- Send Notification Form -->
+  <section class="space-y-4">
+    <h3 class="font-label-sm text-label-sm text-on-surface-variant/50 uppercase tracking-widest px-1">Broadcast Message</h3>
+    <form method="post" action="">
+      {% csrf_token %}
+      <div class="glass-card rounded-xl p-6 space-y-4">
+        <div class="space-y-1">
+          <label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Title</label>
+          <input
+            class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors font-body-md"
+            name="title" placeholder="Account Alert..." required type="text"/>
+        </div>
+        <div class="space-y-1">
+          <label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Message</label>
+          <textarea
+            class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors font-body-md"
+            name="message" placeholder="Please verify your recent activity..." required rows="3"></textarea>
+        </div>
+        <button
+          class="w-full bg-primary-container text-on-primary-container font-bold py-4 rounded-lg active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2"
+          type="submit">
+          <span class="material-symbols-outlined text-sm">send</span>
+          DISPATCH NOTIFICATION
+        </button>
+      </div>
+    </form>
+  </section>
 
-<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Title</label>
-<input class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors font-body-md" name="title" placeholder="Account Alert..." required="" type="text"/>
-</div>
-<div class="space-y-1">
-<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Message</label>
-<textarea class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-primary transition-colors font-body-md" name="message" placeholder="Please verify your recent activity..." required="" rows="3"></textarea>
-</div>
-<button class="w-full bg-primary-container text-on-primary-container font-bold py-4 rounded-lg active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2" type="submit">
-<span class="material-symbols-outlined text-sm">send</span>
-                        DISPATCH NOTIFICATION
-                    </button>
-</form>
-</div>
-</section>
-<!-- Notification History -->
-<section class="space-y-4">
-<h3 class="font-label-sm text-label-sm text-on-surface-variant/50 uppercase tracking-widest px-1">Sent Notifications</h3>
-<div class="space-y-3">
-                {% for n in notifications %}
-                <div class="glass-card rounded-xl p-4 flex gap-4 items-start border-l-4 {% if not n.is_read %}border-l-primary{% else %}border-l-outline-variant/20{% endif %}">
-<div class="mt-1">
-                        {% if not n.is_read %}
-                        <div class="w-2 h-2 rounded-full bg-[#FFB300] shadow-[0_0_8px_#FFB300]"></div>
-                        {% else %}
-                        <div class="w-2 h-2 rounded-full bg-outline-variant/50"></div>
-                        {% endif %}
-                    </div>
-<div class="flex-1 min-w-0">
-<div class="flex justify-between items-start mb-1">
-<h4 class="font-bold text-on-surface truncate pr-2">{{ n.title }}</h4>
-<span class="font-label-sm text-[10px] text-on-surface-variant/40 whitespace-nowrap">{{ n.created_at|date:"M d, H:i" }}</span>
-</div>
-<p class="text-sm text-on-surface-variant/80 line-clamp-2 leading-relaxed">{{ n.message }}</p>
-</div>
-</div>
-                {% empty %}
-                <div class="glass-card rounded-xl p-8 text-center border-dashed">
-<span class="material-symbols-outlined text-4xl text-on-surface-variant/20 mb-2">inbox</span>
-<p class="text-on-surface-variant/40 font-label-sm">No notifications issued</p>
-</div>
-                {% endfor %}
-            </div>
-</section>
-<!-- Transaction History -->
-<section class="space-y-4">
-<h3 class="font-label-sm text-label-sm text-on-surface-variant/50 uppercase tracking-widest px-1">Transaction Ledger</h3>
-<div class="glass-card rounded-xl overflow-hidden">
-<div class="overflow-x-auto">
+  <!-- Notification History -->
+  <section class="space-y-4">
+    <h3 class="font-label-sm text-label-sm text-on-surface-variant/50 uppercase tracking-widest px-1">Sent Notifications</h3>
+    <div class="space-y-3">
+      {% for n in notifications %}
+      <div class="glass-card rounded-xl p-4 flex gap-4 items-start border-l-4 {% if not n.is_read %}border-l-primary{% else %}border-l-outline-variant/20{% endif %}">
+        <div class="mt-1">
+          {% if not n.is_read %}
+          <div class="w-2 h-2 rounded-full bg-[#FFB300] shadow-[0_0_8px_#FFB300]"></div>
+          {% else %}
+          <div class="w-2 h-2 rounded-full bg-outline-variant/50"></div>
+          {% endif %}
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex justify-between items-start mb-1">
+            <h4 class="font-bold text-on-surface truncate pr-2">{{ n.title }}</h4>
+            <span class="font-label-sm text-[10px] text-on-surface-variant/40 whitespace-nowrap">{{ n.created_at|date:"M d, H:i" }}</span>
+          </div>
+          <p class="text-sm text-on-surface-variant/80 line-clamp-2 leading-relaxed">{{ n.message }}</p>
+        </div>
+      </div>
+      {% empty %}
+      <div class="glass-card rounded-xl p-8 text-center border-dashed">
+        <span class="material-symbols-outlined text-4xl text-on-surface-variant/20 mb-2 block">inbox</span>
+        <p class="text-on-surface-variant/40 font-label-sm">No notifications issued</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
 
-                            {% for t in transactions %}
-                            
-                            {% empty %}
-                            
-                            {% endfor %}
-                        <table class="w-full text-left border-collapse">
-<thead class="bg-surface-container-high">
-<tr>
-<th class="px-4 py-3 font-label-sm text-[10px] text-on-surface-variant uppercase tracking-tighter">Reference</th>
-<th class="px-4 py-3 font-label-sm text-[10px] text-on-surface-variant uppercase tracking-tighter">Amount</th>
-<th class="px-4 py-3 font-label-sm text-[10px] text-on-surface-variant uppercase tracking-tighter">Status</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-white/5"><tr class="active:bg-white/5 transition-colors">
-<td class="px-4 py-4">
-<div class="flex flex-col">
-<span class="font-mono-data text-xs text-on-surface mb-0.5">#{{ t.reference|truncatechars:10 }}</span>
-<span class="text-[10px] text-on-surface-variant/60 uppercase">{{ t.transaction_type }}</span>
-</div>
-</td>
-<td class="px-4 py-4">
-<span class="font-mono-data text-sm font-bold {% if t.transaction_type == 'withdrawal' or t.transaction_type == 'fee' %}text-error{% else %}text-primary{% endif %}">
-                                        {% if t.transaction_type == 'withdrawal' or t.transaction_type == 'fee' %}-{% else %}+{% endif %}${{ t.amount }}
-                                    </span>
-</td>
-<td class="px-4 py-4">
-<div class="flex flex-col items-start gap-1">
-<span class="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-tighter {% if t.status == 'completed' %}bg-primary-container/20 text-primary {% elif t.status == 'pending' %}bg-tertiary-container/20 text-tertiary {% else %}bg-error-container/20 text-error{% endif %}">
-                                            {{ t.status }}
-                                        </span>
-<span class="text-[9px] text-on-surface-variant/40">{{ t.created_at|date:"d/m/y" }}</span>
-</div>
-</td>
-</tr><tr>
-<td class="px-4 py-12 text-center text-on-surface-variant/40 italic font-label-sm" colspan="3">
-                                    No transaction records found.
-                                </td>
-</tr></tbody>
-</table>
-</div>
-</div>
-</section>
+  <!-- Transaction History -->
+  <section class="space-y-4">
+    <h3 class="font-label-sm text-label-sm text-on-surface-variant/50 uppercase tracking-widest px-1">Transaction Ledger</h3>
+    <div class="glass-card rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-surface-container-high">
+            <tr>
+              <th class="px-4 py-3 font-label-sm text-[10px] text-on-surface-variant uppercase tracking-tighter">Reference</th>
+              <th class="px-4 py-3 font-label-sm text-[10px] text-on-surface-variant uppercase tracking-tighter">Amount</th>
+              <th class="px-4 py-3 font-label-sm text-[10px] text-on-surface-variant uppercase tracking-tighter">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5">
+            {% for t in transactions %}
+            <tr class="hover:bg-white/5 transition-colors">
+              <td class="px-4 py-4">
+                <div class="flex flex-col">
+                  <span class="font-mono-data text-xs text-on-surface mb-0.5">#{{ t.reference|truncatechars:10 }}</span>
+                  <span class="text-[10px] text-on-surface-variant/60 uppercase">{{ t.transaction_type }}</span>
+                </div>
+              </td>
+              <td class="px-4 py-4">
+                <span class="font-mono-data text-sm font-bold {% if t.transaction_type == 'withdrawal' or t.transaction_type == 'fee' %}text-error{% else %}text-primary{% endif %}">
+                  {% if t.transaction_type == 'withdrawal' or t.transaction_type == 'fee' %}-{% else %}+{% endif %}${{ t.amount }}
+                </span>
+              </td>
+              <td class="px-4 py-4">
+                <div class="flex flex-col items-start gap-1">
+                  <span class="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-tighter
+                    {% if t.status == 'completed' %}bg-primary-container/20 text-primary
+                    {% elif t.status == 'pending' %}bg-tertiary-container/20 text-tertiary
+                    {% else %}bg-error-container/20 text-error{% endif %}">
+                    {{ t.status }}
+                  </span>
+                  <span class="text-[9px] text-on-surface-variant/40">{{ t.created_at|date:"d/m/y" }}</span>
+                </div>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td class="px-4 py-12 text-center text-on-surface-variant/40 italic font-label-sm" colspan="3">
+                No transaction records found.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
 </main>
+
 <!-- Bottom Navigation Bar -->
 <nav class="fixed bottom-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-2xl border-t border-white/5 shadow-[0_-4px_24px_rgba(45,90,67,0.1)] flex justify-around items-center h-20 px-4 pb-safe">
-<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="#">
-<span class="material-symbols-outlined">home</span>
-<span class="font-label-sm text-label-sm">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center text-primary font-bold bg-primary-container/10 rounded-full py-1 px-3 active:scale-90 transition-all duration-300" href="#">
-<span class="material-symbols-outlined">account_balance_wallet</span>
-<span class="font-label-sm text-label-sm">Accounts</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="#">
-<span class="material-symbols-outlined">add_circle</span>
-<span class="font-label-sm text-label-sm">Deposit</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="#">
-<span class="material-symbols-outlined">history</span>
-<span class="font-label-sm text-label-sm">Activity</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span class="font-label-sm text-label-sm">Settings</span>
-</a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="{% url 'home' %}">
+    <span class="material-symbols-outlined">home</span>
+    <span class="font-label-sm text-label-sm">Home</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="{% url 'deposit-request' %}">
+    <span class="material-symbols-outlined">add_circle</span>
+    <span class="font-label-sm text-label-sm">Deposit</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="{% url 'request-withdrawal' %}">
+    <span class="material-symbols-outlined">withdrawal</span>
+    <span class="font-label-sm text-label-sm">Withdrawal</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="{% url 'profile' %}">
+    <span class="material-symbols-outlined">person</span>
+    <span class="font-label-sm text-label-sm">Profile</span>
+  </a>
 </nav>
-<!-- Subtle atmospheric background effect -->
-<div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px]"></div>
-<div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-primary/2 rounded-full blur-[150px]"></div>
-</div>
-<script>
-        // Micro-interaction: Subtle glow on card focus
-        document.querySelectorAll('input, textarea').forEach(el => {
-            el.addEventListener('focus', () => {
-                el.parentElement.classList.add('glow-focus');
-            });
-            el.addEventListener('blur', () => {
-                el.parentElement.classList.remove('glow-focus');
-            });
-        });
 
-        // Simple scroll observer for top app bar shadow
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 10) {
-                header.classList.add('shadow-xl');
-            } else {
-                header.classList.remove('shadow-xl');
-            }
-        });
-    </script>
-</body></html>
+<!-- Atmospheric background -->
+<div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
+  <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px]"></div>
+  <div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[150px]"></div>
+</div>
+
+<script>
+  document.querySelectorAll('input, textarea').forEach(el => {
+    el.addEventListener('focus', () => el.closest('.glass-card')?.classList.add('border-primary/30'));
+    el.addEventListener('blur',  () => el.closest('.glass-card')?.classList.remove('border-primary/30'));
+  });
+  window.addEventListener('scroll', () => {
+    document.querySelector('header').classList.toggle('shadow-xl', window.scrollY > 10);
+  });
+</script>
+</body>
+</html>

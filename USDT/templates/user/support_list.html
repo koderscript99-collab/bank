@@ -1,127 +1,280 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Support</title>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Santander Bank - Support Tickets</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&family=Geist:wght@400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "outline": "#8b938c",
+          "on-secondary-container": "#b7b5b4",
+          "on-tertiary-fixed": "#002113",
+          "tertiary-container": "#305944",
+          "surface-container-highest": "#353535",
+          "primary-fixed-dim": "#a1d1b4",
+          "on-secondary-fixed-variant": "#474746",
+          "surface-dim": "#131313",
+          "surface-bright": "#393939",
+          "background": "#131313",
+          "on-secondary-fixed": "#1c1b1b",
+          "on-surface-variant": "#c0c9c1",
+          "error": "#ffb4ab",
+          "on-primary-container": "#9fcfb2",
+          "primary": "#a1d1b4",
+          "on-tertiary-fixed-variant": "#254f3a",
+          "secondary-fixed": "#e5e2e1",
+          "surface": "#131313",
+          "on-primary-fixed-variant": "#224f39",
+          "tertiary-fixed-dim": "#a4d1b6",
+          "surface-container-high": "#2a2a2a",
+          "secondary": "#c8c6c5",
+          "inverse-primary": "#3a674f",
+          "error-container": "#93000a",
+          "on-primary": "#063824",
+          "on-background": "#e2e2e2",
+          "inverse-on-surface": "#303030",
+          "on-secondary": "#313030",
+          "on-primary-fixed": "#002112",
+          "surface-container": "#1f1f1f",
+          "secondary-container": "#474746",
+          "surface-container-lowest": "#0e0e0e",
+          "on-tertiary": "#0c3825",
+          "tertiary": "#a4d1b6",
+          "on-error": "#690005",
+          "on-error-container": "#ffdad6",
+          "on-surface": "#e2e2e2",
+          "on-tertiary-container": "#a1ceb3",
+          "surface-variant": "#353535",
+          "surface-tint": "#a1d1b4",
+          "primary-container": "#2d5a43",
+          "inverse-surface": "#e2e2e2",
+          "primary-fixed": "#bceecf",
+          "tertiary-fixed": "#bfedd1",
+          "secondary-fixed-dim": "#c8c6c5",
+          "surface-container-low": "#1b1b1b",
+          "outline-variant": "#414943"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+        "spacing": {
+          "base": "8px",
+          "gutter": "16px",
+          "stack-lg": "32px",
+          "stack-md": "12px",
+          "stack-sm": "4px",
+          "container-padding": "24px"
+        },
+        "fontFamily": {
+          "label-sm": ["Geist"],
+          "body-lg": ["Hanken Grotesk"],
+          "mono-data": ["Geist"],
+          "headline-xl": ["Hanken Grotesk"],
+          "body-md": ["Hanken Grotesk"],
+          "headline-md": ["Hanken Grotesk"],
+          "headline-lg": ["Hanken Grotesk"]
+        },
+        "fontSize": {
+          "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+          "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+          "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+          "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+          "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+          "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+          "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+        }
+      },
+    },
+  }
+</script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#f9fafb;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;--accent:#2563eb;--accent-dim:rgba(37,99,235,.08);--green:#16a34a;--green-dim:rgba(22,163,74,.08);--amber:#d97706;--amber-dim:rgba(217,119,6,.08);--red:#dc2626;--red-dim:rgba(220,38,38,.08);--sidebar-w:220px;--header-h:56px;--radius:10px}
-[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d27;--border:#2a2d3a;--text:#f3f4f6;--muted:#6b7280;--accent-dim:rgba(37,99,235,.15);--green-dim:rgba(22,163,74,.15);--amber-dim:rgba(217,119,6,.15);--red-dim:rgba(220,38,38,.15)}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s}
-.sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;transition:transform .3s}
-.logo{height:var(--header-h);display:flex;align-items:center;padding:0 18px;font-size:17px;font-weight:800;border-bottom:1px solid var(--border)}
-.logo span{color:var(--accent)}
-.nav{padding:12px 8px;flex:1}
-.nav a{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;font-size:13.5px;color:var(--muted);text-decoration:none;margin-bottom:2px;transition:background .15s,color .15s}
-.nav a:hover{background:var(--accent-dim);color:var(--text)}
-.nav a.active{background:var(--accent-dim);color:var(--accent);font-weight:600}
-.sidebar-foot{padding:12px;border-top:1px solid var(--border)}
-.ucard{display:flex;align-items:center;gap:9px;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:9px;margin-bottom:8px}
-.av{width:32px;height:32px;border-radius:50%;background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
-.signout{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:13px;color:var(--red);text-decoration:none}
-.signout:hover{background:var(--red-dim)}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:150}
-.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column}
-.topbar{height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:100}
-.menu-btn{display:none;background:none;border:none;cursor:pointer;color:var(--muted);padding:6px}
-.page-title{font-size:14px;font-weight:600}
-.tt{width:34px;height:34px;border-radius:50%;background:var(--bg);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted)}
-[data-theme="light"] .moon{display:none}
-[data-theme="dark"] .sun{display:none}
-.content{padding:24px;max-width:720px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px}
-.card-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border)}
-.card-title{font-size:14px;font-weight:600}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:opacity .15s}
-.btn:hover{opacity:.9}
-.btn-accent{background:var(--accent);color:#fff}
-.btn-sm{padding:5px 12px;font-size:12px}
-.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
-.badge{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600}
-.badge-green{background:var(--green-dim);color:var(--green)}
-.badge-amber{background:var(--amber-dim);color:var(--amber)}
-.badge-red{background:var(--red-dim);color:var(--red)}
-.badge-muted{background:var(--bg);color:var(--muted);border:1px solid var(--border)}
-table{width:100%;border-collapse:collapse;font-size:13.5px}
-th{text-align:left;padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);border-bottom:1px solid var(--border)}
-td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:middle}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--bg)}
-.empty{text-align:center;padding:40px;color:var(--muted);font-size:13.5px}
-.msg{padding:11px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;border-left:3px solid}
-.msg.success{background:var(--green-dim);border-color:var(--green);color:var(--green)}
-.msg.error{background:var(--red-dim);border-color:var(--red);color:var(--red)}
-@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.overlay.open{display:block}.main{margin-left:0}.menu-btn{display:flex}.content{padding:14px}}
+  body {
+    background-color: #131313;
+    color: #e2e2e2;
+    font-family: 'Hanken Grotesk', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: max(884px, 100dvh);
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .glass-card {
+    background: rgba(27, 27, 27, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .glass-card:hover {
+    border-color: #2d5a43;
+    transform: translateY(-2px);
+  }
+  .status-badge {
+    font-family: 'Geist', monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: #0e0e0e; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: #2d5a43; border-radius: 10px; }
+
+  /* Django message tags */
+  .alert-success { background: rgba(161,209,180,0.1); border-color: rgba(161,209,180,0.3); color: #a1d1b4; }
+  .alert-error   { background: rgba(255,180,171,0.1); border-color: rgba(255,180,171,0.3); color: #ffb4ab; }
+  .alert-warning { background: rgba(255,222,100,0.1); border-color: rgba(255,222,100,0.3); color: #ffe08a; }
+  .alert-info    { background: rgba(161,209,180,0.1); border-color: rgba(161,209,180,0.2); color: #a1d1b4; }
 </style>
 </head>
-<body>
-<div class="overlay" id="ov" onclick="closeSB()"></div>
-<aside class="sidebar" id="sb">
-  <div class="logo">My<span>Portal</span></div>
-  <nav class="nav">
-    <a href="{% url 'dashboard' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Dashboard</a>
-    <a href="{% url 'request-withdrawal' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Withdraw</a>
-    <a href="{% url 'notifications' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>Notifications</a>
-    <a href="{% url 'support-list' %}" class="active"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Support</a>
-    {% if not request.user.account_activated %}<a href="{% url 'activate-account' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Activate</a>{% endif %}
-    <a href="{% url 'profile' %}"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</a>
-  </nav>
-  <div class="sidebar-foot">
-    <div class="ucard">
-      <div class="av">{{ request.user.username|first|upper }}</div>
-      <div>
-        <div style="font-size:13px;font-weight:600">{{ request.user.username }}</div>
-        <div style="font-size:11px;color:var(--muted)">{% if request.user.account_activated %}<span style="color:var(--green)">● Active</span>{% else %}<span style="color:var(--amber)">● Pending</span>{% endif %}</div>
-      </div>
-    </div>
-    <a href="{% url 'logout' %}" class="signout"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</a>
+<body class="min-h-screen flex flex-col pb-24">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-xl border-b border-white/5 bg-background/80 flex justify-between items-center px-container-padding h-16">
+  <div class="flex items-center gap-3">
+    <span class="material-symbols-outlined text-primary">menu</span>
+    <h1 class="font-headline-md text-headline-md font-bold tracking-tighter text-primary">SANTANDER</h1>
   </div>
-</aside>
-<div class="main">
-  <header class="topbar">
-    <div style="display:flex;align-items:center;gap:10px">
-      <button class="menu-btn" onclick="openSB()"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-      <span class="page-title">Support</span>
-    </div>
-    <button class="tt" id="tt">
-      <svg class="sun" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg class="moon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-    </button>
-  </header>
-  <div class="content">
-    {% if messages %}{% for m in messages %}<div class="msg {{ m.tags }}">{{ m }}</div>{% endfor %}{% endif %}
-    <div class="card">
-      <div class="card-head">
-        <span class="card-title">My Tickets</span>
-        <a href="{% url 'support-create' %}" class="btn btn-accent btn-sm">+ New Ticket</a>
-      </div>
-      {% if tickets %}
-      <table>
-        <thead><tr><th>#</th><th>Subject</th><th>Status</th><th>Last Update</th><th></th></tr></thead>
-        <tbody>
-        {% for t in tickets %}
-        <tr>
-          <td style="color:var(--muted);font-size:12px">#{{ t.id }}</td>
-          <td style="font-weight:500">{{ t.subject }}</td>
-          <td><span class="badge {% if t.status == 'open' %}badge-red{% elif t.status == 'pending' %}badge-amber{% else %}badge-muted{% endif %}">{{ t.status }}</span></td>
-          <td style="color:var(--muted);font-size:12.5px">{{ t.updated_at|date:"M d, Y" }}</td>
-          <td><a href="{% url 'support-detail' t.id %}" class="btn btn-outline btn-sm">View</a></td>
-        </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-      {% else %}
-      <div class="empty">No tickets yet. <a href="{% url 'support-create' %}" style="color:var(--accent)">Create one →</a></div>
-      {% endif %}
-    </div>
+  <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container text-xs font-bold overflow-hidden">
+    {% if request.user.is_authenticated %}
+      {{ request.user.username|first|upper }}
+    {% else %}
+      <span class="material-symbols-outlined text-sm">person</span>
+    {% endif %}
   </div>
+</header>
+
+<main class="flex-grow pt-24 px-container-padding max-w-4xl mx-auto w-full">
+
+  <!-- Django Flash Messages -->
+  {% if messages %}
+  <div class="space-y-3 mb-6">
+    {% for message in messages %}
+    <div class="alert-{{ message.tags }} border p-4 rounded-xl flex items-start gap-3">
+      <span class="material-symbols-outlined">
+        {% if message.tags == 'success' %}check_circle
+        {% elif message.tags == 'error' %}error
+        {% elif message.tags == 'warning' %}warning
+        {% else %}info{% endif %}
+      </span>
+      <p class="font-body-md text-body-md">{{ message }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Header Section -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h2 class="font-headline-lg text-headline-lg text-on-background">My Tickets</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant/70">Manage your support requests and inquiries</p>
+    </div>
+    <a href="{% url 'support-create' %}" class="bg-primary-container hover:opacity-80 active:scale-95 transition-all text-on-primary-container font-bold px-4 py-2 rounded-xl flex items-center gap-2">
+      <span class="material-symbols-outlined text-sm">add</span>
+      <span class="font-label-sm text-label-sm">New Ticket</span>
+    </a>
+  </div>
+
+  <!-- Tickets List -->
+  <div class="space-y-4">
+    {% if tickets %}
+      {% for t in tickets %}
+      <div class="glass-card p-6 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4
+        {% if t.status == 'closed' %}opacity-70{% endif %}">
+        <div class="flex items-center gap-4">
+          <div class="h-12 w-12 rounded-xl bg-surface-container-high flex items-center justify-center border border-outline-variant">
+            {% if t.status == 'open' %}
+              <span class="material-symbols-outlined text-primary">support_agent</span>
+            {% elif t.status == 'pending' %}
+              <span class="material-symbols-outlined text-tertiary">payment</span>
+            {% else %}
+              <span class="material-symbols-outlined text-outline">verified</span>
+            {% endif %}
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="font-mono-data text-mono-data text-outline">#{{ t.id }}</span>
+              {% if t.status == 'open' %}
+                <span class="status-badge px-2 py-0.5 rounded text-[10px] bg-primary/10 text-primary border border-primary/20">Open</span>
+              {% elif t.status == 'pending' %}
+                <span class="status-badge px-2 py-0.5 rounded text-[10px] bg-on-secondary-container/20 text-on-secondary-container border border-white/5">Pending</span>
+              {% else %}
+                <span class="status-badge px-2 py-0.5 rounded text-[10px] bg-outline/10 text-outline border border-outline/20">Closed</span>
+              {% endif %}
+            </div>
+            <h3 class="font-body-lg text-body-lg text-on-surface font-semibold">{{ t.subject }}</h3>
+            <p class="font-label-sm text-label-sm text-outline-variant mt-1">Last update: {{ t.updated_at|date:"M d, Y" }}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="{% url 'support-detail' t.id %}" class="flex-1 md:flex-none px-6 py-2 border border-white/10 hover:border-primary/50 text-on-surface-variant font-label-sm text-label-sm rounded-lg transition-colors text-center">
+            View Details
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+
+    {% else %}
+      <!-- Empty State -->
+      <div class="py-20 flex flex-col items-center justify-center text-center space-y-4">
+        <div class="w-20 h-20 bg-surface-container-high rounded-full flex items-center justify-center">
+          <span class="material-symbols-outlined text-4xl text-outline-variant">folder_open</span>
+        </div>
+        <div class="space-y-1">
+          <h3 class="font-headline-md text-headline-md text-on-background">No tickets yet</h3>
+          <p class="font-body-md text-body-md text-outline">Create your first support request to get help.</p>
+        </div>
+        <a href="{% url 'support-create' %}" class="text-primary font-bold flex items-center gap-2 hover:underline">
+          Create one <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+      </div>
+    {% endif %}
+  </div>
+
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 backdrop-blur-2xl border-t border-white/5 bg-surface-container-lowest/90 shadow-[0_-4px_24px_rgba(45,90,67,0.1)] h-20 px-4 pb-safe flex justify-around items-center">
+  <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors" href="{% url 'dashboard' %}">
+    <span class="material-symbols-outlined">home</span>
+    <span class="font-label-sm text-label-sm">Home</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors" href="#">
+    <span class="material-symbols-outlined">account_balance_wallet</span>
+    <span class="font-label-sm text-label-sm">Accounts</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors" href="{% url 'request-withdrawal' %}">
+    <span class="material-symbols-outlined">add_circle</span>
+    <span class="font-label-sm text-label-sm">Deposit</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-primary font-bold bg-primary-container/10 rounded-full py-1 px-3" href="{% url 'support-list' %}">
+    <span class="material-symbols-outlined">history</span>
+    <span class="font-label-sm text-label-sm">Activity</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors" href="{% url 'profile' %}">
+    <span class="material-symbols-outlined">person</span>
+    <span class="font-label-sm text-label-sm">profile</span>
+  </a>
+</nav>
+
+<!-- Background Atmospheric Effect -->
+<div class="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+  <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px]"></div>
+  <div class="absolute bottom-[10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-primary/5 blur-[150px]"></div>
 </div>
+
 <script>
-const h=document.documentElement;h.setAttribute('data-theme',localStorage.getItem('theme')||'light');
-document.getElementById('tt').onclick=()=>{const n=h.getAttribute('data-theme')==='light'?'dark':'light';h.setAttribute('data-theme',n);localStorage.setItem('theme',n)};
-function openSB(){document.getElementById('sb').classList.add('open');document.getElementById('ov').classList.add('open')}
-function closeSB(){document.getElementById('sb').classList.remove('open');document.getElementById('ov').classList.remove('open')}
+  document.querySelectorAll('button, a').forEach(el => {
+    el.addEventListener('touchstart', () => el.classList.add('scale-95'));
+    el.addEventListener('touchend', () => el.classList.remove('scale-95'));
+  });
 </script>
-</body>
-</html>
+</body></html>
