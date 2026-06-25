@@ -150,59 +150,8 @@
     </div>
   </section>
 
-  <!-- Transaction History -->
-  <section class="space-y-4">
-    <h3 class="font-label-sm text-label-sm text-on-surface-variant/50 uppercase tracking-widest px-1">Transaction Ledger</h3>
-    <div class="glass-card rounded-xl overflow-hidden">
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead class="bg-surface-container-high">
-            <tr>
-              <th class="px-4 py-3 font-label-sm text-[10px] text-on-surface-variant uppercase tracking-tighter">Reference</th>
-              <th class="px-4 py-3 font-label-sm text-[10px] text-on-surface-variant uppercase tracking-tighter">Amount</th>
-              <th class="px-4 py-3 font-label-sm text-[10px] text-on-surface-variant uppercase tracking-tighter">Status</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-white/5">
-            {% for t in transactions %}
-            <tr class="hover:bg-white/5 transition-colors">
-              <td class="px-4 py-4">
-                <div class="flex flex-col">
-                  <span class="font-mono-data text-xs text-on-surface mb-0.5">#{{ t.reference|truncatechars:10 }}</span>
-                  <span class="text-[10px] text-on-surface-variant/60 uppercase">{{ t.transaction_type }}</span>
-                </div>
-              </td>
-              <td class="px-4 py-4">
-                <span class="font-mono-data text-sm font-bold {% if t.transaction_type == 'withdrawal' or t.transaction_type == 'fee' %}text-error{% else %}text-primary{% endif %}">
-                  {% if t.transaction_type == 'withdrawal' or t.transaction_type == 'fee' %}-{% else %}+{% endif %}${{ t.amount }}
-                </span>
-              </td>
-              <td class="px-4 py-4">
-                <div class="flex flex-col items-start gap-1">
-                  <span class="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-tighter
-                    {% if t.status == 'completed' %}bg-primary-container/20 text-primary
-                    {% elif t.status == 'pending' %}bg-tertiary-container/20 text-tertiary
-                    {% else %}bg-error-container/20 text-error{% endif %}">
-                    {{ t.status }}
-                  </span>
-                  <span class="text-[9px] text-on-surface-variant/40">{{ t.created_at|date:"d/m/y" }}</span>
-                </div>
-              </td>
-            </tr>
-            {% empty %}
-            <tr>
-              <td class="px-4 py-12 text-center text-on-surface-variant/40 italic font-label-sm" colspan="3">
-                No transaction records found.
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
 
-</main>
+
 
 <!-- Bottom Navigation Bar -->
 <nav class="fixed bottom-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-2xl border-t border-white/5 shadow-[0_-4px_24px_rgba(45,90,67,0.1)] flex justify-around items-center h-20 px-4 pb-safe">
