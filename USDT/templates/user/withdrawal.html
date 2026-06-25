@@ -131,7 +131,8 @@
 <!-- Top App Bar (Mobile View) -->
 <header class="glass-header fixed top-0 left-0 right-0 h-16 z-50 flex items-center justify-between px-gutter border-b border-surface-container-highest">
 <div class="flex items-center gap-base">
-<span class="font-headline-md text-headline-md font-bold text-primary tracking-tighter">Obsidian</span>
+<img alt="Santander Logo" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN3AnOVRPu8Dq2lIlwjMGQAPbGvyvBtdCgnW8BYisnHqX5LYiZgQMlW8iDBdhSriIRgHD_U8Qa3aYdLfdvepBU_7AKAZbzrRzMLjLoPsCT2z8p_muRKGxwjqxhnyi6eWPa8uYf2rtWQGhpYB6AFxNvxkvSX2AiI_C5y5QNEyP5VCNleFvuSyjwuINvZYKPtvUU28tuQAq8uge_Dw1lXUoBVVZ-9ob9PiJ1idZRO5VGlexFjB7A_0BhJFRNTeaXypJHp4EXdvP0GAg"/>
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tighter"></span>
 </div>
 <h1 class="font-headline-md text-headline-md text-on-surface truncate px-4">Withdraw Funds</h1>
 <button class="hover:bg-surface-container-high rounded-full p-2 transition-colors" id="theme-toggle">
@@ -185,7 +186,7 @@
                 <div class="space-y-base">
                     {% for acc in payment_accounts %}
                     <label class="relative block cursor-pointer group">
-<input %}="" %}checked{%="" class="peer sr-only" endif="" forloop.first="" if="" name="payment_account_id" required="" type="radio" value="{{ acc.id }}" {%=""/>
+<input class="peer sr-only" name="payment_account_id" required type="radio" value="{{ acc.id }}" {% if forloop.first %}checked{% endif %}/>
 <div class="obsidian-card rounded-xl p-gutter flex items-center justify-between peer-checked:border-primary peer-checked:bg-primary-container/10 transition-all">
 <div class="flex items-center gap-gutter">
 <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary">
@@ -196,8 +197,13 @@
                                     {% endif %}
                                 </div>
 <div>
-<p class="font-headline-md text-body-md font-bold text-on-surface">{{ acc.bank_name|default:acc.provider_name }}</p>
+                                    {% if acc.account_type == 'bank' %}
+<p class="font-headline-md text-body-md font-bold text-on-surface">{{ acc.bank_name }}</p>
 <p class="font-label-sm text-label-sm text-on-surface-variant">•••• {{ acc.account_number|slice:"-4:" }}</p>
+                                    {% else %}
+<p class="font-headline-md text-body-md font-bold text-on-surface">{{ acc.crypto_currency }} ({{ acc.crypto_network }})</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">{{ acc.wallet_address|truncatechars:18 }}</p>
+                                    {% endif %}
 </div>
 </div>
 <div class="w-5 h-5 rounded-full border-2 border-surface-container-highest flex items-center justify-center peer-checked:bg-primary peer-checked:border-primary">
@@ -217,7 +223,7 @@
                 </p>
 </div>
 <!-- Action Button -->
-<button %}="" %}disabled{%="" class="w-full bg-primary-container text-on-primary-container font-bold py-4 rounded-xl shadow-lg active:scale-[0.98] transition-transform flex items-center justify-center gap-base" endif="" if="" not="" payment_accounts="" type="submit" {%="">
+<button class="w-full bg-primary-container text-on-primary-container font-bold py-4 rounded-xl shadow-lg active:scale-[0.98] transition-transform flex items-center justify-center gap-base" type="submit" {% if not payment_accounts %}disabled{% endif %}>
 <span class="material-symbols-outlined">send_money</span>
                 Confirm Withdrawal
             </button>

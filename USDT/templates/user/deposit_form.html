@@ -136,10 +136,8 @@
 <div class="flex items-center gap-2">
 <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors">
 <span class="material-symbols-outlined text-[24px]">notifications</span>
-</button>
-<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant">
-<img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfp0oZc4F92njRBDEQySA3kCe17Fjfanuoncdz_Pq3oIRJFnoDrAxblZiWotzSr6BIIFzi6YWKNF-gTCeF2CXc8diixUdEPHY69UBEHd3XJjg1tTBHnVF35MMHn84xvvIsbOaZozP6zmIjoMAS-2WwHmo2g1ThPcscI4hAX4OfzzLXsfqhHaqgTi2cvlS5SCj71RK6roeewdOfWs8AkW3ZGPkywIY_HRBhjpsnxcJ20uHnlVvXDsGWUAMKbU1jl2RQAu_5E3UsCf0"/>
-</div>
+<a href="{% url 'notifications' %}" class="block w-full h-full flex items-center justify-center">
+</a>
 </div>
 </header>
 <!-- Main Content Canvas -->
@@ -154,8 +152,9 @@
                 </p>
 </section>
 <!-- Form Container -->
-<form action="#" class="space-y-gutter" method="POST">
-<!-- Payment Method Selector Card -->
+<form action="." class="space-y-gutter" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <!-- Payment Method Selector Card -->
 <div class="bg-surface-container-low p-5 rounded-xl border border-surface-container-highest shadow-sm">
 <div class="flex items-center gap-2 mb-4">
 <span class="material-symbols-outlined text-primary">payments</span>
@@ -176,8 +175,9 @@
 <div class="hidden space-y-3 animate-in fade-in slide-in-from-top-2 duration-300" id="bankSection">
 <h4 class="font-label-sm text-on-surface-variant uppercase ml-1">Select Bank Account</h4>
                     {% for detail in payment_details %}
+                    {% if detail.payment_type == "bank" %}
                     <div class="relative">
-<input class="hidden peer payment-radio" id="bank_{{ detail.id }}" name="payment_detail" type="radio" value="{{ detail.id }}"/>
+<input class="hidden peer payment-radio" id="bank_{{ detail.id }}" name="payment_detail" required type="radio" value="{{ detail.id }}"/>
 <label class="block p-5 rounded-xl border border-surface-container-highest bg-surface-container-low cursor-pointer transition-all active:scale-[0.98] peer-checked:border-primary" for="bank_{{ detail.id }}">
 <div class="flex flex-col gap-3">
 <div class="flex justify-between items-center">
@@ -197,32 +197,35 @@
 </div>
 </label>
 </div>
+                    {% endif %}
                     {% endfor %}
                 </div>
 <!-- Crypto Section (Hidden by Default) -->
 <div class="hidden space-y-3 animate-in fade-in slide-in-from-top-2 duration-300" id="cryptoSection">
 <h4 class="font-label-sm text-on-surface-variant uppercase ml-1">Select Wallet</h4>
                     {% for detail in payment_details %}
+                    {% if detail.payment_type == "crypto" %}
                     <div class="relative">
-<input class="hidden peer payment-radio" id="crypto_{{ detail.id }}" name="payment_detail" type="radio" value="{{ detail.id }}"/>
+<input class="hidden peer payment-radio" id="crypto_{{ detail.id }}" name="payment_detail" required type="radio" value="{{ detail.id }}"/>
 <label class="block p-5 rounded-xl border border-surface-container-highest bg-surface-container-low cursor-pointer transition-all active:scale-[0.98] peer-checked:border-primary" for="crypto_{{ detail.id }}">
 <div class="flex flex-col gap-3">
 <div class="flex justify-between items-center">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-primary">currency_bitcoin</span>
-<h3 class="font-headline-md text-base text-on-surface">{{ detail.crypto_name }}</h3>
+<h3 class="font-headline-md text-base text-on-surface">{{ detail.crypto_currency }}</h3>
 </div>
 <div class="w-5 h-5 rounded-full border-2 border-outline peer-checked:border-primary flex items-center justify-center">
 <div class="w-2.5 h-2.5 rounded-full bg-primary opacity-0 peer-checked:opacity-100"></div>
 </div>
 </div>
 <div class="p-3 bg-surface-container-lowest/50 rounded-lg border border-white/5">
-<p class="font-mono-data text-[11px] break-all text-primary/80 mb-1">Network: {{ detail.network }}</p>
+<p class="font-mono-data text-[11px] break-all text-primary/80 mb-1">Network: {{ detail.crypto_network }}</p>
 <p class="font-mono-data text-[11px] break-all text-on-surface-variant">{{ detail.wallet_address }}</p>
 </div>
 </div>
 </label>
 </div>
+                    {% endif %}
                     {% endfor %}
                 </div>
 <!-- Proof & Notes -->
@@ -234,7 +237,7 @@
 <h3 class="font-headline-md text-lg">Proof of Payment</h3>
 </div>
 <div class="relative group">
-<input accept="image/*,application/pdf" class="hidden" id="proof" type="file"/>
+<input accept="image/*,application/pdf" class="hidden" id="proof" name="proof" type="file"/>
 <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-outline-variant rounded-xl cursor-pointer hover:border-primary hover:bg-surface-container-high transition-all" for="proof">
 <span class="material-symbols-outlined text-3xl mb-1 text-on-surface-variant">cloud_upload</span>
 <span class="font-body-md text-sm text-on-surface-variant">Tap to <span class="text-primary font-bold">upload proof</span></span>
@@ -248,7 +251,7 @@
 <span class="material-symbols-outlined text-primary">edit_note</span>
 <h3 class="font-headline-md text-lg">Transaction Note</h3>
 </div>
-<textarea class="w-full bg-surface-container-lowest border border-outline-variant text-on-surface rounded-xl p-4 focus:ring-2 focus:ring-primary-container focus:border-primary transition-all duration-200 outline-none font-body-md resize-none h-28 placeholder:text-outline/50 text-sm" id="note" placeholder="Add optional details like reference IDs..."></textarea>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant text-on-surface rounded-xl p-4 focus:ring-2 focus:ring-primary-container focus:border-primary transition-all duration-200 outline-none font-body-md resize-none h-28 placeholder:text-outline/50 text-sm" id="note" name="note" placeholder="Add optional details like reference IDs..." rows="4"></textarea>
 </div>
 </div>
 <!-- Submit Button -->
@@ -280,13 +283,13 @@
 <!-- Fixed Bottom Navigation Bar -->
 <nav class="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-t border-surface-container-highest px-4 pb-6 pt-3 h-20">
 <div class="flex justify-between items-center max-w-md mx-auto">
-<a class="flex flex-col items-center gap-1 px-3 text-on-surface-variant hover:text-primary transition-colors" href="{% url "home" %}">
+<a class="flex flex-col items-center gap-1 px-3 text-on-surface-variant hover:text-primary transition-colors" href="{% url 'home' %}">
 <span class="material-symbols-outlined text-[24px]">home</span>
 <span class="text-[10px] font-medium font-label-sm">Home</span>
 </a>
-<a class="flex flex-col items-center gap-1 px-3 text-on-surface-variant hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined text-[24px]">account_balance</span>
-<span class="text-[10px] font-medium font-label-sm">Accounts</span>
+<a class="flex flex-col items-center gap-1 px-3 text-on-surface-variant hover:text-primary transition-colors" href="{% url 'request-withdrawal' %}">
+<span class="material-symbols-outlined text-[24px]">remove_circle</span>
+<span class="text-[10px] font-medium font-label-sm">Withdraw</span>
 </a>
 <a class="flex flex-col items-center gap-1 px-3 text-primary" href="#">
 <span class="material-symbols-outlined text-[24px] font-variation-fill">add_circle</span>
@@ -295,8 +298,7 @@
 <a class="flex flex-col items-center gap-1 px-3 text-on-surface-variant hover:text-primary transition-colors" href="#">
 <span class="material-symbols-outlined text-[24px]">history</span>
 <span class="text-[10px] font-medium font-label-sm">Activity</span>
-</a>>
-
+</a>
 </div>
 </nav>
 <!-- Visual Micro-interaction Scripts -->
