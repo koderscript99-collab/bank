@@ -1,56 +1,94 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin-dashboard.html' %}
 {% block title %}Payment Details{% endblock %}
 {% block page_title %}Payment Details{% endblock %}
-{% block nav_payment_details %}active{% endblock %}
+{% block page_sub %}Manage client-facing payment accounts{% endblock %}
+{% block nav_pd %}active-nav text-tech-cyan{% endblock %}
 
 {% block content %}
-<div style="display:flex;justify-content:flex-end;margin-bottom:20px">
-  <a href="{% url 'admin-add-payment-detail' %}" class="btn btn-purple" style="background:#7c3aed;color:#fff">
-    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+
+<div class="flex justify-end">
+  <a href="{% url 'admin-add-payment-detail' %}"
+    class="inline-flex items-center gap-2 px-4 py-2 bg-primary-container border border-tech-cyan/30 text-tech-cyan rounded font-label-sm text-sm hover:bg-primary-container/80 transition-colors">
+    <span class="material-symbols-outlined text-[16px]">add</span>
     Add Payment Detail
   </a>
 </div>
 
-<div class="card">
-  <div class="card-header">
-    <div class="ch-icon" style="background:var(--green-dim)"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--green)" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
-    <h3>All Payment Details</h3>
-    <span class="ch-meta">Shown to clients on activation page</span>
+<div class="glass-card rounded-lg overflow-hidden">
+  <div class="px-container-padding py-4 border-b border-outline flex items-center gap-3">
+    <span class="material-symbols-outlined text-tech-cyan text-[20px]">credit_card</span>
+    <div>
+      <h3 class="font-headline-md text-white">All Payment Details</h3>
+      <p class="font-label-sm text-on-surface-variant text-[11px]">Shown to clients on activation and deposit pages</p>
+    </div>
   </div>
-  <div class="card-body" style="padding:0">
+
+  <div class="overflow-x-auto custom-scrollbar">
     {% if details %}
-    <table>
-      <thead><tr><th>Label</th><th>Type</th><th>Details</th><th>Status</th><th>Actions</th></tr></thead>
-      <tbody>
-      {% for d in details %}
-      <tr>
-        <td style="font-weight:600">{{ d.label }}</td>
-        <td><span class="badge {% if d.payment_type == 'bank' %}badge-sky{% else %}badge-amber{% endif %}">{{ d.get_payment_type_display }}</span></td>
-        <td style="font-size:13px">
-          {% if d.payment_type == 'bank' %}
-            {{ d.bank_name }} — {{ d.account_number }}
-          {% else %}
-            {{ d.crypto_currency }} ({{ d.crypto_network }})<br>
-            <span style="font-size:11px;color:var(--muted)">{{ d.wallet_address|truncatechars:30 }}</span>
-          {% endif %}
-        </td>
-        <td>{% if d.is_active %}<span class="badge badge-green">Active</span>{% else %}<span class="badge badge-muted">Inactive</span>{% endif %}</td>
-        <td>
-          <div style="display:flex;gap:8px">
-            <a href="{% url 'admin-edit-payment-detail' d.id %}" class="btn btn-sm btn-outline">Edit</a>
-            <form method="post" action="{% url 'admin-delete-payment-detail' d.id %}" onsubmit="return confirm('Delete this payment detail?')">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-sm btn-red">Delete</button>
-            </form>
-          </div>
-        </td>
-      </tr>
-      {% endfor %}
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-surface-container-lowest">
+        <tr>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Label</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Type</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Details</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Status</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px] text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline/30">
+        {% for d in details %}
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="px-gutter py-3 text-white font-bold text-sm">{{ d.label }}</td>
+          <td class="px-gutter py-3">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase
+              {% if d.payment_type == 'bank' %}bg-primary-container/40 text-tech-cyan{% else %}bg-surface-container-highest text-on-surface-variant{% endif %}">
+              {{ d.get_payment_type_display }}
+            </span>
+          </td>
+          <td class="px-gutter py-3">
+            {% if d.payment_type == 'bank' %}
+              <p class="text-white text-sm">{{ d.bank_name }} — {{ d.account_number }}</p>
+            {% else %}
+              <p class="text-white text-sm">{{ d.crypto_currency }} ({{ d.crypto_network }})</p>
+              <p class="font-mono-data text-[11px] text-on-surface-variant">{{ d.wallet_address|truncatechars:30 }}</p>
+            {% endif %}
+          </td>
+          <td class="px-gutter py-3">
+            {% if d.is_active %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-tech-cyan">Active</span>
+            {% else %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-on-surface-variant">Inactive</span>
+            {% endif %}
+          </td>
+          <td class="px-gutter py-3 text-right">
+            <div class="flex gap-2 justify-end">
+              <a href="{% url 'admin-edit-payment-detail' d.id %}"
+                class="px-3 py-1 border border-outline rounded font-label-sm text-[11px] text-on-surface-variant hover:text-tech-cyan hover:border-tech-cyan transition-colors">
+                Edit
+              </a>
+              <form method="post" action="{% url 'admin-delete-payment-detail' d.id %}" onsubmit="return confirm('Delete this payment detail?')">
+                {% csrf_token %}
+                <button type="submit"
+                  class="px-3 py-1 bg-error-container border border-error/30 text-error rounded font-label-sm text-[11px] hover:bg-error-container/80 transition-colors">
+                  Delete
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
       </tbody>
     </table>
     {% else %}
-    <div class="empty-state">No payment details added yet. Add one so clients can see where to pay.</div>
+    <div class="px-gutter py-12 text-center">
+      <span class="material-symbols-outlined text-4xl text-on-surface-variant opacity-30 block mb-3">credit_card</span>
+      <p class="font-label-sm text-on-surface-variant">No payment details added yet.</p>
+      <a href="{% url 'admin-add-payment-detail' %}" class="inline-flex items-center gap-1 mt-3 font-label-sm text-[11px] text-tech-cyan hover:underline">
+        <span class="material-symbols-outlined text-[14px]">add</span> Add your first payment detail
+      </a>
+    </div>
     {% endif %}
   </div>
 </div>
+
 {% endblock %}

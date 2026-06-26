@@ -1,117 +1,124 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin-dashboard.html' %}
 {% block title %}Withdrawals{% endblock %}
 {% block page_title %}Withdrawal Requests{% endblock %}
 {% block page_sub %}Review and process withdrawal requests{% endblock %}
-{% block nav_wd %}active{% endblock %}
+{% block nav_wd %}active-nav text-tech-cyan{% endblock %}
 
 {% block content %}
 
-<!-- FILTER TABS -->
-<div style="display:flex;gap:8px;margin-bottom:20px">
-  <a href="?status=pending" class="btn btn-sm {% if status_filter == 'pending' %}btn-amber{% else %}btn-outline{% endif %}">
+{# Filter tabs #}
+<div class="flex gap-2">
+  <a href="?status=pending"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if status_filter == 'pending' %}bg-surface-container-highest border-tech-cyan text-tech-cyan{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
     Pending {% if status_filter == 'pending' %}({{ withdrawals|length }}){% endif %}
   </a>
-  <a href="?status=approved" class="btn btn-sm {% if status_filter == 'approved' %}btn-green{% else %}btn-outline{% endif %}">
+  <a href="?status=approved"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if status_filter == 'approved' %}bg-primary-container border-tech-cyan text-tech-cyan{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
     Approved
   </a>
-  <a href="?status=rejected" class="btn btn-sm {% if status_filter == 'rejected' %}btn-red{% else %}btn-outline{% endif %}">
+  <a href="?status=rejected"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if status_filter == 'rejected' %}bg-error-container border-error text-error{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
     Rejected
   </a>
 </div>
 
-<div class="card">
-  <div class="card-head">
-    <div class="card-head-left">
-      <div class="card-head-icon" style="background:var(--blue-dim)">
-        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--blue)" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-      </div>
-      <div>
-        <div class="card-title">{{ status_filter|capfirst }} Withdrawals</div>
-        <div class="card-sub">{{ withdrawals|length }} request{{ withdrawals|length|pluralize }}</div>
-      </div>
+<div class="glass-card rounded-lg overflow-hidden">
+  <div class="px-container-padding py-4 border-b border-outline flex items-center gap-3">
+    <span class="material-symbols-outlined text-tech-cyan text-[20px]">payments</span>
+    <div>
+      <h3 class="font-headline-md text-white">{{ status_filter|capfirst }} Withdrawals</h3>
+      <p class="font-label-sm text-on-surface-variant text-[11px]">{{ withdrawals|length }} request{{ withdrawals|length|pluralize }}</p>
     </div>
   </div>
 
-  {% if withdrawals %}
-  <table>
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>Amount</th>
-        <th>To</th>
-        <th>Status</th>
-        <th>Date</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for w in withdrawals %}
-    <tr>
-      <td>
-        <a href="{% url 'admin-user-detail' w.user.id %}"
-           style="font-weight:600;color:var(--blue);text-decoration:none">
-          {{ w.user.username }}
-        </a>
-      </td>
-      <td style="font-weight:700">${{ w.amount }}</td>
-      <td style="font-size:12.5px">
-        {% if w.payment_account %}
-          {% if w.payment_account.account_type == 'bank' %}
-            🏦 {{ w.payment_account.bank_name }}<br>
-            <span style="color:var(--muted)">{{ w.payment_account.account_number }}</span>
-          {% else %}
-            🔐 {{ w.payment_account.crypto_currency }} ({{ w.payment_account.crypto_network }})<br>
-            <span style="color:var(--muted);word-break:break-all">{{ w.payment_account.wallet_address|truncatechars:24 }}</span>
-          {% endif %}
-        {% else %}
-          <span style="color:var(--muted)">—</span>
-        {% endif %}
-      </td>
-      <td>
-        <span class="badge
-          {% if w.status == 'approved' %}badge-green
-          {% elif w.status == 'pending' %}badge-amber
-          {% else %}badge-red{% endif %}">
-          {{ w.status }}
-        </span>
-      </td>
-      <td style="font-size:12px;color:var(--muted);white-space:nowrap">
-        {{ w.created_at|date:"M d, Y" }}
-      </td>
-      <td>
-        {% if w.status == 'pending' %}
-        <div style="display:flex;gap:6px">
-          <form method="post" action="{% url 'admin-review-withdrawal' w.id %}">
-            {% csrf_token %}
-            <button name="action" value="approve" type="submit" class="btn btn-sm btn-green">
-              ✓ Approve
-            </button>
-          </form>
-          <form method="post" action="{% url 'admin-review-withdrawal' w.id %}">
-            {% csrf_token %}
-            <input type="hidden" name="rejection_reason" value="Rejected by admin">
-            <button name="action" value="reject" type="submit" class="btn btn-sm btn-red"
-                    onclick="return confirm('Reject this withdrawal?')">
-              ✗ Reject
-            </button>
-          </form>
-        </div>
-        {% else %}
-        <span style="font-size:12px;color:var(--muted)">
-          by {{ w.reviewed_by.username|default:"—" }}<br>
-          {{ w.reviewed_at|date:"M d, Y"|default:"" }}
-        </span>
-        {% endif %}
-      </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-  <div class="empty">
-    No {{ status_filter }} withdrawals.
+  <div class="overflow-x-auto custom-scrollbar">
+    {% if withdrawals %}
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-surface-container-lowest">
+        <tr>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">User</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Amount</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">To</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Status</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Date</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline/30">
+        {% for w in withdrawals %}
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="px-gutter py-3">
+            <a href="{% url 'admin-user-detail' w.user.id %}" class="text-tech-cyan font-bold text-sm hover:underline">
+              {{ w.user.username }}
+            </a>
+          </td>
+          <td class="px-gutter py-3 font-mono-data text-white font-bold">${{ w.amount }}</td>
+          <td class="px-gutter py-3">
+            {% if w.payment_account %}
+              {% if w.payment_account.account_type == 'bank' %}
+                <p class="text-white text-sm">🏦 {{ w.payment_account.bank_name }}</p>
+                <p class="font-mono-data text-[11px] text-on-surface-variant">{{ w.payment_account.account_number }}</p>
+              {% else %}
+                <p class="text-white text-sm">🔐 {{ w.payment_account.crypto_currency }} ({{ w.payment_account.crypto_network }})</p>
+                <p class="font-mono-data text-[11px] text-on-surface-variant break-all">{{ w.payment_account.wallet_address|truncatechars:24 }}</p>
+              {% endif %}
+            {% else %}
+              <span class="text-on-surface-variant">—</span>
+            {% endif %}
+          </td>
+          <td class="px-gutter py-3">
+            {% if w.status == 'approved' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-tech-cyan">{{ w.status }}</span>
+            {% elif w.status == 'pending' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-on-surface-variant">{{ w.status }}</span>
+            {% else %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error-container text-error">{{ w.status }}</span>
+            {% endif %}
+          </td>
+          <td class="px-gutter py-3 font-mono-data text-[11px] text-on-surface-variant whitespace-nowrap">
+            {{ w.created_at|date:"M d, Y" }}
+          </td>
+          <td class="px-gutter py-3">
+            {% if w.status == 'pending' %}
+            <div class="flex gap-2">
+              <form method="post" action="{% url 'admin-review-withdrawal' w.id %}">
+                {% csrf_token %}
+                <button name="action" value="approve" type="submit"
+                  class="px-3 py-1 bg-primary-container border border-tech-cyan/30 text-tech-cyan rounded font-label-sm text-[11px] hover:bg-primary-container/80 transition-colors">
+                  ✓ Approve
+                </button>
+              </form>
+              <form method="post" action="{% url 'admin-review-withdrawal' w.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="rejection_reason" value="Rejected by admin">
+                <button name="action" value="reject" type="submit"
+                  onclick="return confirm('Reject this withdrawal?')"
+                  class="px-3 py-1 bg-error-container border border-error/30 text-error rounded font-label-sm text-[11px] hover:bg-error-container/80 transition-colors">
+                  ✗ Reject
+                </button>
+              </form>
+            </div>
+            {% else %}
+            <div class="font-label-sm text-[11px] text-on-surface-variant">
+              by {{ w.reviewed_by.username|default:"—" }}<br>
+              {{ w.reviewed_at|date:"M d, Y"|default:"" }}
+            </div>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="px-gutter py-12 text-center">
+      <span class="material-symbols-outlined text-4xl text-on-surface-variant opacity-30 block mb-3">payments</span>
+      <p class="font-label-sm text-on-surface-variant">No {{ status_filter }} withdrawals.</p>
+    </div>
+    {% endif %}
   </div>
-  {% endif %}
 </div>
 
 {% endblock %}

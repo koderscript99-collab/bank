@@ -1,51 +1,90 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin-dashboard.html' %}
 {% block title %}Activations{% endblock %}
 {% block page_title %}Pending Activations{% endblock %}
-{% block nav_activations %}active{% endblock %}
+{% block page_sub %}Review and approve user activation payments{% endblock %}
+{% block nav_act %}active-nav text-tech-cyan{% endblock %}
 
 {% block content %}
-<div class="card">
-  <div class="card-header">
-    <div class="ch-icon" style="background:var(--amber-dim)"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--amber)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-    <h3>Activation Requests</h3>
-    <span class="ch-meta">{{ pending|length }} pending</span>
-  </div>
-  <div class="card-body" style="padding:0">
+
+<div class="glass-card rounded-lg overflow-hidden">
+  <div class="px-container-padding py-4 border-b border-outline flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-tech-cyan text-[20px]">verified_user</span>
+      <div>
+        <h3 class="font-headline-md text-white">Activation Requests</h3>
+        <p class="font-label-sm text-on-surface-variant text-[11px]">{{ pending|length }} pending</p>
+      </div>
+    </div>
     {% if pending %}
-    <table>
-      <thead><tr><th>User</th><th>Amount</th><th>Submitted</th><th>Actions</th></tr></thead>
-      <tbody>
-      {% for p in pending %}
-      <tr>
-        <td>
-          <div style="font-weight:600">{{ p.user.username }}</div>
-          <div style="font-size:11.5px;color:var(--muted)">{{ p.user.email }}</div>
-        </td>
-        <td style="font-weight:600">${{ p.amount_required }}</td>
-        <td style="font-size:12.5px;color:var(--muted)">{{ p.created_at|date:"M d, Y H:i" }}</td>
-        <td>
-          <div style="display:flex;gap:8px">
-            <form method="post" action="{% url 'admin-approve-activation' p.user.id %}">
-              {% csrf_token %}
-              <button name="action" value="approve" type="submit" class="btn btn-sm btn-green">✓ Approve</button>
-            </form>
-            <form method="post" action="{% url 'admin-approve-activation' p.user.id %}">
-              {% csrf_token %}
-              <button name="action" value="reject" type="submit" class="btn btn-sm btn-red" onclick="return confirm('Reject this activation?')">✗ Reject</button>
-            </form>
-            <a href="{% url 'admin-user-detail' p.user.id %}" class="btn btn-sm btn-outline">Profile</a>
-          </div>
-        </td>
-      </tr>
-      {% endfor %}
+    <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error-container text-error">
+      {{ pending|length }} need review
+    </span>
+    {% endif %}
+  </div>
+
+  <div class="overflow-x-auto custom-scrollbar">
+    {% if pending %}
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-surface-container-lowest">
+        <tr>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">User</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Amount</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Submitted</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline/30">
+        {% for p in pending %}
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="px-gutter py-3">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-tech-cyan font-bold text-sm flex-shrink-0">
+                {{ p.user.username|first|upper }}
+              </div>
+              <div>
+                <p class="text-white font-bold text-sm">{{ p.user.username }}</p>
+                <p class="font-mono-data text-[11px] text-on-surface-variant">{{ p.user.email|default:"No email" }}</p>
+              </div>
+            </div>
+          </td>
+          <td class="px-gutter py-3 font-mono-data text-white font-bold">${{ p.amount_required }}</td>
+          <td class="px-gutter py-3 font-mono-data text-[11px] text-on-surface-variant">
+            {{ p.created_at|date:"M d, Y H:i" }}
+          </td>
+          <td class="px-gutter py-3">
+            <div class="flex gap-2">
+              <form method="post" action="{% url 'admin-approve-activation' p.user.id %}">
+                {% csrf_token %}
+                <button name="action" value="approve" type="submit"
+                  class="px-3 py-1 bg-primary-container border border-tech-cyan/30 text-tech-cyan rounded font-label-sm text-[11px] hover:bg-primary-container/80 transition-colors">
+                  ✓ Approve
+                </button>
+              </form>
+              <form method="post" action="{% url 'admin-approve-activation' p.user.id %}">
+                {% csrf_token %}
+                <button name="action" value="reject" type="submit"
+                  onclick="return confirm('Reject this activation?')"
+                  class="px-3 py-1 bg-error-container border border-error/30 text-error rounded font-label-sm text-[11px] hover:bg-error-container/80 transition-colors">
+                  ✗ Reject
+                </button>
+              </form>
+              <a href="{% url 'admin-user-detail' p.user.id %}"
+                class="px-3 py-1 border border-outline rounded font-label-sm text-[11px] text-on-surface-variant hover:text-tech-cyan hover:border-tech-cyan transition-colors">
+                Profile
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
       </tbody>
     </table>
     {% else %}
-    <div class="empty-state">
-      <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="var(--muted)" stroke-width="1.5" style="margin:0 auto 12px;display:block"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      No pending activations. You're all caught up!
+    <div class="px-gutter py-12 text-center">
+      <span class="material-symbols-outlined text-4xl text-tech-cyan opacity-30 block mb-3">verified_user</span>
+      <p class="font-label-sm text-on-surface-variant">No pending activations. You're all caught up!</p>
     </div>
     {% endif %}
   </div>
 </div>
+
 {% endblock %}

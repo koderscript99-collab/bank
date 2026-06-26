@@ -1,69 +1,104 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin-dashboard.html' %}
 {% block title %}Support Tickets{% endblock %}
 {% block page_title %}Support Tickets{% endblock %}
 {% block page_sub %}User support requests{% endblock %}
-{% block nav_support %}active{% endblock %}
+{% block nav_support %}active-nav text-tech-cyan{% endblock %}
 
 {% block content %}
-<div style="display:flex;gap:8px;margin-bottom:20px">
-  <a href="{% url 'admin-support-tickets' %}" class="btn btn-sm {% if not status_filter %}btn-green{% else %}btn-outline{% endif %}">All</a>
-  <a href="?status=open" class="btn btn-sm {% if status_filter == 'open' %}btn-red{% else %}btn-outline{% endif %}">Open</a>
-  <a href="?status=pending" class="btn btn-sm {% if status_filter == 'pending' %}btn-amber{% else %}btn-outline{% endif %}">Pending</a>
-  <a href="?status=closed" class="btn btn-sm {% if status_filter == 'closed' %}btn-outline{% else %}btn-outline{% endif %}">Closed</a>
+
+{# Filter tabs #}
+<div class="flex gap-2">
+  <a href="{% url 'admin-support-tickets' %}"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if not status_filter %}bg-surface-container-highest border-tech-cyan text-tech-cyan{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
+    All
+  </a>
+  <a href="?status=open"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if status_filter == 'open' %}bg-error-container border-error text-error{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
+    Open
+  </a>
+  <a href="?status=pending"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if status_filter == 'pending' %}bg-surface-container-highest border-on-surface-variant text-on-surface-variant{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
+    Pending
+  </a>
+  <a href="?status=closed"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if status_filter == 'closed' %}bg-surface-container border-outline text-on-surface-variant{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
+    Closed
+  </a>
 </div>
 
-<div class="card">
-  <div class="card-head">
-    <div class="card-head-left">
-      <div class="card-head-icon" style="background:var(--blue-dim)">
-        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--blue)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-      </div>
+<div class="glass-card rounded-lg overflow-hidden">
+  <div class="px-container-padding py-4 border-b border-outline flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-tech-cyan text-[20px]">support_agent</span>
       <div>
-        <div class="card-title">All Tickets</div>
-        <div class="card-sub">{{ tickets|length }} tickets</div>
+        <h3 class="font-headline-md text-white">All Tickets</h3>
+        <p class="font-label-sm text-on-surface-variant text-[11px]">{{ tickets|length }} ticket{{ tickets|length|pluralize }}</p>
       </div>
     </div>
+    {% if open_tickets_count %}
+    <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error-container text-error">
+      {{ open_tickets_count }} open
+    </span>
+    {% endif %}
   </div>
-  {% if tickets %}
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>User</th>
-        <th>Subject</th>
-        <th>Status</th>
-        <th>Last Updated</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for t in tickets %}
-    <tr>
-      <td style="color:var(--muted);font-size:12px">#{{ t.id }}</td>
-      <td>
-        <a href="{% url 'admin-user-detail' t.user.id %}" style="color:var(--blue);text-decoration:none;font-weight:500">
-          {{ t.user.username }}
-        </a>
-      </td>
-      <td style="font-weight:500">{{ t.subject }}</td>
-      <td>
-        <span class="badge
-          {% if t.status == 'open' %}badge-red
-          {% elif t.status == 'pending' %}badge-amber
-          {% else %}badge-muted{% endif %}">
-          {{ t.status }}
-        </span>
-      </td>
-      <td style="color:var(--muted);font-size:12.5px">{{ t.updated_at|date:"M d, Y H:i" }}</td>
-      <td>
-        <a href="{% url 'admin-support-detail' t.id %}" class="btn btn-sm btn-outline">View</a>
-      </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-  <div class="empty">No support tickets found.</div>
-  {% endif %}
+
+  <div class="overflow-x-auto custom-scrollbar">
+    {% if tickets %}
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-surface-container-lowest">
+        <tr>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">#</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">User</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Subject</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Status</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Last Updated</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px] text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline/30">
+        {% for t in tickets %}
+        <tr class="hover:bg-white/[0.02] transition-colors group">
+          <td class="px-gutter py-3 font-mono-data text-[11px] text-on-surface-variant">#{{ t.id }}</td>
+          <td class="px-gutter py-3">
+            <a href="{% url 'admin-user-detail' t.user.id %}" class="text-tech-cyan font-bold text-sm hover:underline">
+              {{ t.user.username }}
+            </a>
+          </td>
+          <td class="px-gutter py-3 text-white text-sm font-bold">{{ t.subject }}</td>
+          <td class="px-gutter py-3">
+            {% if t.status == 'open' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error-container text-error">{{ t.status }}</span>
+            {% elif t.status == 'pending' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-on-surface-variant">{{ t.status }}</span>
+            {% else %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container text-on-surface-variant">{{ t.status }}</span>
+            {% endif %}
+          </td>
+          <td class="px-gutter py-3 font-mono-data text-[11px] text-on-surface-variant whitespace-nowrap">
+            {{ t.updated_at|date:"M d, Y H:i" }}
+          </td>
+          <td class="px-gutter py-3 text-right">
+            <a href="{% url 'admin-support-detail' t.id %}"
+              class="opacity-60 group-hover:opacity-100 inline-flex items-center gap-1 px-3 py-1 border border-outline rounded font-label-sm text-[11px] text-on-surface-variant hover:text-tech-cyan hover:border-tech-cyan transition-all">
+              View
+              <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="px-gutter py-12 text-center">
+      <span class="material-symbols-outlined text-4xl text-on-surface-variant opacity-30 block mb-3">support_agent</span>
+      <p class="font-label-sm text-on-surface-variant">No support tickets found.</p>
+    </div>
+    {% endif %}
+  </div>
 </div>
+
 {% endblock %}

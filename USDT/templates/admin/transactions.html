@@ -1,87 +1,116 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin-dashboard.html' %}
 {% block title %}Transactions{% endblock %}
 {% block page_title %}All Transactions{% endblock %}
 {% block page_sub %}Full transaction history across all users{% endblock %}
-{% block nav_tx %}active{% endblock %}
+{% block nav_tx %}active-nav text-tech-cyan{% endblock %}
 
 {% block content %}
-<!-- FILTER -->
-<div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
-  <a href="{% url 'admin-transactions' %}" class="btn btn-sm {% if not type_filter %}btn-green{% else %}btn-outline{% endif %}">All</a>
-  <a href="?type=admin_deposit" class="btn btn-sm {% if type_filter == 'admin_deposit' %}btn-green{% else %}btn-outline{% endif %}">Deposits</a>
-  <a href="?type=withdrawal" class="btn btn-sm {% if type_filter == 'withdrawal' %}btn-green{% else %}btn-outline{% endif %}">Withdrawals</a>
-  <a href="?type=activation_fee" class="btn btn-sm {% if type_filter == 'activation_fee' %}btn-green{% else %}btn-outline{% endif %}">Activation Fees</a>
+
+{# Filter tabs #}
+<div class="flex gap-2 flex-wrap">
+  <a href="{% url 'admin-transactions' %}"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if not type_filter %}bg-surface-container-highest border-tech-cyan text-tech-cyan{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
+    All
+  </a>
+  <a href="?type=admin_deposit"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if type_filter == 'admin_deposit' %}bg-primary-container border-tech-cyan text-tech-cyan{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
+    Deposits
+  </a>
+  <a href="?type=withdrawal"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if type_filter == 'withdrawal' %}bg-error-container border-error text-error{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
+    Withdrawals
+  </a>
+  <a href="?type=activation_fee"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if type_filter == 'activation_fee' %}bg-surface-container-highest border-on-surface-variant text-on-surface-variant{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
+    Activation Fees
+  </a>
 </div>
 
-<div class="card">
-  <div class="card-head">
-    <div class="card-head-left">
-      <div class="card-head-icon" style="background:var(--sky-dim,rgba(56,139,253,.12))">
-        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--blue)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
-      </div>
-      <div>
-        <div class="card-title">Transactions</div>
-        <div class="card-sub">{{ transactions|length }} records</div>
-      </div>
+<div class="glass-card rounded-lg overflow-hidden">
+  <div class="px-container-padding py-4 border-b border-outline flex items-center gap-3">
+    <span class="material-symbols-outlined text-tech-cyan text-[20px]">receipt_long</span>
+    <div>
+      <h3 class="font-headline-md text-white">Transactions</h3>
+      <p class="font-label-sm text-on-surface-variant text-[11px]">{{ transactions|length }} record{{ transactions|length|pluralize }}</p>
     </div>
   </div>
-  {% if transactions %}
-  <table>
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>Type</th>
-        <th>Amount</th>
-        <th>Status</th>
-        <th>By</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for t in transactions %}
-    <tr>
-      <td>
-        <a href="{% url 'admin-user-detail' t.user.id %}"
-           style="font-weight:500;color:var(--blue);text-decoration:none">
-          {{ t.user.username }}
-        </a>
-      </td>
-      <td>
-        <span class="badge
-          {% if t.transaction_type == 'admin_deposit' %}badge-green
-          {% elif t.transaction_type == 'withdrawal' %}badge-red
-          {% elif t.transaction_type == 'activation_fee' %}badge-amber
-          {% else %}badge-muted{% endif %}">
-          {{ t.get_transaction_type_display }}
-        </span>
-      </td>
-      <td style="font-weight:700">
-        {% if t.transaction_type == 'withdrawal' or t.transaction_type == 'activation_fee' %}
-        <span style="color:var(--red)">− ${{ t.amount }}</span>
-        {% else %}
-        <span style="color:var(--green-bright)">+ ${{ t.amount }}</span>
-        {% endif %}
-      </td>
-      <td>
-        <span class="badge
-          {% if t.status == 'success' %}badge-green
-          {% elif t.status == 'pending' %}badge-amber
-          {% else %}badge-red{% endif %}">
-          {{ t.status }}
-        </span>
-      </td>
-      <td style="font-size:12.5px;color:var(--muted)">
-        {{ t.performed_by.username|default:"System" }}
-      </td>
-      <td style="font-size:12px;color:var(--muted);white-space:nowrap">
-        {{ t.created_at|date:"M d, Y H:i" }}
-      </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-  <div class="empty">No transactions found.</div>
-  {% endif %}
+
+  <div class="overflow-x-auto custom-scrollbar">
+    {% if transactions %}
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-surface-container-lowest">
+        <tr>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">User</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Type</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Amount</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Status</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">By</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Date</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline/30">
+        {% for t in transactions %}
+        <tr class="hover:bg-white/[0.02] transition-colors">
+
+          <td class="px-gutter py-3">
+            <a href="{% url 'admin-user-detail' t.user.id %}" class="text-tech-cyan font-bold text-sm hover:underline">
+              {{ t.user.username }}
+            </a>
+          </td>
+
+          <td class="px-gutter py-3">
+            {% if t.transaction_type == 'admin_deposit' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-tech-cyan">{{ t.get_transaction_type_display }}</span>
+            {% elif t.transaction_type == 'withdrawal' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error-container text-error">{{ t.get_transaction_type_display }}</span>
+            {% elif t.transaction_type == 'activation_fee' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-on-surface-variant">{{ t.get_transaction_type_display }}</span>
+            {% else %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container text-on-surface-variant">{{ t.get_transaction_type_display }}</span>
+            {% endif %}
+          </td>
+
+          <td class="px-gutter py-3 font-mono-data font-bold">
+            {% if t.transaction_type == 'withdrawal' or t.transaction_type == 'activation_fee' %}
+              <span class="text-error">− ${{ t.amount }}</span>
+            {% else %}
+              <span class="text-tech-cyan">+ ${{ t.amount }}</span>
+            {% endif %}
+          </td>
+
+          <td class="px-gutter py-3">
+            {% if t.status == 'success' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-tech-cyan">{{ t.status }}</span>
+            {% elif t.status == 'pending' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-on-surface-variant">{{ t.status }}</span>
+            {% else %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error-container text-error">{{ t.status }}</span>
+            {% endif %}
+          </td>
+
+          <td class="px-gutter py-3 font-label-sm text-[12px] text-on-surface-variant">
+            {{ t.performed_by.username|default:"System" }}
+          </td>
+
+          <td class="px-gutter py-3 font-mono-data text-[11px] text-on-surface-variant whitespace-nowrap">
+            {{ t.created_at|date:"M d, Y H:i" }}
+          </td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="px-gutter py-12 text-center">
+      <span class="material-symbols-outlined text-4xl text-on-surface-variant opacity-30 block mb-3">receipt_long</span>
+      <p class="font-label-sm text-on-surface-variant">No transactions found.</p>
+    </div>
+    {% endif %}
+  </div>
 </div>
+
 {% endblock %}
