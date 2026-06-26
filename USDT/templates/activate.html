@@ -1,86 +1,315 @@
-{% extends 'base.html' %}
-{% block title %}Activate Account{% endblock %}
-{% block page_title %}Activate Account{% endblock %}
-{% block nav_activate %}active{% endblock %}
+<!DOCTYPE html>
 
-{% block content %}
-<div style="max-width:600px">
-
-{% if payment.status == 'pending' %}
-<div class="card">
-  <div class="card-header">
-    <div class="ch-icon" style="background:var(--amber-dim)"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--amber)" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-    <h3>Account Activation</h3>
-  </div>
-  <div class="card-body">
-    <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px">
-      To activate your account, send <strong style="color:var(--text)">${{ activation_amount }} USD</strong> to any of the payment accounts below, then click <strong>I've Sent Payment</strong>.
-    </p>
-
-    {% for detail in payment_details %}
-    <div style="border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-        <span class="badge {% if detail.payment_type == 'bank' %}badge-sky{% else %}badge-amber{% endif %}">
-          {{ detail.get_payment_type_display }}
-        </span>
-        <strong style="font-size:14px">{{ detail.label }}</strong>
-      </div>
-
-      {% if detail.payment_type == 'bank' %}
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px">
-        {% if detail.bank_name %}<div><span style="color:var(--muted)">Bank:</span> <strong>{{ detail.bank_name }}</strong></div>{% endif %}
-        {% if detail.account_name %}<div><span style="color:var(--muted)">Account Name:</span> <strong>{{ detail.account_name }}</strong></div>{% endif %}
-        {% if detail.account_number %}<div><span style="color:var(--muted)">Account No:</span> <strong>{{ detail.account_number }}</strong></div>{% endif %}
-        {% if detail.bank_country %}<div><span style="color:var(--muted)">Country:</span> {{ detail.bank_country }}</div>{% endif %}
-        {% if detail.swift_code %}<div><span style="color:var(--muted)">SWIFT:</span> {{ detail.swift_code }}</div>{% endif %}
-        {% if detail.iban %}<div><span style="color:var(--muted)">IBAN:</span> {{ detail.iban }}</div>{% endif %}
-        {% if detail.routing_number %}<div><span style="color:var(--muted)">Routing:</span> {{ detail.routing_number }}</div>{% endif %}
-      </div>
-      {% else %}
-      <div style="font-size:13px">
-        <div style="margin-bottom:6px"><span style="color:var(--muted)">Currency:</span> <strong>{{ detail.crypto_currency }}</strong> &nbsp;|&nbsp; <span style="color:var(--muted)">Network:</span> <strong>{{ detail.crypto_network }}</strong></div>
-        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:monospace;font-size:13px;word-break:break-all">{{ detail.wallet_address }}</div>
-      </div>
-      {% endif %}
-    </div>
-    {% empty %}
-    <div style="text-align:center;padding:30px;color:var(--muted);font-size:13.5px">No payment details available yet. Please contact admin.</div>
-    {% endfor %}
-
-    {% if payment_details %}
-    <form method="post" style="margin-top:20px">
-      {% csrf_token %}
-      <div style="background:var(--sky-dim);border:1px solid rgba(14,165,233,.3);border-radius:10px;padding:14px;margin-bottom:16px;font-size:13px">
-        ⚠ Only click below after you have sent the payment. Admin will verify and activate your account.
-      </div>
-      <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
-        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        I've Sent Payment — Notify Admin
-      </button>
-    </form>
-    {% endif %}
-  </div>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>SANTANDER | Activate Account</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .luminous-border {
+            border-top: 1px solid #2D5A43;
+        }
+        body {
+            background-color: #000000;
+            color: #e2e2e2;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#a1d1b4",
+                        "surface-container": "#1f1f1f",
+                        "on-primary-fixed": "#002112",
+                        "secondary-fixed": "#e5e2e1",
+                        "tertiary-fixed-dim": "#a4d1b6",
+                        "tertiary-fixed": "#bfedd1",
+                        "on-secondary": "#313030",
+                        "tertiary": "#a4d1b6",
+                        "on-background": "#e2e2e2",
+                        "surface-tint": "#a1d1b4",
+                        "primary-fixed": "#bceecf",
+                        "secondary": "#c8c6c5",
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#e2e2e2",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#474746",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-container-low": "#1b1b1b",
+                        "on-tertiary-fixed-variant": "#254f3a",
+                        "surface-container-highest": "#353535",
+                        "inverse-primary": "#3a674f",
+                        "surface-container-high": "#2a2a2a",
+                        "on-tertiary-container": "#a1ceb3",
+                        "on-error": "#690005",
+                        "primary": "#a1d1b4",
+                        "surface-bright": "#393939",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#305944",
+                        "outline-variant": "#414943",
+                        "error-container": "#93000a",
+                        "surface": "#131313",
+                        "secondary-container": "#474746",
+                        "outline": "#8b938c",
+                        "on-primary-fixed-variant": "#224f39",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-variant": "#353535",
+                        "surface-dim": "#131313",
+                        "on-primary-container": "#9fcfb2",
+                        "inverse-on-surface": "#303030",
+                        "background": "#131313",
+                        "on-surface-variant": "#c0c9c1",
+                        "on-secondary-container": "#b7b5b4",
+                        "on-tertiary": "#0c3825",
+                        "primary-container": "#2d5a43",
+                        "on-primary": "#063824",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-surface": "#e2e2e2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-md": "12px",
+                        "stack-lg": "32px",
+                        "stack-sm": "4px",
+                        "container-padding": "24px",
+                        "gutter": "16px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "mono-data": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden min-h-screen">
+<!-- Top AppBar (from JSON) -->
+<header class="fixed top-0 w-full z-50 bg-background/80 dark:bg-background/80 backdrop-blur-xl border-b border-white/5 flex justify-between items-center px-container-padding h-16 w-full">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200 cursor-pointer">menu</span>
+<h1 class="font-headline-md text-headline-md font-bold tracking-tighter text-primary dark:text-primary">SANTANDER</h1>
 </div>
-
-{% elif payment.status == 'paid' %}
-<div class="card">
-  <div class="card-body" style="text-align:center;padding:40px">
-    <div style="width:64px;height:64px;background:var(--green-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
-      <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <h3 style="font-size:18px;margin-bottom:8px">Account Activated!</h3>
-    <p style="color:var(--muted);font-size:13.5px">Your account has been activated. Enjoy full access.</p>
-    <a href="{% url 'dashboard' %}" class="btn btn-primary" style="margin-top:20px">Go to Dashboard</a>
-  </div>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden border border-white/10">
+<img class="w-full h-full object-cover" data-alt="A high-end, professionally lit corporate headshot of a person with a clean-cut aesthetic. The background is a soft-focus office with forest green accents and deep obsidian shadows, aligning with a premium private banking environment. The lighting is dramatic yet soft, highlighting a trustworthy and elite professional identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVCv3VaKqM5gfOgn4YvEDYv668uaCdsntL_cBDINTKXSbDQvFlGG3aGWpSfS3bgxdWpNsbXnkpOj_ZTSr9iAxe4xlJEdWYc2mL6tFicFLTZuxOgnG2ej6HpXuYd55yaV17J8Vzncn-bizOct2qh2cPh_on8wdSgJSvVSJ6ztewslPUOoquaZFw10ln3ZK3b0po7J_BcEbNaJbE-IS7U5ThDrvWEO-XtWC9RrKvXPuo0Vjote-F-zPibHVbg3Hakxgryti2DWbI8CM"/>
 </div>
-
-{% else %}
-<div class="card">
-  <div class="card-body" style="text-align:center;padding:40px;color:var(--muted)">
-    Payment submitted. Awaiting admin confirmation.
-  </div>
+</header>
+<main class="pt-24 pb-32 px-container-padding max-w-lg mx-auto min-h-screen flex flex-col">
+<!-- Status: PENDING -->
+        {% if payment.status == 'pending' %}
+        <section class="space-y-gutter animate-in fade-in slide-in-from-bottom-4 duration-700">
+<div class="text-center space-y-2 mb-8">
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-primary/60">Account Activation Required</span>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Secure Your Access</h2>
+<p class="text-on-surface-variant/70 text-body-md font-body-md">To complete your registration, please send the activation amount to the secure account below.</p>
 </div>
-{% endif %}
-
+<!-- Amount Card -->
+<div class="glass-card rounded-xl p-6 text-center border-t-2 border-primary-container">
+<p class="text-label-sm font-label-sm text-on-surface-variant/50 uppercase mb-1">Activation Amount</p>
+<div class="text-headline-xl font-headline-xl text-primary font-bold tracking-tight">
+                    ${{ activation_amount }} <span class="text-body-md opacity-50">USD</span>
 </div>
-{% endblock %}
+</div>
+<div class="space-y-4">
+<h3 class="text-label-sm font-label-sm uppercase tracking-tighter text-on-surface-variant/40 ml-1">Payment Instructions</h3>
+                
+                {% for detail in payment_details %}
+                    {% if detail.type == 'bank' %}
+                    <div class="glass-card rounded-lg p-5 space-y-4 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container/40"></div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-label-sm font-label-sm text-primary/80 mb-0.5">Wire Transfer Details</p>
+<p class="text-body-lg font-bold">{{ detail.bank_name }}</p>
+</div>
+<span class="material-symbols-outlined text-primary/30">account_balance</span>
+</div>
+<div class="grid grid-cols-2 gap-y-4 pt-2 border-t border-white/5">
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant/40">Account Name</p>
+<p class="text-body-md font-mono-data font-medium">{{ detail.account_name }}</p>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant/40">Account No</p>
+<p class="text-body-md font-mono-data font-medium">{{ detail.account_no }}</p>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant/40">SWIFT/BIC</p>
+<p class="text-body-md font-mono-data font-medium">{{ detail.swift }}</p>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant/40">Routing No</p>
+<p class="text-body-md font-mono-data font-medium">{{ detail.routing }}</p>
+</div>
+<div class="col-span-2">
+<p class="text-label-sm font-label-sm text-on-surface-variant/40">IBAN</p>
+<p class="text-body-md font-mono-data font-medium tracking-wider">{{ detail.iban }}</p>
+</div>
+<div class="col-span-2">
+<p class="text-label-sm font-label-sm text-on-surface-variant/40">Country</p>
+<p class="text-body-md">{{ detail.country }}</p>
+</div>
+</div>
+</div>
+                    {% endif %}
+
+                    {% if detail.type == 'crypto' %}
+                    <div class="glass-card rounded-lg p-5 space-y-4 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary/60"></div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">currency_bitcoin</span>
+</div>
+<div>
+<p class="text-body-md font-bold">{{ detail.currency }}</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant/60">Network: {{ detail.network }}</p>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<p class="text-label-sm font-label-sm text-on-surface-variant/40">Wallet Address</p>
+<div class="bg-black/50 border border-white/10 rounded p-4 break-all font-mono-data text-body-md text-primary-fixed-dim select-all relative group/address">
+                                {{ detail.wallet_address }}
+                                <div class="absolute right-2 bottom-2">
+<span class="material-symbols-outlined text-sm opacity-30 hover:opacity-100 cursor-pointer transition-opacity">content_copy</span>
+</div>
+</div>
+</div>
+</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+<div class="pt-6">
+<button class="w-full h-14 bg-primary-container text-on-primary-container font-headline-md text-headline-md rounded-xl flex items-center justify-center gap-3 hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary-container/20 border border-white/10">
+<span>I've Sent Payment</span>
+<span class="material-symbols-outlined">send</span>
+</button>
+<p class="text-center text-label-sm font-label-sm text-on-surface-variant/30 mt-4 px-8 leading-relaxed">
+                    Transaction verification typically takes between 15 minutes and 24 hours depending on the network.
+                </p>
+</div>
+</section>
+<!-- Status: PAID (Success) -->
+        {% elif payment.status == 'paid' %}
+        <section class="flex-grow flex flex-col items-center justify-center text-center space-y-stack-lg animate-in zoom-in duration-500">
+<div class="w-24 h-24 rounded-full bg-primary-container/20 border-2 border-primary flex items-center justify-center text-primary mb-4 relative">
+<span class="material-symbols-outlined text-6xl" style="font-variation-settings: 'wght' 600;">check</span>
+<div class="absolute inset-0 rounded-full border-4 border-primary/20 animate-ping"></div>
+</div>
+<div class="space-y-2">
+<h2 class="text-headline-xl font-headline-xl font-bold text-on-surface tracking-tight">Account Activated!</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant/70 max-w-xs mx-auto">Welcome to Santander Obsidian. Your portfolio and accounts are now fully accessible.</p>
+</div>
+<div class="w-full pt-8">
+<button class="w-full h-14 glass-card text-primary font-headline-md text-headline-md rounded-xl flex items-center justify-center gap-3 hover:bg-white/5 active:scale-95 transition-all">
+<span>Go to Dashboard</span>
+<span class="material-symbols-outlined">dashboard</span>
+</button>
+</div>
+</section>
+<!-- Status: OTHER (Processing) -->
+        {% else %}
+        <section class="flex-grow flex flex-col items-center justify-center text-center space-y-stack-lg animate-in fade-in duration-1000">
+<div class="relative w-16 h-16 mb-6">
+<div class="absolute inset-0 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
+</div>
+<div class="space-y-4 glass-card p-8 rounded-2xl border-t border-white/5">
+<h2 class="text-headline-md font-headline-md font-medium text-on-surface">Payment Submitted</h2>
+<p class="text-body-md font-body-md text-on-surface-variant/60">We have received your request. Our administration team is currently confirming your transaction.</p>
+<div class="bg-surface-container-low py-3 px-4 rounded-lg inline-block border border-white/5">
+<span class="text-label-sm font-label-sm text-primary uppercase tracking-widest">Awaiting Confirmation</span>
+</div>
+</div>
+</section>
+        {% endif %}
+
+    </main>
+<!-- Bottom Navigation Bar (from JSON) -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container-lowest/90 dark:bg-surface-container-lowest/90 backdrop-blur-2xl border-t border-white/5 shadow-[0_-4px_24px_rgba(45,90,67,0.1)] flex justify-around items-center h-20 px-4 pb-safe w-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 font-label-sm text-label-sm hover:text-primary transition-colors active:scale-90 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+            Home
+        </a>
+<a class="flex flex-col items-center justify-center text-primary font-bold bg-primary-container/10 rounded-full py-1 px-3 font-label-sm text-label-sm active:scale-90 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mb-1">account_balance_wallet</span>
+            Accounts
+        </a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 font-label-sm text-label-sm hover:text-primary transition-colors active:scale-90 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mb-1">add_circle</span>
+            Deposit
+        </a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 font-label-sm text-label-sm hover:text-primary transition-colors active:scale-90 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mb-1">history</span>
+            Activity
+        </a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 font-label-sm text-label-sm hover:text-primary transition-colors active:scale-90 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mb-1">settings</span>
+            Settings
+        </a>
+</nav>
+<script>
+        // Micro-interaction for feedback
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+        // Simple Copy to Clipboard Simulation
+        const addressBox = document.querySelector('.group\\/address');
+        if (addressBox) {
+            addressBox.addEventListener('click', () => {
+                const icon = addressBox.querySelector('.material-symbols-outlined');
+                icon.innerText = 'check';
+                icon.style.color = '#a1d1b4';
+                setTimeout(() => {
+                    icon.innerText = 'content_copy';
+                    icon.style.color = '';
+                }, 2000);
+            });
+        }
+    </script>
+</body></html>

@@ -13,32 +13,57 @@
     theme: {
       extend: {
         "colors": {
-          "primary-fixed-dim": "#a1d1b4", "on-surface-variant": "#c0c9c1",
-          "primary": "#a1d1b4", "surface-container-high": "#2a2a2a",
-          "on-secondary-fixed-variant": "#474746", "tertiary-fixed-dim": "#a4d1b6",
-          "tertiary": "#a4d1b6", "error-container": "#93000a",
-          "secondary": "#c8c6c5", "primary-container": "#2d5a43",
-          "on-error": "#690005", "secondary-container": "#474746",
-          "background": "#131313", "surface-container-low": "#1b1b1b",
-          "on-background": "#e2e2e2", "inverse-on-surface": "#303030",
-          "inverse-primary": "#3a674f", "surface-tint": "#a1d1b4",
-          "on-secondary-fixed": "#1c1b1b", "on-error-container": "#ffdad6",
-          "surface": "#131313", "on-primary-fixed": "#002112",
-          "on-surface": "#e2e2e2", "surface-container-lowest": "#0e0e0e",
-          "tertiary-container": "#305944", "on-tertiary-fixed": "#002113",
-          "primary-fixed": "#bceecf", "on-secondary-container": "#b7b5b4",
-          "outline-variant": "#414943", "error": "#ffb4ab",
-          "secondary-fixed": "#e5e2e1", "on-secondary": "#313030",
-          "on-primary-container": "#9fcfb2", "on-primary": "#063824",
-          "surface-dim": "#131313", "inverse-surface": "#e2e2e2",
-          "surface-container": "#1f1f1f", "on-tertiary-container": "#a1ceb3",
-          "outline": "#8b938c", "surface-bright": "#393939",
-          "on-tertiary": "#0c3825", "on-primary-fixed-variant": "#224f39",
-          "surface-variant": "#353535", "on-tertiary-fixed-variant": "#254f3a",
-          "secondary-fixed-dim": "#c8c6c5", "tertiary-fixed": "#bfedd1",
+          "primary-fixed-dim": "#a1d1b4",
+          "on-surface-variant": "#c0c9c1",
+          "primary": "#a1d1b4",
+          "surface-container-high": "#2a2a2a",
+          "on-secondary-fixed-variant": "#474746",
+          "tertiary-fixed-dim": "#a4d1b6",
+          "tertiary": "#a4d1b6",
+          "error-container": "#93000a",
+          "secondary": "#c8c6c5",
+          "primary-container": "#2d5a43",
+          "on-error": "#690005",
+          "secondary-container": "#474746",
+          "background": "#131313",
+          "surface-container-low": "#1b1b1b",
+          "on-background": "#e2e2e2",
+          "inverse-on-surface": "#303030",
+          "inverse-primary": "#3a674f",
+          "surface-tint": "#a1d1b4",
+          "on-secondary-fixed": "#1c1b1b",
+          "on-error-container": "#ffdad6",
+          "surface": "#131313",
+          "on-primary-fixed": "#002112",
+          "on-surface": "#e2e2e2",
+          "surface-container-lowest": "#0e0e0e",
+          "tertiary-container": "#305944",
+          "on-tertiary-fixed": "#002113",
+          "primary-fixed": "#bceecf",
+          "on-secondary-container": "#b7b5b4",
+          "outline-variant": "#414943",
+          "error": "#ffb4ab",
+          "secondary-fixed": "#e5e2e1",
+          "on-secondary": "#313030",
+          "on-primary-container": "#9fcfb2",
+          "on-primary": "#063824",
+          "surface-dim": "#131313",
+          "inverse-surface": "#e2e2e2",
+          "surface-container": "#1f1f1f",
+          "on-tertiary-container": "#a1ceb3",
+          "outline": "#8b938c",
+          "surface-bright": "#393939",
+          "on-tertiary": "#0c3825",
+          "on-primary-fixed-variant": "#224f39",
+          "surface-variant": "#353535",
+          "on-tertiary-fixed-variant": "#254f3a",
+          "secondary-fixed-dim": "#c8c6c5",
+          "tertiary-fixed": "#bfedd1",
           "surface-container-highest": "#353535"
         },
-        "borderRadius": { "DEFAULT": "0.125rem","lg": "0.25rem","xl": "0.5rem","full": "0.75rem" },
+        "borderRadius": {
+          "DEFAULT": "0.125rem","lg": "0.25rem","xl": "0.5rem","full": "0.75rem"
+        },
         "spacing": {
           "container-padding": "24px","stack-md": "12px","base": "8px",
           "gutter": "16px","stack-sm": "4px","stack-lg": "32px"
@@ -64,7 +89,11 @@
 </script>
 <style>
   body { background-color: #000000; color: #e2e2e2; }
-  .glass-card { background: #111111; border: 1px solid #222222; transition: border-color 0.3s ease; }
+  .glass-card {
+    background: #111111;
+    border: 1px solid #222222;
+    transition: border-color 0.3s ease;
+  }
   .glass-card:hover { border-color: #2D5A43; }
   .custom-scrollbar::-webkit-scrollbar { width: 4px; }
   .custom-scrollbar::-webkit-scrollbar-track { background: #0e0e0e; }
@@ -85,7 +114,7 @@
 
   <!-- Logo Section -->
   <div class="px-gutter py-stack-lg flex flex-col items-center border-b border-surface-container-highest">
-    <div class="w-16 h-16 rounded-xl mb-base glow-effect bg-primary-container flex items-center justify-center">
+    <div class="w-16 h-16 rounded-xl mb-base glow-effect bg-primary-container flex items-center justify-content:center">
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
         <path d="M20 4L4 12l16 8 16-8L20 4zM4 28l16 8 16-8M4 20l16 8 16-8" stroke="#a1d1b4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -96,18 +125,26 @@
   <!-- Scrollable Navigation Area -->
   <div class="flex-1 overflow-y-auto custom-scrollbar px-stack-md py-stack-md space-y-1">
     <nav class="space-y-1">
+
+      <!-- Dashboard -->
       <a class="sidebar-active flex items-center gap-base px-gutter py-stack-md rounded-lg transition-all duration-200" href="{% url 'dashboard' %}">
         <span class="material-symbols-outlined">dashboard</span>
         <span class="font-label-sm text-label-sm uppercase tracking-widest">Dashboard</span>
       </a>
+
+      <!-- Deposit -->
       <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="{% url 'deposit-request' %}">
         <span class="material-symbols-outlined">account_balance_wallet</span>
         <span class="font-label-sm text-label-sm uppercase tracking-widest">Deposit</span>
       </a>
+
+      <!-- Withdraw -->
       <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="{% url 'request-withdrawal' %}">
         <span class="material-symbols-outlined">payments</span>
         <span class="font-label-sm text-label-sm uppercase tracking-widest">Withdraw</span>
       </a>
+
+      <!-- Notifications -->
       <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="{% url 'notifications' %}">
         <span class="material-symbols-outlined">notifications</span>
         <span class="font-label-sm text-label-sm uppercase tracking-widest">Notifications</span>
@@ -115,22 +152,29 @@
         <span class="ml-auto bg-primary text-on-primary px-1.5 py-0.5 rounded-full text-[10px] font-bold">{{ unread_notifications }}</span>
         {% endif %}
       </a>
+
+      <!-- Support -->
       <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="{% url 'support-list' %}">
         <span class="material-symbols-outlined">contact_support</span>
         <span class="font-label-sm text-label-sm uppercase tracking-widest">Support</span>
       </a>
+
     </nav>
 
     <div class="mt-stack-lg pt-stack-lg border-t border-surface-container-highest">
       <div class="px-gutter mb-base">
         <span class="text-[10px] text-on-surface-variant opacity-50 uppercase tracking-widest font-bold">Preferences</span>
       </div>
+
+      <!-- Profile -->
       <a class="flex items-center gap-base px-gutter py-stack-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-all duration-200" href="{% url 'profile' %}">
         <span class="material-symbols-outlined">person</span>
         <span class="font-label-sm text-label-sm uppercase tracking-widest">Profile</span>
       </a>
+
     </div>
 
+    <!-- Activation Banner if not active -->
     {% if not request.user.account_activated %}
     <div class="mt-stack-lg px-gutter">
       <div class="bg-primary-container/20 border border-primary/30 rounded-xl p-stack-md">
@@ -139,6 +183,7 @@
       </div>
     </div>
     {% endif %}
+
   </div>
 
   <!-- User Profile Card (Bottom) -->
@@ -281,8 +326,7 @@
         </div>
         <div class="mt-stack-md flex items-center gap-gutter">
           <div class="flex-1 h-1 bg-surface-container rounded-full overflow-hidden">
-            {# Progress bar: filled if any transactions exist #}
-            <div class="bg-primary h-full transition-all duration-700" style="width: {% if transactions %}{% widthratio transactions|length 10 100 %}%{% else %}0%{% endif %}"></div>
+            <div class="bg-primary h-full" style="width:{% if transactions %}65%{% else %}0%{% endif %}"></div>
           </div>
           <span class="text-[10px] font-mono-data text-on-surface-variant">All time</span>
         </div>
@@ -407,11 +451,9 @@
           <tbody class="divide-y divide-surface-container-highest">
             {% for t in transactions %}
             <tr class="hover:bg-white/5 transition-colors group">
-
-              <!-- Type Icon -->
               <td class="px-gutter py-gutter">
                 <div class="flex items-center gap-stack-md">
-                  {% if t.transaction_type == 'admin_deposit' or t.transaction_type == 'deposit' %}
+                  {% if t.transaction_type == 'admin_deposit' %}
                   <div class="p-2 bg-primary/10 text-primary rounded-lg">
                     <span class="material-symbols-outlined text-[20px]">add_circle</span>
                   </div>
@@ -419,7 +461,7 @@
                   <div class="p-2 bg-error/10 text-error rounded-lg">
                     <span class="material-symbols-outlined text-[20px]">remove_circle</span>
                   </div>
-                  {% elif t.transaction_type == 'activation_fee' or t.transaction_type == 'fee' %}
+                  {% elif t.transaction_type == 'activation_fee' %}
                   <div class="p-2 bg-tertiary/10 text-tertiary rounded-lg">
                     <span class="material-symbols-outlined text-[20px]">verified_user</span>
                   </div>
@@ -431,37 +473,23 @@
                   <span class="font-bold text-sm text-on-surface">{{ t.get_transaction_type_display }}</span>
                 </div>
               </td>
-
-              <!-- Description -->
               <td class="px-gutter py-gutter text-sm text-on-surface-variant">{{ t.description|default:"—" }}</td>
-
-              <!-- Amount: + for credits, - for debits -->
               <td class="px-gutter py-gutter">
-                {% if t.transaction_type == 'admin_deposit' or t.transaction_type == 'deposit' %}
-                  <span class="font-mono-data font-bold text-primary">+${{ t.amount }}</span>
-                {% elif t.transaction_type == 'withdrawal' or t.transaction_type == 'activation_fee' or t.transaction_type == 'fee' %}
-                  <span class="font-mono-data font-bold text-error">-${{ t.amount }}</span>
-                {% else %}
-                  <span class="font-mono-data font-bold text-on-surface">${{ t.amount }}</span>
-                {% endif %}
+                <span class="font-mono-data font-bold {% if t.transaction_type == 'admin_deposit' %}text-primary{% elif t.transaction_type == 'withdrawal' or t.transaction_type == 'activation_fee' %}text-error{% else %}text-on-surface{% endif %}">
+                  {% if t.transaction_type == 'admin_deposit' %}+{% else %}-{% endif %}${{ t.amount }}
+                </span>
               </td>
-
-              <!-- Status: handles both 'completed' and 'success' -->
               <td class="px-gutter py-gutter">
                 <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter
-                  {% if t.status == 'completed' or t.status == 'success' %}bg-primary/20 text-primary
+                  {% if t.status == 'success' %}bg-primary/20 text-primary
                   {% elif t.status == 'pending' %}bg-tertiary/20 text-tertiary
-                  {% elif t.status == 'failed' %}bg-error/20 text-error
                   {% else %}bg-surface-container text-on-surface-variant{% endif %}">
                   {{ t.status }}
                 </span>
               </td>
-
-              <!-- Date -->
               <td class="px-gutter py-gutter text-right text-[12px] text-on-surface-variant font-mono-data">
                 {{ t.created_at|date:"M d, Y" }}
               </td>
-
             </tr>
             {% endfor %}
           </tbody>

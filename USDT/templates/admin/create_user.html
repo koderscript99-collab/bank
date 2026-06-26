@@ -1,0 +1,58 @@
+{% extends 'admin/admin-dashboard.html' %}
+{% block title %}Create User{% endblock %}
+{% block page_title %}Create User{% endblock %}
+{% block page_sub %}Add a new user account{% endblock %}
+{% block nav_users %}active-nav text-tech-cyan{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'admin-users' %}" class="inline-flex items-center gap-2 font-label-sm text-on-surface-variant hover:text-tech-cyan transition-colors mb-stack-lg">
+  <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+  Back to Users
+</a>
+
+<div class="max-w-md">
+  <div class="glass-card rounded-lg overflow-hidden">
+    <div class="px-container-padding py-4 border-b border-outline flex items-center gap-3">
+      <span class="material-symbols-outlined text-tech-cyan text-[20px]">person_add</span>
+      <h3 class="font-headline-md text-white">New User</h3>
+    </div>
+    <div class="p-container-padding">
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        <div>
+          <label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Username</label>
+          <input type="text" name="username" required autofocus
+            placeholder="e.g. john_doe"
+            class="w-full bg-background border border-outline rounded px-3 py-2.5 text-white text-sm font-mono-data focus:border-tech-cyan focus:outline-none transition-colors">
+        </div>
+
+        <div>
+          <label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Password</label>
+          <input type="password" name="password" required
+            placeholder="Min. 6 characters"
+            class="w-full bg-background border border-outline rounded px-3 py-2.5 text-white text-sm font-mono-data focus:border-tech-cyan focus:outline-none transition-colors">
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button type="submit"
+            class="flex-1 py-2.5 bg-primary-container border border-tech-cyan/30 text-tech-cyan rounded font-label-sm font-bold hover:bg-primary-container/80 transition-colors flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">person_add</span>
+            Create User
+          </button>
+          <a href="{% url 'admin-users' %}"
+            class="px-4 py-2.5 border border-outline rounded font-label-sm text-sm text-on-surface-variant hover:text-white transition-colors flex items-center justify-center">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <p class="font-label-sm text-[11px] text-on-surface-variant mt-3 px-1">
+    A wallet will be created automatically. You can set an activation fee and fund the wallet from the user detail page.
+  </p>
+</div>
+
+{% endblock %}

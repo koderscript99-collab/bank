@@ -1,4 +1,4 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/admin-dashboard.html' %}
 {% block title %}All Users{% endblock %}
 {% block page_title %}All Users{% endblock %}
 {% block page_sub %}{{ total }} registered user{{ total|pluralize }}{% endblock %}
@@ -29,6 +29,10 @@
   </div>
 </form>
 
+<a href="{% url 'admin-create-user' %}" class="inline-flex items-center gap-2 font-label-sm text-on-surface-variant hover:text-tech-cyan transition-colors mb-stack-lg">
+  <span class="material-symbols-outlined text-[16px]">person_add</span>
+  Create New User
+</a>
 {# ── USERS TABLE ─────────────────────────────────────────── #}
 <div class="glass-card rounded-lg overflow-hidden">
   <div class="px-container-padding py-4 border-b border-outline flex items-center justify-between">

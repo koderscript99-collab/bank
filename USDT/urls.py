@@ -35,6 +35,7 @@ urlpatterns = [
     path('admin-panel/users/<int:user_id>/set-fee/', views.admin_set_activation_fee, name='admin-set-activation-fee'),
     path('admin-panel/users/<int:user_id>/reset-password/', views.admin_reset_password, name='admin-reset-password'),
     path('admin-panel/users/<int:user_id>/delete/', views.admin_delete_user, name='admin-delete-user'),
+    path('admin-panel/users/create/', views.admin_create_user, name='admin-create-user'),
 
     # ── Admin — accounts ──────────────────────────────────────
     path('admin-panel/accounts/<int:account_id>/remove/', views.admin_remove_payment_account, name='admin-remove-account'),

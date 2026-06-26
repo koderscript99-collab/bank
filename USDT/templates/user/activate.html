@@ -1,271 +1,355 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Activate Account</title>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Activate Account | SANTANDER</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#1f1f1f",
+                    "on-primary-fixed": "#002112",
+                    "surface-dim": "#131313",
+                    "surface": "#131313",
+                    "on-primary-fixed-variant": "#224f39",
+                    "surface-container-high": "#2a2a2a",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "primary-fixed-dim": "#a1d1b4",
+                    "on-error": "#690005",
+                    "tertiary-fixed-dim": "#a4d1b6",
+                    "surface-tint": "#a1d1b4",
+                    "primary-fixed": "#bceecf",
+                    "on-error-container": "#ffdad6",
+                    "surface-variant": "#353535",
+                    "on-surface-variant": "#c0c9c1",
+                    "on-secondary-fixed-variant": "#474746",
+                    "on-surface": "#e2e2e2",
+                    "on-secondary-container": "#b7b5b4",
+                    "on-primary": "#063824",
+                    "tertiary-container": "#305944",
+                    "primary": "#a1d1b4",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "secondary": "#c8c6c5",
+                    "surface-container-highest": "#353535",
+                    "outline": "#8b938c",
+                    "on-tertiary-container": "#a1ceb3",
+                    "on-tertiary-fixed-variant": "#254f3a",
+                    "on-secondary": "#313030",
+                    "error": "#ffb4ab",
+                    "on-background": "#e2e2e2",
+                    "surface-container-low": "#1b1b1b",
+                    "on-primary-container": "#9fcfb2",
+                    "inverse-primary": "#3a674f",
+                    "secondary-fixed": "#e5e2e1",
+                    "primary-container": "#2d5a43",
+                    "tertiary-fixed": "#bfedd1",
+                    "surface-container-lowest": "#0e0e0e",
+                    "tertiary": "#a4d1b6",
+                    "surface-bright": "#393939",
+                    "error-container": "#93000a",
+                    "outline-variant": "#414943",
+                    "secondary-container": "#474746",
+                    "inverse-on-surface": "#303030",
+                    "background": "#131313",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-surface": "#e2e2e2",
+                    "on-tertiary": "#0c3825"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "base": "8px",
+                    "stack-sm": "4px",
+                    "stack-md": "12px",
+                    "stack-lg": "32px",
+                    "container-padding": "24px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Geist"],
+                    "body-md": ["Hanken Grotesk"],
+                    "headline-xl": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "mono-data": ["Geist"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#f9fafb;--surface:#fff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;--accent:#2563eb;--accent-dim:rgba(37,99,235,.08);--green:#16a34a;--green-dim:rgba(22,163,74,.08);--amber:#d97706;--amber-dim:rgba(217,119,6,.08);--red:#dc2626;--red-dim:rgba(220,38,38,.08);--sidebar-w:220px;--header-h:56px;--radius:10px}
-[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d27;--border:#2a2d3a;--text:#f3f4f6;--muted:#6b7280;--accent-dim:rgba(37,99,235,.15);--green-dim:rgba(22,163,74,.15);--amber-dim:rgba(217,119,6,.15)}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s}
-.sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:200;overflow-y:auto;transition:transform .3s}
-.logo{height:var(--header-h);display:flex;align-items:center;padding:0 18px;font-size:17px;font-weight:800;border-bottom:1px solid var(--border)}
-.logo span{color:var(--accent)}
-.nav{padding:12px 8px;flex:1}
-.nav a{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;font-size:13.5px;color:var(--muted);text-decoration:none;margin-bottom:2px;transition:background .15s,color .15s}
-.nav a:hover{background:var(--accent-dim);color:var(--text)}
-.nav a.active{background:var(--accent-dim);color:var(--accent);font-weight:600}
-.sidebar-foot{padding:12px;border-top:1px solid var(--border)}
-.ucard{display:flex;align-items:center;gap:9px;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:9px;margin-bottom:8px}
-.av{width:32px;height:32px;border-radius:50%;background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
-.uname{font-size:13px;font-weight:600}
-.urole{font-size:11px;color:var(--muted)}
-.signout{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font-size:13px;color:var(--red);text-decoration:none}
-.signout:hover{background:var(--red-dim)}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:150}
-.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column}
-.topbar{height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:100}
-.menu-btn{display:none;background:none;border:none;cursor:pointer;color:var(--muted);padding:6px;border-radius:7px}
-.page-title{font-size:14px;font-weight:600}
-.tt{width:34px;height:34px;border-radius:50%;background:var(--bg);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted)}
-[data-theme="light"] .moon{display:none}
-[data-theme="dark"] .sun{display:none}
-.content{padding:24px;max-width:680px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:18px}
-.card-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
-.card-head h3{font-size:14px;font-weight:600}
-.card-body{padding:18px}
-.notice{display:flex;align-items:flex-start;gap:10px;padding:13px 16px;border-radius:9px;font-size:13.5px;margin-bottom:16px;border:1px solid}
-.notice-blue{background:var(--accent-dim);border-color:rgba(37,99,235,.2);color:var(--accent)}
-.notice-amber{background:var(--amber-dim);border-color:rgba(217,119,6,.25);color:var(--amber)}
-.notice-green{background:var(--green-dim);border-color:rgba(22,163,74,.25);color:var(--green)}
-.notice-red{background:var(--red-dim);border-color:rgba(220,38,38,.25);color:var(--red)}
-.detail-block{border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px}
-.detail-block-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.detail-block-label{font-size:13px;font-weight:700}
-.badge{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600}
-.badge-blue{background:var(--accent-dim);color:var(--accent)}
-.badge-amber{background:var(--amber-dim);color:var(--amber)}
-.row{display:flex;flex-direction:column;gap:3px;margin-bottom:10px}
-.row:last-child{margin-bottom:0}
-.row-key{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
-.row-val{font-size:13.5px;font-weight:500}
-.mono{font-family:monospace;font-size:12.5px;background:var(--bg);border:1px solid var(--border);padding:8px 12px;border-radius:7px;word-break:break-all;margin-top:4px}
-.copy{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;background:var(--accent-dim);color:var(--accent);border:none;cursor:pointer;margin-top:8px;transition:opacity .15s}
-.copy:hover{opacity:.8}
-.btn{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s;margin-top:6px}
-.btn:hover{opacity:.9}
-.msg{padding:11px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;border-left:3px solid}
-.msg.success{background:var(--green-dim);border-color:var(--green);color:var(--green)}
-.msg.error{background:var(--red-dim);border-color:var(--red);color:var(--red)}
-.empty-box{text-align:center;padding:48px 20px;color:var(--muted)}
-.empty-box svg{display:block;margin:0 auto 16px;opacity:.3}
-.empty-box h3{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px}
-.empty-box p{font-size:13.5px}
-@media(max-width:768px){
-  .sidebar{transform:translateX(-100%)}
-  .sidebar.open{transform:translateX(0)}
-  .overlay.open{display:block}
-  .main{margin-left:0}
-  .menu-btn{display:flex}
-  .content{padding:14px}
-}
-</style>
-</head>
-<body>
-<div class="overlay" id="ov" onclick="closeSB()"></div>
-<aside class="sidebar" id="sb">
-  <div class="logo">My<span>Portal</span></div>
-  <nav class="nav">
-    <a href="{% url 'dashboard' %}">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Dashboard
-    </a>
-    <a href="{% url 'request-withdrawal' %}">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-      Withdraw
-    </a>
-    <a href="{% url 'notifications' %}">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-      Notifications
-    </a>
-    <a href="{% url 'activate-account' %}" class="active">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      Activate Account
-    </a>
-  </nav>
-  <div class="sidebar-foot">
-    <div class="ucard">
-      <div class="av">{{ request.user.username|first|upper }}</div>
-      <div>
-        <div class="uname">{{ request.user.username }}</div>
-        <div class="urole">
-          {% if request.user.account_activated %}
-          <span style="color:var(--green)">● Active</span>
-          {% else %}
-          <span style="color:var(--amber)">● Pending</span>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-    <a href="{% url 'logout' %}" class="signout">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      Sign out
-    </a>
-  </div>
-</aside>
-
-<div class="main">
-  <header class="topbar">
-    <div style="display:flex;align-items:center;gap:10px">
-      <button class="menu-btn" onclick="openSB()">
-        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <span class="page-title">Activate Account</span>
-    </div>
-    <button class="tt" id="tt">
-      <svg class="sun" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg class="moon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-    </button>
-  </header>
-
-  <div class="content">
-    {% if messages %}
-      {% for m in messages %}
-      <div class="msg {{ m.tags }}">{{ m }}</div>
-      {% endfor %}
-    {% endif %}
-
-    {% if request.user.account_activated %}
-    <!-- ALREADY ACTIVATED -->
-    <div class="card">
-      <div class="card-body">
-        <div class="notice notice-green" style="margin-bottom:0">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          Your account is already activated. You have full access.
-        </div>
-      </div>
-    </div>
-
-    {% elif payment is None %}
-    <!-- NO ACTIVATION SET BY ADMIN YET -->
-    <div class="card">
-      <div class="card-body">
-        <div class="empty-box">
-          <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-          <h3>Activation Not Set Up Yet</h3>
-          <p>Your admin has not assigned an activation fee to your account yet. Please contact support.</p>
-        </div>
-      </div>
-    </div>
-
-    {% elif payment.status == 'paid' %}
-    <!-- PAYMENT SUBMITTED WAITING FOR ADMIN -->
-    <div class="card">
-      <div class="card-body" style="text-align:center;padding:40px">
-        <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="var(--green)" stroke-width="1.5" style="display:block;margin:0 auto 14px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        <div style="font-size:17px;font-weight:700;margin-bottom:6px">Payment Submitted</div>
-        <div style="font-size:13.5px;color:var(--muted)">Admin is reviewing your payment and will activate your account shortly.</div>
-      </div>
-    </div>
-
-    {% elif payment.status == 'failed' %}
-    <!-- PAYMENT REJECTED -->
-    <div class="card">
-      <div class="card-body">
-        <div class="notice notice-red" style="margin-bottom:0">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-          Your previous activation was rejected. Please contact support or resubmit payment.
-        </div>
-      </div>
-    </div>
-
-    {% else %}
-    <!-- PENDING — SHOW PAYMENT DETAILS -->
-    <div class="notice notice-blue">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      Send exactly <strong style="margin:0 3px">${{ activation_amount }} USD</strong> to one of the accounts below then click the button.
-    </div>
-
-    {% for detail in payment_details %}
-    <div class="detail-block">
-      <div class="detail-block-head">
-        <span class="detail-block-label">{{ detail.label }}</span>
-        <span class="badge {% if detail.payment_type == 'bank' %}badge-blue{% else %}badge-amber{% endif %}">
-          {{ detail.get_payment_type_display }}
-        </span>
-      </div>
-
-      {% if detail.payment_type == 'bank' %}
-        {% if detail.bank_name %}<div class="row"><span class="row-key">Bank</span><span class="row-val">{{ detail.bank_name }}</span></div>{% endif %}
-        {% if detail.account_name %}<div class="row"><span class="row-key">Account Name</span><span class="row-val">{{ detail.account_name }}</span></div>{% endif %}
-        {% if detail.account_number %}
-        <div class="row">
-          <span class="row-key">Account Number</span>
-          <span class="row-val">{{ detail.account_number }}</span>
-        </div>
-        <button class="copy" onclick="cp('{{ detail.account_number }}',this)">
-          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          Copy Number
-        </button>
-        {% endif %}
-        {% if detail.bank_country %}<div class="row" style="margin-top:10px"><span class="row-key">Country</span><span class="row-val">{{ detail.bank_country }}</span></div>{% endif %}
-        {% if detail.swift_code %}<div class="row"><span class="row-key">SWIFT</span><span class="row-val">{{ detail.swift_code }}</span></div>{% endif %}
-        {% if detail.iban %}<div class="row"><span class="row-key">IBAN</span><span class="row-val">{{ detail.iban }}</span></div>{% endif %}
-        {% if detail.routing_number %}<div class="row"><span class="row-key">Routing</span><span class="row-val">{{ detail.routing_number }}</span></div>{% endif %}
-
-      {% else %}
-        {% if detail.crypto_currency %}<div class="row"><span class="row-key">Currency</span><span class="row-val">{{ detail.crypto_currency }}</span></div>{% endif %}
-        {% if detail.crypto_network %}<div class="row"><span class="row-key">Network</span><span class="row-val">{{ detail.crypto_network }}</span></div>{% endif %}
-        {% if detail.wallet_address %}
-        <div class="row">
-          <span class="row-key">Wallet Address</span>
-          <div class="mono">{{ detail.wallet_address }}</div>
-        </div>
-        <button class="copy" onclick="cp('{{ detail.wallet_address }}',this)">
-          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          Copy Address
-        </button>
-        {% endif %}
-      {% endif %}
-    </div>
-    {% empty %}
-    <div style="text-align:center;padding:32px;color:var(--muted);font-size:13.5px;border:1px dashed var(--border);border-radius:10px">
-      No payment details available yet. Please contact support.
-    </div>
-    {% endfor %}
-
-    {% if payment_details %}
-    <div class="card" style="margin-top:4px">
-      <div class="card-body">
-        <div class="notice notice-amber" style="margin-bottom:14px">
-          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
-          Only click below after you have sent the payment. Admin will verify and activate your account.
-        </div>
-        <form method="post">
-          {% csrf_token %}
-          <button class="btn" type="submit">I've Sent the Payment — Notify Admin</button>
-        </form>
-      </div>
-    </div>
-    {% endif %}
-
-    {% endif %}
-  </div>
+        body {
+            background-color: #000000;
+            color: #e2e2e2;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-card-accent {
+            border-top: 1px solid #2d5a43;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .copy-success {
+            color: #a1d1b4 !important;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-background/80 dark:bg-background/80 backdrop-blur-xl border-b border-white/5 flex justify-between items-center px-container-padding h-16 w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">menu</span>
+<span class="font-headline-md text-headline-md font-bold tracking-tighter text-primary dark:text-primary">SANTANDER</span>
 </div>
+<div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary scale-75">person</span>
+</div>
+</header>
+<main class="pt-24 pb-32 px-4 max-w-lg mx-auto min-h-screen">
+<!-- Header Section -->
+<section class="mb-8">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Activate Account</h1>
+<p class="text-on-surface-variant font-body-md opacity-70">Complete your initial deposit to enable full banking features.</p>
+</section>
+<!-- Status Notifications -->
+        {% if payment.status == 'pending' %}
+        <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-primary-container flex gap-4 items-start animate-pulse">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">info</span>
+<div>
+<p class="font-label-sm text-primary uppercase mb-1">Awaiting Payment</p>
+<p class="text-sm opacity-80">Please transfer exactly <span class="font-mono-data font-bold text-primary">${{ activation_amount }}</span> to any of the accounts below.</p>
+</div>
+</div>
+        {% elif payment.status == 'processing' %}
+        <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-tertiary-container flex gap-4 items-start">
+<span class="material-symbols-outlined text-tertiary">history</span>
+<div>
+<p class="font-label-sm text-tertiary uppercase mb-1">Processing</p>
+<p class="text-sm opacity-80">We have received your request. Our compliance team is verifying the transaction.</p>
+</div>
+</div>
+        {% elif payment.status == 'paid' %}
+        <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-primary flex gap-4 items-start">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<div>
+<p class="font-label-sm text-primary uppercase mb-1">Account Active</p>
+<p class="text-sm opacity-80">Your deposit has been verified. Welcome to Santander Private Banking.</p>
+</div>
+</div>
+        {% elif payment.status == 'failed' %}
+        <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-error flex gap-4 items-start">
+<span class="material-symbols-outlined text-error">error</span>
+<div>
+<p class="font-label-sm text-error uppercase mb-1">Payment Failed</p>
+<p class="text-sm opacity-80">There was an issue with your verification. Please contact support.</p>
+</div>
+</div>
+        {% endif %}
 
+        <!-- Payment Details Loop -->
+<div class="space-y-6">
+            {% for detail in payment_details %}
+            <div class="glass-card glass-card-accent rounded-xl overflow-hidden">
+<div class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-white/5">
+<div class="flex items-center gap-2">
+                        {% if detail.type == 'bank' %}
+                        <span class="material-symbols-outlined text-primary scale-90">account_balance</span>
+<span class="font-label-sm text-on-surface">WIRED TRANSFER</span>
+                        {% else %}
+                        <span class="material-symbols-outlined text-primary scale-90">currency_bitcoin</span>
+<span class="font-label-sm text-on-surface">CRYPTO DEPOSIT</span>
+                        {% endif %}
+                    </div>
+<span class="font-mono-data text-xs text-primary/60 uppercase">{{ detail.network|default:"SWIFT" }}</span>
+</div>
+<div class="p-6 space-y-4">
+                    {% if detail.type == 'bank' %}
+                    <div class="space-y-4">
+<div class="group">
+<label class="font-label-sm text-white/40 block mb-1">BANK NAME</label>
+<p class="text-on-surface font-headline-md tracking-tight">{{ detail.bank_name }}</p>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="font-label-sm text-white/40 block mb-1">ACCOUNT NO.</label>
+<div class="flex items-center gap-2">
+<span class="font-mono-data text-on-surface truncate" id="acc_{{ forloop.counter }}">{{ detail.account_no }}</span>
+<button class="text-primary hover:text-white transition-colors" onclick="copyToClipboard('acc_{{ forloop.counter }}', this)">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</div>
+<div>
+<label class="font-label-sm text-white/40 block mb-1">SWIFT / BIC</label>
+<div class="flex items-center gap-2">
+<span class="font-mono-data text-on-surface" id="swift_{{ forloop.counter }}">{{ detail.swift_code }}</span>
+<button class="text-primary hover:text-white transition-colors" onclick="copyToClipboard('swift_{{ forloop.counter }}', this)">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+                    {% else %}
+                    <div class="space-y-4">
+<div class="flex justify-between items-start">
+<div>
+<label class="font-label-sm text-white/40 block mb-1">CURRENCY</label>
+<p class="text-on-surface font-headline-md tracking-tight">{{ detail.currency }}</p>
+</div>
+<div class="w-16 h-16 bg-white p-1 rounded-lg">
+<!-- QR Placeholder -->
+<div class="w-full h-full bg-slate-100 flex items-center justify-center text-black">
+<span class="material-symbols-outlined">qr_code_2</span>
+</div>
+</div>
+</div>
+<div>
+<label class="font-label-sm text-white/40 block mb-1">WALLET ADDRESS</label>
+<div class="flex items-center gap-2 bg-black/40 p-3 rounded-lg border border-white/5">
+<span class="font-mono-data text-xs text-primary truncate break-all" id="wallet_{{ forloop.counter }}">{{ detail.wallet_address }}</span>
+<button class="shrink-0 text-primary hover:text-white transition-colors" onclick="copyToClipboard('wallet_{{ forloop.counter }}', this)">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+                    {% endif %}
+                </div>
+</div>
+            {% endfor %}
+        </div>
+<!-- Confirmation Form -->
+        {% if payment.status == 'pending' %}
+        <section class="mt-10">
+<div class="glass-card rounded-xl p-6 border-white/10">
+<h3 class="font-headline-md text-on-surface mb-4">Confirm Payment</h3>
+<form action="." class="space-y-4" method="POST">
+                    {% csrf_token %}
+                    <div class="space-y-2">
+<label class="font-label-sm text-white/60">Transaction Reference / Hash</label>
+<input class="w-full bg-black border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-all text-on-surface font-mono-data" name="ref_code" placeholder="e.g. TXN-99201-X" required="" type="text"/>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container font-headline-md py-4 rounded-xl hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+                        I've Sent Payment
+                    </button>
+<p class="text-center text-[10px] text-white/30 uppercase tracking-widest pt-2">
+                        Average verification time: 2-6 hours
+                    </p>
+</form>
+</div>
+</section>
+        {% endif %}
+
+        <!-- Help Section -->
+<section class="mt-8 mb-12">
+<div class="flex items-center gap-4 text-white/40 hover:text-white/60 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-label-sm underline decoration-white/20 underline-offset-4">Encountering issues? Contact Santander Support</span>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container-lowest/90 dark:bg-surface-container-lowest/90 backdrop-blur-2xl border-t border-white/5 shadow-[0_-4px_24px_rgba(45,90,67,0.1)] flex justify-around items-center h-20 px-4 pb-safe w-full md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold bg-primary-container/10 rounded-full py-1 px-3 active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm">Accounts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-label-sm text-label-sm">Deposit</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-sm text-label-sm">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</nav>
+<!-- Desktop Sidebar Suggestion (Responsive Pivot) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-white/5 flex-col p-6">
+<div class="mb-12">
+<span class="font-headline-md text-primary font-bold tracking-tighter">SANTANDER</span>
+</div>
+<nav class="space-y-6">
+<a class="flex items-center gap-4 text-on-surface-variant hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">home</span> Home
+            </a>
+<a class="flex items-center gap-4 text-primary font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span> Accounts
+            </a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">add_circle</span> Deposit
+            </a>
+<a class="flex items-center gap-4 text-on-surface-variant hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">history</span> Activity
+            </a>
+</nav>
+</aside>
 <script>
-const h=document.documentElement;
-h.setAttribute('data-theme',localStorage.getItem('theme')||'light');
-document.getElementById('tt').onclick=()=>{const n=h.getAttribute('data-theme')==='light'?'dark':'light';h.setAttribute('data-theme',n);localStorage.setItem('theme',n)};
-function openSB(){document.getElementById('sb').classList.add('open');document.getElementById('ov').classList.add('open')}
-function closeSB(){document.getElementById('sb').classList.remove('open');document.getElementById('ov').classList.remove('open')}
-function cp(t,btn){navigator.clipboard.writeText(t).then(()=>{const o=btn.innerHTML;btn.innerHTML='✓ Copied!';setTimeout(()=>btn.innerHTML=o,2000)})}
-</script>
-</body>
-</html>
+        function copyToClipboard(id, btn) {
+            const text = document.getElementById(id).innerText;
+            const originalIcon = btn.innerHTML;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                btn.classList.add('copy-success');
+                btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span>';
+                
+                setTimeout(() => {
+                    btn.classList.remove('copy-success');
+                    btn.innerHTML = originalIcon;
+                }, 2000);
+            });
+        }
+
+        // Lightweight background parallax or subtle effect
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+            document.body.style.backgroundPosition = ${moveX}px ${moveY}px;
+        });
+    </script>
+</body></html>
