@@ -1,280 +1,376 @@
 {% extends 'admin/base.html' %}
 {% block title %}{{ target.username }}{% endblock %}
 {% block page_title %}User — {{ target.username }}{% endblock %}
-{% block nav_users %}active{% endblock %}
+{% block page_sub %}Account details and controls{% endblock %}
+{% block nav_users %}active-nav text-tech-cyan{% endblock %}
 
 {% block content %}
-<a href="{% url 'admin-dashboard' %}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:20px">
-  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+
+<a href="{% url 'admin-users' %}" class="inline-flex items-center gap-2 font-label-sm text-on-surface-variant hover:text-tech-cyan transition-colors mb-stack-lg">
+  <span class="material-symbols-outlined text-[16px]">arrow_back</span>
   Back to Users
 </a>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+{# ── TOP ROW: User Info + Quick Actions ─────────────────── #}
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
 
-  <!-- USER INFO -->
-  <div class="card" style="margin:0">
-    <div class="card-head">
-      <div class="card-head-left">
-        <div class="card-head-icon" style="background:var(--blue-dim)">
-          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--blue)" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </div>
-        <div class="card-title">User Info</div>
-      </div>
+  {# User Info #}
+  <div class="glass-card rounded-lg overflow-hidden">
+    <div class="px-container-padding py-4 border-b border-outline flex items-center gap-3">
+      <span class="material-symbols-outlined text-tech-cyan text-[20px]">person</span>
+      <h3 class="font-headline-md text-white">User Info</h3>
     </div>
-    <div class="card-body">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
-        <div style="width:52px;height:52px;border-radius:50%;background:var(--blue-dim);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;flex-shrink:0">{{ target.username|first|upper }}</div>
+    <div class="p-container-padding">
+      <div class="flex items-center gap-4 mb-stack-lg">
+        <div class="w-14 h-14 rounded-full bg-primary-container flex items-center justify-center text-tech-cyan font-bold text-xl flex-shrink-0">
+          {{ target.username|first|upper }}
+        </div>
         <div>
-          <div style="font-size:17px;font-weight:700">{{ target.username }}</div>
-          <div style="font-size:13px;color:var(--muted)">{{ target.email }}</div>
+          <p class="text-white font-bold text-lg">{{ target.username }}</p>
+          <p class="font-label-sm text-on-surface-variant">{{ target.email|default:"No email" }}</p>
         </div>
       </div>
-      <table style="font-size:13px;width:100%">
-        <tr><td style="color:var(--muted);padding:6px 0;border:none;width:120px">Phone</td><td style="border:none">{{ target.phone|default:"—" }}</td></tr>
-        <tr><td style="color:var(--muted);padding:6px 0;border:none">Joined</td><td style="border:none">{{ target.date_joined|date:"M d, Y" }}</td></tr>
-        <tr><td style="color:var(--muted);padding:6px 0;border:none">Account</td><td style="border:none">{% if target.account_activated %}<span class="badge badge-green">Active</span>{% else %}<span class="badge badge-amber">Inactive</span>{% endif %}</td></tr>
-        <tr><td style="color:var(--muted);padding:6px 0;border:none">Balance</td><td style="border:none;font-weight:700;color:var(--blue)">${{ wallet.balance }}</td></tr>
-        <tr><td style="color:var(--muted);padding:6px 0;border:none">Wallet</td><td style="border:none">{% if wallet.is_frozen %}<span class="badge badge-red">Frozen</span>{% else %}<span class="badge badge-green">Active</span>{% endif %}</td></tr>
+
+      <div class="space-y-2">
+        <div class="flex justify-between items-center py-2 border-b border-outline/30">
+          <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest">Phone</span>
+          <span class="font-mono-data text-sm text-white">{{ target.phone|default:"—" }}</span>
+        </div>
+
+        <div class="flex justify-between items-center py-2 border-b border-outline/30">
+          <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest">Joined</span>
+          <span class="font-mono-data text-sm text-white">{{ target.date_joined|date:"M d, Y" }}</span>
+        </div>
+
+        <div class="flex justify-between items-center py-2 border-b border-outline/30">
+          <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest">Account</span>
+          {% if target.account_activated %}
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-tech-cyan">Active</span>
+          {% else %}
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-on-surface-variant">Inactive</span>
+          {% endif %}
+        </div>
+
+        <div class="flex justify-between items-center py-2 border-b border-outline/30">
+          <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest">Balance</span>
+          <span class="font-mono-data text-tech-cyan font-bold">${{ wallet.balance }}</span>
+        </div>
+
+        <div class="flex justify-between items-center py-2 border-b border-outline/30">
+          <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest">Wallet</span>
+          {% if wallet.is_frozen %}
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error-container text-error">Frozen</span>
+          {% else %}
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-tech-cyan">Active</span>
+          {% endif %}
+        </div>
+
         {% if activation_payment %}
-        <tr><td style="color:var(--muted);padding:6px 0;border:none">Act. Fee</td><td style="border:none">${{ activation_payment.amount_required }} — <span class="badge {% if activation_payment.status == 'paid' %}badge-green{% elif activation_payment.status == 'pending' %}badge-amber{% else %}badge-red{% endif %}">{{ activation_payment.status }}</span></td></tr>
+        <div class="flex justify-between items-center py-2">
+          <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest">Act. Fee</span>
+          <span class="font-mono-data text-sm text-white">
+            ${{ activation_payment.amount_required }} —
+            {% if activation_payment.status == 'paid' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-tech-cyan">Paid</span>
+            {% elif activation_payment.status == 'pending' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-on-surface-variant">Pending</span>
+            {% else %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error-container text-error">Failed</span>
+            {% endif %}
+          </span>
+        </div>
         {% endif %}
-      </table>
+      </div>
     </div>
   </div>
 
-  <!-- QUICK ACTIONS -->
-  <div class="card" style="margin:0">
-    <div class="card-head">
-      <div class="card-head-left">
-        <div class="card-head-icon" style="background:var(--green-dim)">
-          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--green-bright)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
-        </div>
-        <div class="card-title">Quick Actions</div>
-      </div>
+  {# Quick Actions #}
+  <div class="glass-card rounded-lg overflow-hidden">
+    <div class="px-container-padding py-4 border-b border-outline flex items-center gap-3">
+      <span class="material-symbols-outlined text-tech-cyan text-[20px]">bolt</span>
+      <h3 class="font-headline-md text-white">Quick Actions</h3>
     </div>
-    <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+    <div class="p-container-padding space-y-3">
 
-      <!-- TOGGLE ACTIVATION -->
+      {# Toggle Activation #}
       <form method="post" action="{% url 'admin-toggle-activation' target.id %}">
         {% csrf_token %}
         <input type="hidden" name="note" value="Manual toggle">
-        <button type="submit" class="btn {% if target.account_activated %}btn-amber{% else %}btn-green{% endif %}" style="width:100%;justify-content:center">
+        <button type="submit" class="w-full py-2.5 px-4 rounded border font-label-sm text-sm font-bold transition-all
+          {% if target.account_activated %}border-error/40 bg-error-container/30 text-error hover:bg-error-container/50
+          {% else %}border-tech-cyan/40 bg-primary-container/30 text-tech-cyan hover:bg-primary-container/50{% endif %}">
           {% if target.account_activated %}⊘ Deactivate Account{% else %}✓ Activate Account{% endif %}
         </button>
       </form>
 
-      <!-- TOGGLE FREEZE -->
+      {# Toggle Freeze #}
       <form method="post" action="{% url 'admin-toggle-freeze' target.id %}">
         {% csrf_token %}
         <input type="hidden" name="note" value="Manual toggle">
-        <button type="submit" class="btn {% if wallet.is_frozen %}btn-green{% else %}btn-red{% endif %}" style="width:100%;justify-content:center">
+        <button type="submit" class="w-full py-2.5 px-4 rounded border font-label-sm text-sm font-bold transition-all
+          {% if wallet.is_frozen %}border-tech-cyan/40 bg-primary-container/30 text-tech-cyan hover:bg-primary-container/50
+          {% else %}border-error/40 bg-error-container/30 text-error hover:bg-error-container/50{% endif %}">
           {% if wallet.is_frozen %}❄ Unfreeze Wallet{% else %}❄ Freeze Wallet{% endif %}
         </button>
       </form>
 
-      <!-- FUND WALLET -->
-      <form method="post" action="{% url 'admin-fund-user' target.id %}" style="border:1px solid var(--border);border-radius:10px;padding:14px">
-        {% csrf_token %}
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:10px">Fund Wallet</div>
-        <div style="display:flex;gap:8px">
-          <input type="number" name="amount" step="0.01" min="1" placeholder="Amount USD"
-                 style="flex:1;padding:9px 12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;color:var(--text);outline:none">
-          <button type="submit" class="btn btn-blue" style="white-space:nowrap">+ Add Funds</button>
-        </div>
-        <input type="text" name="note" placeholder="Note (optional)"
-               style="width:100%;padding:9px 12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--text);outline:none;margin-top:8px">
-      </form>
+      {# Fund Wallet #}
+      <div class="border border-outline rounded-lg p-4">
+        <p class="font-label-sm text-on-surface-variant text-[10px] uppercase tracking-widest mb-3">Fund Wallet</p>
+        <form method="post" action="{% url 'admin-fund-user' target.id %}" class="space-y-2">
+          {% csrf_token %}
+          <div class="flex gap-2">
+            <input type="number" name="amount" step="0.01" min="1" placeholder="Amount USD"
+              class="flex-1 bg-background border border-outline rounded px-3 py-2 text-white text-sm font-mono-data focus:border-tech-cyan focus:outline-none transition-colors">
+            <button type="submit" class="px-4 py-2 bg-primary-container border border-tech-cyan/30 text-tech-cyan rounded font-label-sm text-sm hover:bg-primary-container/80 transition-colors whitespace-nowrap">
+              + Add
+            </button>
+          </div>
+          <input type="text" name="note" placeholder="Note (optional)"
+            class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors">
+        </form>
+      </div>
 
-      <!-- SET ACTIVATION FEE -->
-      <form method="post" action="{% url 'admin-set-activation-fee' target.id %}" style="border:1px solid var(--border);border-radius:10px;padding:14px">
-        {% csrf_token %}
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:10px">Set Activation Fee</div>
-        <div style="display:flex;gap:8px">
+      {# Set Activation Fee #}
+      <div class="border border-outline rounded-lg p-4">
+        <p class="font-label-sm text-on-surface-variant text-[10px] uppercase tracking-widest mb-3">Set Activation Fee</p>
+        <form method="post" action="{% url 'admin-set-activation-fee' target.id %}" class="flex gap-2">
+          {% csrf_token %}
           <input type="number" name="amount" step="0.01" min="1"
-                 placeholder="Amount USD" value="{% if activation_payment %}{{ activation_payment.amount_required }}{% endif %}"
-                 style="flex:1;padding:9px 12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;color:var(--text);outline:none">
-          <button type="submit" class="btn btn-amber" style="white-space:nowrap">Set Fee</button>
-        </div>
-      </form>
+            value="{% if activation_payment %}{{ activation_payment.amount_required }}{% endif %}"
+            placeholder="Amount USD"
+            class="flex-1 bg-background border border-outline rounded px-3 py-2 text-white text-sm font-mono-data focus:border-tech-cyan focus:outline-none transition-colors">
+          <button type="submit" class="px-4 py-2 border border-outline rounded font-label-sm text-sm text-on-surface-variant hover:text-white hover:border-tech-cyan transition-colors whitespace-nowrap">
+            Set Fee
+          </button>
+        </form>
+      </div>
 
-      <!-- RESET PASSWORD -->
-      <form method="post" action="{% url 'admin-reset-password' target.id %}" style="border:1px solid var(--border);border-radius:10px;padding:14px">
-        {% csrf_token %}
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:10px">Reset Password</div>
-        <div style="display:flex;gap:8px">
+      {# Reset Password #}
+      <div class="border border-outline rounded-lg p-4">
+        <p class="font-label-sm text-on-surface-variant text-[10px] uppercase tracking-widest mb-3">Reset Password</p>
+        <form method="post" action="{% url 'admin-reset-password' target.id %}" class="flex gap-2">
+          {% csrf_token %}
           <input type="text" name="new_password" placeholder="New password (min 6 chars)"
-                 style="flex:1;padding:9px 12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;color:var(--text);outline:none">
-          <button type="submit" class="btn btn-red" style="white-space:nowrap">Reset</button>
-        </div>
-      </form>
+            class="flex-1 bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors">
+          <button type="submit" class="px-4 py-2 bg-error-container border border-error/30 text-error rounded font-label-sm text-sm hover:bg-error-container/80 transition-colors whitespace-nowrap">
+            Reset
+          </button>
+        </form>
+      </div>
 
     </div>
   </div>
 </div>
 
-<!-- PAYMENT ACCOUNTS -->
-<div class="card" style="margin-top:20px">
-  <div class="card-head">
-    <div class="card-head-left">
-      <div class="card-head-icon" style="background:var(--green-dim)">
-        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--green-bright)" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-      </div>
-      <div class="card-title">Payment Accounts</div>
+{# ── PAYMENT ACCOUNTS ────────────────────────────────────── #}
+<div class="glass-card rounded-lg overflow-hidden">
+  <div class="px-container-padding py-4 border-b border-outline flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-tech-cyan text-[20px]">credit_card</span>
+      <h3 class="font-headline-md text-white">Payment Accounts</h3>
     </div>
-    <button onclick="toggleForm('uAccountForm')" class="btn btn-sm" style="background:#7c3aed;color:#fff">+ Assign New</button>
+    <button onclick="toggleForm('uAccountForm')"
+      class="px-3 py-1.5 border border-outline rounded font-label-sm text-[11px] text-on-surface-variant hover:text-tech-cyan hover:border-tech-cyan transition-colors">
+      + Assign New
+    </button>
   </div>
 
-  <!-- ASSIGN ACCOUNT FORM -->
-  <div id="uAccountForm" style="display:none;padding:20px;border-bottom:1px solid var(--border);background:var(--surface2)">
-    <form method="post" action="{% url 'admin-assign-account' target.id %}">
+  {# Assign Account Form #}
+  <div id="uAccountForm" style="display:none" class="p-container-padding border-b border-outline bg-surface-container/50">
+    <form method="post" action="{% url 'admin-assign-account' target.id %}" class="space-y-3">
       {% csrf_token %}
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Account Type</label>
-          <select name="account_type" id="uAccType" onchange="uSwitchType()">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">Account Type</label>
+          <select name="account_type" id="uAccType" onchange="uSwitchType()"
+            class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors">
             <option value="bank">Bank Account</option>
             <option value="crypto">Crypto Wallet</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Label / Nickname</label>
-          <input type="text" name="label" placeholder="e.g. Main GTBank or USDT TRC20">
+        <div>
+          <label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">Label / Nickname</label>
+          <input type="text" name="label" placeholder="e.g. Main GTBank"
+            class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors">
         </div>
       </div>
 
-      <div id="uBankFields">
-        <div class="form-grid">
-          <div class="form-group"><label>Bank Name</label><input type="text" name="bank_name" placeholder="e.g. GTBank"></div>
-          <div class="form-group"><label>Account Name</label><input type="text" name="account_name" placeholder="e.g. John Doe"></div>
-          <div class="form-group"><label>Account Number</label><input type="text" name="account_number" placeholder="e.g. 0123456789"></div>
-          <div class="form-group"><label>Country</label><input type="text" name="bank_country" placeholder="e.g. Nigeria"></div>
-          <div class="form-group"><label>SWIFT / BIC</label><input type="text" name="swift_code" placeholder="e.g. GTBINGLAXXX"></div>
-          <div class="form-group"><label>IBAN</label><input type="text" name="iban" placeholder="optional"></div>
-          <div class="form-group span-2"><label>Routing Number</label><input type="text" name="routing_number" placeholder="optional"></div>
+      <div id="uBankFields" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {% for field, placeholder in bank_fields %}
+        <div>
+          <label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">{{ field|title }}</label>
+          <input type="text" name="{{ field }}" placeholder="{{ placeholder }}"
+            class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors">
         </div>
+        {% empty %}
+        <div><label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">Bank Name</label><input type="text" name="bank_name" placeholder="e.g. GTBank" class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors"></div>
+        <div><label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">Account Name</label><input type="text" name="account_name" placeholder="e.g. John Doe" class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors"></div>
+        <div><label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">Account Number</label><input type="text" name="account_number" placeholder="e.g. 0123456789" class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors"></div>
+        <div><label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">Country</label><input type="text" name="bank_country" placeholder="e.g. Nigeria" class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors"></div>
+        <div><label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">SWIFT / BIC</label><input type="text" name="swift_code" placeholder="e.g. GTBINGLAXXX" class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors"></div>
+        <div><label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">IBAN</label><input type="text" name="iban" placeholder="optional" class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors"></div>
+        <div class="sm:col-span-2"><label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">Routing Number</label><input type="text" name="routing_number" placeholder="optional" class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors"></div>
+        {% endfor %}
       </div>
 
-      <div id="uCryptoFields" style="display:none">
-        <div class="form-grid">
-          <div class="form-group"><label>Currency</label><input type="text" name="crypto_currency" placeholder="e.g. USDT, BTC, ETH"></div>
-          <div class="form-group"><label>Network</label><input type="text" name="crypto_network" placeholder="e.g. TRC20, ERC20, BEP20"></div>
-          <div class="form-group span-2"><label>Wallet Address</label><input type="text" name="wallet_address" placeholder="e.g. TXyz1234..."></div>
-        </div>
+      <div id="uCryptoFields" style="display:none" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div><label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">Currency</label><input type="text" name="crypto_currency" placeholder="e.g. USDT, BTC" class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors"></div>
+        <div><label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">Network</label><input type="text" name="crypto_network" placeholder="e.g. TRC20, ERC20" class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors"></div>
+        <div class="sm:col-span-2"><label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">Wallet Address</label><input type="text" name="wallet_address" placeholder="e.g. TXyz1234..." class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors"></div>
       </div>
 
-      <div class="form-group"><label>Internal Note</label><input type="text" name="note" placeholder="Optional"></div>
-      <div style="display:flex;gap:10px;margin-top:4px">
-        <button type="submit" class="btn btn-green">Save Account</button>
-        <button type="button" onclick="toggleForm('uAccountForm')" class="btn btn-outline">Cancel</button>
+      <div><label class="font-label-sm text-[10px] uppercase tracking-widest text-on-surface-variant block mb-1">Internal Note</label>
+        <input type="text" name="note" placeholder="Optional" class="w-full bg-background border border-outline rounded px-3 py-2 text-white text-sm focus:border-tech-cyan focus:outline-none transition-colors">
+      </div>
+      <div class="flex gap-3">
+        <button type="submit" class="px-4 py-2 bg-primary-container border border-tech-cyan/30 text-tech-cyan rounded font-label-sm text-sm hover:bg-primary-container/80 transition-colors">Save Account</button>
+        <button type="button" onclick="toggleForm('uAccountForm')" class="px-4 py-2 border border-outline rounded font-label-sm text-sm text-on-surface-variant hover:text-white transition-colors">Cancel</button>
       </div>
     </form>
   </div>
 
-  <div class="card-body" style="padding:0">
+  <div class="overflow-x-auto custom-scrollbar">
     {% if payment_accounts %}
-    <table>
-      <thead><tr><th>Type</th><th>Details</th><th>Status</th><th></th></tr></thead>
-      <tbody>
-      {% for acc in payment_accounts %}
-      <tr>
-        <td><span class="badge {% if acc.account_type == 'bank' %}badge-blue{% else %}badge-amber{% endif %}">{{ acc.get_account_type_display }}</span></td>
-        <td>
-          {% if acc.account_type == 'bank' %}
-            <strong>{{ acc.account_name }}</strong><br>
-            <span style="font-size:12px;color:var(--muted)">{{ acc.bank_name }} — {{ acc.account_number }}</span>
-          {% else %}
-            <strong>{{ acc.crypto_currency }}</strong> ({{ acc.crypto_network }})<br>
-            <span style="font-size:11px;color:var(--muted);word-break:break-all">{{ acc.wallet_address }}</span>
-          {% endif %}
-        </td>
-        <td>{% if acc.is_active %}<span class="badge badge-green">Active</span>{% else %}<span class="badge badge-muted">Removed</span>{% endif %}</td>
-        <td>
-          {% if acc.is_active %}
-          <form method="post" action="{% url 'admin-remove-account' acc.id %}" onsubmit="return confirm('Remove this account?')">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-red">Remove</button>
-          </form>
-          {% endif %}
-        </td>
-      </tr>
-      {% endfor %}
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-surface-container-lowest">
+        <tr>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Type</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Details</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Status</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px] text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline/30">
+        {% for acc in payment_accounts %}
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="px-gutter py-3">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase
+              {% if acc.account_type == 'bank' %}bg-primary-container/40 text-tech-cyan{% else %}bg-surface-container-highest text-on-surface-variant{% endif %}">
+              {{ acc.get_account_type_display }}
+            </span>
+          </td>
+          <td class="px-gutter py-3">
+            {% if acc.account_type == 'bank' %}
+              <p class="text-white text-sm font-bold">{{ acc.account_name }}</p>
+              <p class="font-mono-data text-[11px] text-on-surface-variant">{{ acc.bank_name }} — {{ acc.account_number }}</p>
+            {% else %}
+              <p class="text-white text-sm font-bold">{{ acc.crypto_currency }} ({{ acc.crypto_network }})</p>
+              <p class="font-mono-data text-[11px] text-on-surface-variant break-all">{{ acc.wallet_address }}</p>
+            {% endif %}
+          </td>
+          <td class="px-gutter py-3">
+            {% if acc.is_active %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-tech-cyan">Active</span>
+            {% else %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-on-surface-variant">Removed</span>
+            {% endif %}
+          </td>
+          <td class="px-gutter py-3 text-right">
+            {% if acc.is_active %}
+            <form method="post" action="{% url 'admin-remove-account' acc.id %}" onsubmit="return confirm('Remove this account?')">
+              {% csrf_token %}
+              <button type="submit" class="px-3 py-1 bg-error-container border border-error/30 text-error rounded font-label-sm text-[11px] hover:bg-error-container/80 transition-colors">
+                Remove
+              </button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
       </tbody>
     </table>
     {% else %}
-    <div class="empty" style="padding:30px">No payment accounts assigned yet.</div>
+    <div class="px-gutter py-8 text-center font-label-sm text-on-surface-variant">No payment accounts assigned yet.</div>
     {% endif %}
   </div>
 </div>
 
-<!-- TRANSACTIONS -->
-<div class="card">
-  <div class="card-head">
-    <div class="card-head-left">
-      <div class="card-head-icon" style="background:var(--blue-dim)">
-        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--blue)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
-      </div>
-      <div class="card-title">Transaction History</div>
-    </div>
+{# ── TRANSACTIONS ────────────────────────────────────────── #}
+<div class="glass-card rounded-lg overflow-hidden">
+  <div class="px-container-padding py-4 border-b border-outline flex items-center gap-3">
+    <span class="material-symbols-outlined text-tech-cyan text-[20px]">receipt_long</span>
+    <h3 class="font-headline-md text-white">Transaction History</h3>
   </div>
-  <div class="card-body" style="padding:0">
+  <div class="overflow-x-auto custom-scrollbar">
     {% if transactions %}
-    <table>
-      <thead><tr><th>Type</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
-      <tbody>
-      {% for t in transactions %}
-      <tr>
-        <td>{{ t.get_transaction_type_display }}</td>
-        <td style="font-weight:600">${{ t.amount }}</td>
-        <td><span class="badge {% if t.status == 'success' %}badge-green{% elif t.status == 'pending' %}badge-amber{% else %}badge-red{% endif %}">{{ t.status }}</span></td>
-        <td style="font-size:12px;color:var(--muted)">{{ t.created_at|date:"M d, Y H:i" }}</td>
-      </tr>
-      {% endfor %}
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-surface-container-lowest">
+        <tr>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Type</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Amount</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Status</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Date</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline/30">
+        {% for t in transactions %}
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="px-gutter py-3 font-label-sm text-sm">{{ t.get_transaction_type_display }}</td>
+          <td class="px-gutter py-3 font-mono-data text-white font-bold">${{ t.amount }}</td>
+          <td class="px-gutter py-3">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase
+              {% if t.status == 'success' %}bg-primary-container text-tech-cyan
+              {% elif t.status == 'pending' %}bg-surface-container-highest text-on-surface-variant
+              {% else %}bg-error-container text-error{% endif %}">
+              {{ t.status }}
+            </span>
+          </td>
+          <td class="px-gutter py-3 font-mono-data text-[11px] text-on-surface-variant">{{ t.created_at|date:"M d, Y H:i" }}</td>
+        </tr>
+        {% endfor %}
       </tbody>
     </table>
     {% else %}
-    <div class="empty" style="padding:30px">No transactions yet.</div>
+    <div class="px-gutter py-8 text-center font-label-sm text-on-surface-variant">No transactions yet.</div>
     {% endif %}
   </div>
 </div>
 
-<!-- ACTIVITY LOG -->
-<div class="card">
-  <div class="card-head">
-    <div class="card-head-left">
-      <div class="card-head-icon" style="background:var(--amber-dim)">
-        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--amber)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      </div>
-      <div class="card-title">Admin Activity Log</div>
-    </div>
+{# ── ACTIVITY LOG ────────────────────────────────────────── #}
+<div class="glass-card rounded-lg overflow-hidden">
+  <div class="px-container-padding py-4 border-b border-outline flex items-center gap-3">
+    <span class="material-symbols-outlined text-tech-cyan text-[20px]">history</span>
+    <h3 class="font-headline-md text-white">Admin Activity Log</h3>
   </div>
-  <div class="card-body" style="padding:0">
+  <div class="overflow-x-auto custom-scrollbar">
     {% if control_logs %}
-    <table>
-      <thead><tr><th>Action</th><th>By</th><th>Note</th><th>Date</th></tr></thead>
-      <tbody>
-      {% for log in control_logs %}
-      <tr>
-        <td><span class="badge badge-amber">{{ log.get_action_display }}</span></td>
-        <td style="font-size:13px">{{ log.admin.username }}</td>
-        <td style="font-size:12.5px;color:var(--muted)">{{ log.note|default:"—" }}</td>
-        <td style="font-size:12px;color:var(--muted)">{{ log.created_at|date:"M d, H:i" }}</td>
-      </tr>
-      {% endfor %}
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-surface-container-lowest">
+        <tr>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Action</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">By</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Note</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Date</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline/30">
+        {% for log in control_logs %}
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="px-gutter py-3">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-on-surface-variant">
+              {{ log.get_action_display }}
+            </span>
+          </td>
+          <td class="px-gutter py-3 font-label-sm text-sm text-white">{{ log.admin.username }}</td>
+          <td class="px-gutter py-3 font-label-sm text-sm text-on-surface-variant">{{ log.note|default:"—" }}</td>
+          <td class="px-gutter py-3 font-mono-data text-[11px] text-on-surface-variant">{{ log.created_at|date:"M d, H:i" }}</td>
+        </tr>
+        {% endfor %}
       </tbody>
     </table>
     {% else %}
-    <div class="empty" style="padding:30px">No activity logged.</div>
+    <div class="px-gutter py-8 text-center font-label-sm text-on-surface-variant">No activity logged.</div>
     {% endif %}
   </div>
 </div>
 
-<!-- DELETE USER -->
+{# ── DELETE USER ─────────────────────────────────────────── #}
 <form method="post" action="{% url 'admin-delete-user' target.id %}"
-      onsubmit="return confirm('Permanently delete {{ target.username }}? This cannot be undone.')"
-      style="margin-top:10px">
+  onsubmit="return confirm('Permanently delete {{ target.username }}? This cannot be undone.')">
   {% csrf_token %}
-  <button type="submit" class="btn btn-red" style="width:100%;justify-content:center">
-    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+  <button type="submit" class="w-full py-3 bg-error-container border border-error/20 text-error rounded font-label-sm font-bold flex items-center justify-center gap-2 hover:bg-error-container/80 transition-colors">
+    <span class="material-symbols-outlined text-[18px]">delete_forever</span>
     Permanently Delete User
   </button>
 </form>
@@ -287,11 +383,10 @@
     var el = document.getElementById(id);
     el.style.display = el.style.display === 'none' ? 'block' : 'none';
   }
-
   function uSwitchType() {
     var t = document.getElementById('uAccType').value;
-    document.getElementById('uBankFields').style.display   = (t === 'bank')   ? 'block' : 'none';
-    document.getElementById('uCryptoFields').style.display = (t === 'crypto') ? 'block' : 'none';
+    document.getElementById('uBankFields').style.display   = t === 'bank'   ? 'block' : 'none';
+    document.getElementById('uCryptoFields').style.display = t === 'crypto' ? 'block' : 'none';
   }
 </script>
 {% endblock %}

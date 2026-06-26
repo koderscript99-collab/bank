@@ -1,0 +1,450 @@
+{% extends 'admin/admin-dashboard.html' %}
+{% extends 'admin/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block nav_dash %}active-nav text-tech-cyan{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_sub %}Live overview of all platform activity{% endblock %}
+
+{% block content %}
+
+{# ── STAT CARDS ─────────────────────────────────────────── #}
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-gutter">
+
+  <div class="glass-card p-container-padding rounded-lg flex flex-col gap-base relative overflow-hidden group">
+    <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+      <span class="material-symbols-outlined text-4xl text-tech-cyan">group</span>
+    </div>
+    <span class="font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Total Users</span>
+    <div class="flex items-baseline gap-2">
+      <span class="font-mono-data text-3xl font-bold text-white">{{ total_users }}</span>
+    </div>
+    <span class="font-label-sm text-[11px] text-tech-cyan">{{ active_users }} activated</span>
+    <div class="w-full h-1 bg-surface-container rounded-full mt-1">
+      <div class="h-full bg-tech-cyan rounded-full" style="width:{% if total_users %}{% widthratio active_users total_users 100 %}{% else %}0{% endif %}%"></div>
+    </div>
+  </div>
+
+  <div class="glass-card p-container-padding rounded-lg flex flex-col gap-base relative overflow-hidden group">
+    <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+      <span class="material-symbols-outlined text-4xl text-tech-cyan">pending_actions</span>
+    </div>
+    <span class="font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Pending Actions</span>
+    <div class="flex items-baseline gap-2">
+      <span class="font-mono-data text-3xl font-bold text-white">{{ pending_withdrawals|add:pending_activations|add:pending_deposits }}</span>
+      <span class="text-error text-xs font-mono-data">Action Req.</span>
+    </div>
+    <div class="flex flex-col gap-0.5 text-[10px] font-mono-data">
+      <span class="text-on-surface-variant">Withdrawals: <span class="text-white">{{ pending_withdrawals }}</span></span>
+      <span class="text-on-surface-variant">Activations: <span class="text-white">{{ pending_activations }}</span></span>
+      <span class="text-on-surface-variant">Deposits: <span class="text-white">{{ pending_deposits }}</span></span>
+    </div>
+  </div>
+
+  <div class="glass-card p-container-padding rounded-lg flex flex-col gap-base relative overflow-hidden group">
+    <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+      <span class="material-symbols-outlined text-4xl text-tech-cyan">account_balance</span>
+    </div>
+    <span class="font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Total Balance</span>
+    <div class="flex items-baseline gap-2">
+      <span class="font-mono-data text-3xl font-bold text-white">${{ total_balance|floatformat:0 }}</span>
+    </div>
+    <span class="font-label-sm text-[11px] text-on-surface-variant">Across all wallets</span>
+    <div class="w-full h-1 bg-surface-container rounded-full mt-1">
+      <div class="h-full bg-tech-cyan rounded-full w-[80%]"></div>
+    </div>
+  </div>
+
+  <div class="glass-card p-container-padding rounded-lg flex flex-col gap-base relative overflow-hidden group">
+    <div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+      <span class="material-symbols-outlined text-4xl text-tech-cyan">support_agent</span>
+    </div>
+    <span class="font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Open Tickets</span>
+    <div class="flex items-baseline gap-2">
+      <span class="font-mono-data text-3xl font-bold text-white">{{ open_tickets }}</span>
+      {% if open_tickets > 0 %}
+        <span class="text-error text-xs font-mono-data">Needs reply</span>
+      {% else %}
+        <span class="text-tech-cyan text-xs font-mono-data">All clear</span>
+      {% endif %}
+    </div>
+    <a href="{% url 'admin-support-tickets' %}" class="font-label-sm text-[11px] text-tech-cyan hover:underline">View tickets →</a>
+  </div>
+
+</div>
+
+{# ── CHARTS ROW ──────────────────────────────────────────── #}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+
+  {# Weekly volume / messages bar chart #}
+  <div class="lg:col-span-2 glass-card rounded-lg overflow-hidden">
+    <div class="px-container-padding py-4 border-b border-outline flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      <div>
+        <h3 class="font-headline-md text-white">Weekly Overview</h3>
+        <p class="font-label-sm text-on-surface-variant text-[11px]">Last 7 days</p>
+      </div>
+      <div class="flex gap-1 bg-surface-container p-1 rounded-lg">
+        <button onclick="switchChart('volume')" id="tab-volume"
+          class="chart-tab px-3 py-1.5 rounded font-label-sm text-[11px] bg-surface-container-highest text-tech-cyan transition-colors">
+          Volume
+        </button>
+        <button onclick="switchChart('messages')" id="tab-messages"
+          class="chart-tab px-3 py-1.5 rounded font-label-sm text-[11px] text-on-surface-variant hover:text-white transition-colors">
+          Messages
+        </button>
+      </div>
+    </div>
+    <div class="p-container-padding">
+      <div class="flex gap-4 mb-3" id="chart-legend-volume">
+        <span class="flex items-center gap-1.5 font-label-sm text-[11px] text-on-surface-variant">
+          <span class="w-3 h-2 rounded-sm inline-block" style="background:#378ADD"></span>Deposits
+        </span>
+        <span class="flex items-center gap-1.5 font-label-sm text-[11px] text-on-surface-variant">
+          <span class="w-3 h-2 rounded-sm inline-block border border-dashed" style="border-color:#E24B4A"></span>Withdrawals
+        </span>
+      </div>
+      <div class="flex gap-4 mb-3 hidden" id="chart-legend-messages">
+        <span class="flex items-center gap-1.5 font-label-sm text-[11px] text-on-surface-variant">
+          <span class="w-3 h-2 rounded-sm inline-block" style="background:#1D9E75"></span>Support Messages
+        </span>
+      </div>
+      <div style="position:relative;height:220px">
+        <canvas id="weeklyChart" role="img" aria-label="Weekly deposits and withdrawals bar chart">Weekly financial volume.</canvas>
+      </div>
+    </div>
+  </div>
+
+  {# Doughnut — transaction type breakdown #}
+  <div class="glass-card rounded-lg overflow-hidden">
+    <div class="px-container-padding py-4 border-b border-outline">
+      <h3 class="font-headline-md text-white">Transaction Breakdown</h3>
+      <p class="font-label-sm text-on-surface-variant text-[11px]">By type (all time)</p>
+    </div>
+    <div class="p-container-padding">
+      <div style="position:relative;height:180px">
+        <canvas id="pieChart" role="img" aria-label="Transaction type breakdown doughnut chart">Transaction breakdown.</canvas>
+      </div>
+      <div class="mt-3 space-y-1.5" id="pie-legend"></div>
+    </div>
+  </div>
+
+</div>
+
+{# ── USER GROWTH ─────────────────────────────────────────── #}
+<div class="glass-card rounded-lg overflow-hidden">
+  <div class="px-container-padding py-4 border-b border-outline">
+    <h3 class="font-headline-md text-white">User Growth</h3>
+    <p class="font-label-sm text-on-surface-variant text-[11px]">Cumulative registered users — last 30 days</p>
+  </div>
+  <div class="p-container-padding">
+    <div style="position:relative;height:160px">
+      <canvas id="growthChart" role="img" aria-label="User growth line chart over 30 days">User growth.</canvas>
+    </div>
+  </div>
+</div>
+
+{# ── LIVE ACTIVITY FEED ──────────────────────────────────── #}
+<div class="glass-card rounded-lg overflow-hidden">
+  <div class="px-container-padding py-4 border-b border-outline flex justify-between items-center">
+    <div>
+      <h3 class="font-headline-md text-white">Live Activity Feed</h3>
+      <p class="font-label-sm text-on-surface-variant text-[11px]">Most recent platform events</p>
+    </div>
+    <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter bg-primary-container text-tech-cyan">
+      {{ feed|length }} events
+    </span>
+  </div>
+
+  <div class="overflow-x-auto custom-scrollbar">
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-surface-container-lowest">
+        <tr>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Time</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">User</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Event</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Amount</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Status</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px] text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline/30">
+        {% for event in feed %}
+        <tr class="hover:bg-white/[0.02] transition-colors group">
+
+          <td class="px-gutter py-3 font-mono-data text-xs text-on-surface-variant">
+            {{ event.time|date:"M d, H:i" }}
+          </td>
+
+          <td class="px-gutter py-3">
+            <a href="{% url 'admin-user-detail' event.user_id %}" class="flex flex-col hover:text-tech-cyan transition-colors">
+              <span class="text-white font-bold text-sm">{{ event.user }}</span>
+            </a>
+          </td>
+
+          <td class="px-gutter py-3">
+            <div class="flex items-center gap-2">
+              {% if event.type == 'deposit' or event.type == 'admin_deposit' or event.type == 'deposit_request' %}
+                <span class="w-2 h-2 rounded-full bg-tech-cyan"></span>
+              {% elif event.type == 'withdrawal' or event.type == 'withdrawal_request' %}
+                <span class="w-2 h-2 rounded-full bg-error"></span>
+              {% elif event.type == 'support_ticket' %}
+                <span class="w-2 h-2 rounded-full" style="background:#378ADD"></span>
+              {% else %}
+                <span class="w-2 h-2 rounded-full bg-on-surface-variant"></span>
+              {% endif %}
+              <span class="font-label-sm text-[12px]">{{ event.description }}</span>
+            </div>
+          </td>
+
+          <td class="px-gutter py-3 font-mono-data text-sm text-white">
+            {% if event.amount is not None %}
+              ${{ event.amount|floatformat:2 }}
+            {% else %}
+              —
+            {% endif %}
+          </td>
+
+          <td class="px-gutter py-3">
+            {% if event.status == 'success' or event.status == 'approved' or event.status == 'paid' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter bg-primary-container text-tech-cyan">{{ event.status }}</span>
+            {% elif event.status == 'pending' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter bg-surface-container-highest text-on-surface-variant">{{ event.status }}</span>
+            {% elif event.status == 'open' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter" style="background:rgba(56,139,253,.15);color:#388bfd">{{ event.status }}</span>
+            {% else %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter bg-error-container text-error">{{ event.status }}</span>
+            {% endif %}
+          </td>
+
+          <td class="px-gutter py-3 text-right">
+            {% if event.type == 'withdrawal_request' %}
+              <a href="{% url 'admin-withdrawals' %}" class="opacity-40 group-hover:opacity-100 hover:text-tech-cyan transition-all">
+                <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+              </a>
+            {% elif event.type == 'support_ticket' %}
+              <a href="{% url 'admin-support-tickets' %}" class="opacity-40 group-hover:opacity-100 hover:text-tech-cyan transition-all">
+                <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+              </a>
+            {% elif event.type == 'deposit_request' %}
+              <a href="{% url 'admin-deposits' %}" class="opacity-40 group-hover:opacity-100 hover:text-tech-cyan transition-all">
+                <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+              </a>
+            {% else %}
+              <a href="{% url 'admin-user-detail' event.user_id %}" class="opacity-40 group-hover:opacity-100 hover:text-tech-cyan transition-all">
+                <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+              </a>
+            {% endif %}
+          </td>
+
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="px-gutter py-8 text-center font-label-sm text-on-surface-variant">No recent activity found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{# ── QUICK ACCESS ────────────────────────────────────────── #}
+<div class="glass-card p-container-padding rounded-lg">
+  <h4 class="text-white font-bold mb-4 flex items-center gap-2">
+    <span class="material-symbols-outlined text-tech-cyan">bolt</span>
+    Quick Access
+  </h4>
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+    <a href="{% url 'admin-pending-activations' %}" class="py-2 px-4 rounded border border-outline bg-background hover:border-tech-cyan hover:text-tech-cyan text-center text-xs font-mono-data transition-all flex items-center justify-between group">
+      ACTIVATIONS <span class="text-error font-bold">{{ pending_activations }}</span>
+    </a>
+    <a href="{% url 'admin-withdrawals' %}" class="py-2 px-4 rounded border border-outline bg-background hover:border-tech-cyan hover:text-tech-cyan text-center text-xs font-mono-data transition-all flex items-center justify-between group">
+      WITHDRAWALS <span class="text-error font-bold">{{ pending_withdrawals }}</span>
+    </a>
+    <a href="{% url 'admin-deposits' %}" class="py-2 px-4 rounded border border-outline bg-background hover:border-tech-cyan hover:text-tech-cyan text-center text-xs font-mono-data transition-all flex items-center justify-between group">
+      DEPOSITS <span class="text-error font-bold">{{ pending_deposits }}</span>
+    </a>
+    <a href="{% url 'admin-support-tickets' %}" class="py-2 px-4 rounded border border-outline bg-background hover:border-tech-cyan hover:text-tech-cyan text-center text-xs font-mono-data transition-all flex items-center justify-between group">
+      TICKETS <span class="text-error font-bold">{{ open_tickets }}</span>
+    </a>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+// ── Data injected from Django ──────────────────────────────
+const LABELS   = {{ chart_labels|safe }};
+const DEPOSITS = {{ chart_deposits|safe }};
+const WITHDRAWALS = {{ chart_withdrawals|safe }};
+const MESSAGES = {{ chart_messages|safe }};
+const MONTH_LABELS = {{ month_labels|safe }};
+const USER_GROWTH  = {{ chart_user_growth|safe }};
+const PIE_LABELS   = {{ pie_labels|safe }};
+const PIE_VALUES   = {{ pie_values|safe }};
+
+// ── Shared chart defaults ──────────────────────────────────
+const GRID_COLOR  = 'rgba(255,255,255,0.05)';
+const TICK_COLOR  = '#7d8590';
+
+// ── Weekly bar / line chart ────────────────────────────────
+let weeklyChart;
+
+function buildVolumeChart() {
+  return {
+    type: 'bar',
+    data: {
+      labels: LABELS,
+      datasets: [
+        {
+          label: 'Deposits',
+          data: DEPOSITS,
+          backgroundColor: '#378ADD33',
+          borderColor: '#378ADD',
+          borderWidth: 1.5,
+          borderRadius: 3,
+        },
+        {
+          label: 'Withdrawals',
+          data: WITHDRAWALS,
+          backgroundColor: '#E24B4A22',
+          borderColor: '#E24B4A',
+          borderWidth: 1.5,
+          borderDash: [5, 4],
+          type: 'line',
+          fill: false,
+          tension: 0.35,
+          pointRadius: 3,
+          pointBackgroundColor: '#E24B4A',
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+      scales: {
+        x: { grid: { color: GRID_COLOR }, ticks: { color: TICK_COLOR, font: { size: 11 }, autoSkip: false, maxRotation: 0 } },
+        y: { grid: { color: GRID_COLOR }, ticks: { color: TICK_COLOR, font: { size: 11 }, callback: v => '$' + (v >= 1000 ? Math.round(v/1000)+'k' : Math.round(v)) } }
+      }
+    }
+  };
+}
+
+function buildMessagesChart() {
+  return {
+    type: 'bar',
+    data: {
+      labels: LABELS,
+      datasets: [{
+        label: 'Messages',
+        data: MESSAGES,
+        backgroundColor: '#1D9E7533',
+        borderColor: '#1D9E75',
+        borderWidth: 1.5,
+        borderRadius: 3,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+      scales: {
+        x: { grid: { color: GRID_COLOR }, ticks: { color: TICK_COLOR, font: { size: 11 }, autoSkip: false, maxRotation: 0 } },
+        y: { grid: { color: GRID_COLOR }, ticks: { color: TICK_COLOR, font: { size: 11 }, stepSize: 1 } }
+      }
+    }
+  };
+}
+
+function switchChart(type) {
+  document.querySelectorAll('.chart-tab').forEach(t => {
+    t.classList.remove('bg-surface-container-highest', 'text-tech-cyan');
+    t.classList.add('text-on-surface-variant');
+  });
+  const active = document.getElementById('tab-' + type);
+  active.classList.add('bg-surface-container-highest', 'text-tech-cyan');
+  active.classList.remove('text-on-surface-variant');
+
+  document.getElementById('chart-legend-volume').classList.toggle('hidden', type !== 'volume');
+  document.getElementById('chart-legend-messages').classList.toggle('hidden', type !== 'messages');
+
+  if (weeklyChart) weeklyChart.destroy();
+  const cfg = type === 'volume' ? buildVolumeChart() : buildMessagesChart();
+  weeklyChart = new Chart(document.getElementById('weeklyChart'), cfg);
+}
+
+switchChart('volume');
+
+// ── User growth line chart ─────────────────────────────────
+new Chart(document.getElementById('growthChart'), {
+  type: 'line',
+  data: {
+    labels: MONTH_LABELS,
+    datasets: [{
+      label: 'Users',
+      data: USER_GROWTH,
+      borderColor: '#4ade80',
+      backgroundColor: 'rgba(74,222,128,0.08)',
+      fill: true, tension: 0.4,
+      pointRadius: 0, borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: TICK_COLOR, font: { size: 10 }, maxTicksLimit: 6 } },
+      y: { grid: { color: GRID_COLOR }, ticks: { color: TICK_COLOR, font: { size: 10 } } }
+    }
+  }
+});
+
+// ── Doughnut ───────────────────────────────────────────────
+const PIE_COLORS = ['#378ADD','#E24B4A','#EF9F27','#1D9E75','#534AB7','#D85A30'];
+
+new Chart(document.getElementById('pieChart'), {
+  type: 'doughnut',
+  data: {
+    labels: PIE_LABELS,
+    datasets: [{
+      data: PIE_VALUES,
+      backgroundColor: PIE_COLORS.slice(0, PIE_LABELS.length),
+      borderColor: 'transparent',
+      borderWidth: 2,
+      hoverOffset: 4
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    cutout: '65%',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+            const pct = total > 0 ? Math.round(ctx.parsed / total * 100) : 0;
+            return ' $' + ctx.parsed.toLocaleString() + ' (' + pct + '%)';
+          }
+        }
+      }
+    }
+  }
+});
+
+// Build custom pie legend
+const legendEl = document.getElementById('pie-legend');
+const total = PIE_VALUES.reduce((a, b) => a + b, 0);
+PIE_LABELS.forEach((label, i) => {
+  const pct = total > 0 ? Math.round(PIE_VALUES[i] / total * 100) : 0;
+  legendEl.innerHTML += `
+    <div class="flex items-center justify-between font-label-sm text-[11px]">
+      <span class="flex items-center gap-2 text-on-surface-variant">
+        <span class="w-2.5 h-2.5 rounded-sm inline-block flex-shrink-0" style="background:${PIE_COLORS[i]}"></span>
+        ${label}
+      </span>
+      <span class="font-mono-data text-white">${pct}%</span>
+    </div>`;
+});
+</script>
+{% endblock %}

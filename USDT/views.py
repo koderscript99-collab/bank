@@ -9,6 +9,8 @@ from django.conf import settings
 from decimal import Decimal
 import json, hmac, hashlib
 
+from urllib3 import request
+
 from .models import (
     DepositRequest, User, AdminProfile, Wallet, PaymentAccount,
     ActivationPayment, AdminDeposit, Transaction,
@@ -65,6 +67,12 @@ def admin_required(view_func):
 # ======================
 # HOME
 # ======================
+
+def admin_dashboard(request):
+    return render(request, 'admin/admin-dashboard.html')
+
+
+
 
 def home(request):
     if request.user.is_authenticated:

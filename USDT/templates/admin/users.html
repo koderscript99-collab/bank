@@ -2,101 +2,126 @@
 {% block title %}All Users{% endblock %}
 {% block page_title %}All Users{% endblock %}
 {% block page_sub %}{{ total }} registered user{{ total|pluralize }}{% endblock %}
-{% block nav_users %}active{% endblock %}
-
+{% block nav_users %}active-nav text-tech-cyan{% endblock %}
 {% block content %}
 
-<!-- SEARCH -->
-<form method="get" style="margin-bottom:20px">
-  <div style="display:flex;gap:10px;max-width:420px">
-    <input
-      type="text"
-      name="search"
-      value="{{ search }}"
-      placeholder="Search by username, email or name..."
-      style="flex:1;padding:10px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;font-size:13.5px;color:var(--text);outline:none;font-family:inherit;transition:border-color .2s"
-      onfocus="this.style.borderColor='var(--green)'"
-      onblur="this.style.borderColor='var(--border)'"
-    >
-    <button type="submit" class="btn btn-green">Search</button>
+{# ── SEARCH ──────────────────────────────────────────────── #}
+<form method="get">
+  <div class="flex gap-3 max-w-lg">
+    <div class="relative flex-1">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+      <input
+        type="text"
+        name="search"
+        value="{{ search }}"
+        placeholder="Search by username, email or name..."
+        class="w-full bg-background border border-outline rounded py-2 pl-10 pr-4 text-white text-sm font-mono-data focus:border-tech-cyan focus:outline-none transition-colors"
+      >
+    </div>
+    <button type="submit" class="px-4 py-2 bg-primary-container border border-tech-cyan/30 text-tech-cyan rounded font-label-sm text-sm hover:bg-primary-container/80 transition-colors">
+      Search
+    </button>
     {% if search %}
-    <a href="{% url 'admin-users' %}" class="btn btn-outline">Clear</a>
+    <a href="{% url 'admin-users' %}" class="px-4 py-2 border border-outline rounded font-label-sm text-sm text-on-surface-variant hover:text-white transition-colors">
+      Clear
+    </a>
     {% endif %}
   </div>
 </form>
 
-<div class="card">
-  <div class="card-head">
-    <div class="card-head-left">
-      <div class="card-head-icon" style="background:var(--blue-dim)">
-        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--blue)" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-      </div>
+{# ── USERS TABLE ─────────────────────────────────────────── #}
+<div class="glass-card rounded-lg overflow-hidden">
+  <div class="px-container-padding py-4 border-b border-outline flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-tech-cyan text-[20px]">group</span>
       <div>
-        <div class="card-title">Users</div>
-        <div class="card-sub">{{ total }} result{{ total|pluralize }}</div>
+        <h3 class="font-headline-md text-white">Users</h3>
+        <p class="font-label-sm text-on-surface-variant text-[11px]">{{ total }} result{{ total|pluralize }}</p>
       </div>
     </div>
+    <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-tighter bg-primary-container text-tech-cyan">
+      {{ total }} total
+    </span>
   </div>
 
-  {% if users %}
-  <table>
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>Account No</th>
-        <th>Status</th>
-        <th>Wallet</th>
-        <th>Joined</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for u in users %}
-    <tr>
-      <td>
-        <div style="display:flex;align-items:center;gap:10px">
-          <div style="width:32px;height:32px;border-radius:50%;background:var(--green-dim);color:var(--green-bright);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0">
-            {{ u.username|first|upper }}
-          </div>
-          <div>
-            <div style="font-weight:500;font-size:13.5px">{{ u.username }}</div>
-            <div style="font-size:11.5px;color:var(--muted)">{{ u.email|default:"No email" }}</div>
-          </div>
-        </div>
-      </td>
-      <td style="font-family:monospace;font-size:12.5px;color:var(--muted)">
-        {{ u.account_number|default:"—" }}
-      </td>
-      <td>
-        {% if u.account_activated %}
-        <span class="badge badge-green">● Active</span>
-        {% else %}
-        <span class="badge badge-amber">● Pending</span>
-        {% endif %}
-      </td>
-      <td style="font-weight:600">
-        {% if u.wallet %}
-          {% if u.wallet.is_frozen %}
-          <span style="color:var(--red)">❄ Frozen</span>
-          {% else %}
-          ${{ u.wallet.balance }}
-          {% endif %}
-        {% else %}
-        <span style="color:var(--muted)">—</span>
-        {% endif %}
-      </td>
-      <td style="color:var(--muted);font-size:12.5px">{{ u.date_joined|date:"M d, Y" }}</td>
-      <td>
-        <a href="{% url 'admin-user-detail' u.id %}" class="btn btn-outline btn-sm">Manage</a>
-      </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-  <div class="empty">
-    {% if search %}No users found for "{{ search }}"{% else %}No users registered yet.{% endif %}
+  <div class="overflow-x-auto custom-scrollbar">
+    {% if users %}
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-surface-container-lowest">
+        <tr>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">User</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Account No</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Status</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Wallet</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Joined</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px] text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline/30">
+        {% for u in users %}
+        <tr class="hover:bg-white/[0.02] transition-colors group">
+
+          <td class="px-gutter py-3">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-tech-cyan font-bold text-sm flex-shrink-0">
+                {{ u.username|first|upper }}
+              </div>
+              <div>
+                <p class="text-white font-bold text-sm">{{ u.username }}</p>
+                <p class="font-mono-data text-[11px] text-on-surface-variant">{{ u.email|default:"No email" }}</p>
+              </div>
+            </div>
+          </td>
+
+          <td class="px-gutter py-3 font-mono-data text-[12px] text-on-surface-variant">
+            {{ u.account_number|default:"—" }}
+          </td>
+
+          <td class="px-gutter py-3">
+            {% if u.account_activated %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-tech-cyan">● Active</span>
+            {% else %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-on-surface-variant">● Pending</span>
+            {% endif %}
+          </td>
+
+          <td class="px-gutter py-3 font-mono-data text-sm">
+            {% if u.wallet %}
+              {% if u.wallet.is_frozen %}
+                <span class="text-error">❄ Frozen</span>
+              {% else %}
+                <span class="text-tech-cyan font-bold">${{ u.wallet.balance }}</span>
+              {% endif %}
+            {% else %}
+              <span class="text-on-surface-variant">—</span>
+            {% endif %}
+          </td>
+
+          <td class="px-gutter py-3 font-mono-data text-[11px] text-on-surface-variant">
+            {{ u.date_joined|date:"M d, Y" }}
+          </td>
+
+          <td class="px-gutter py-3 text-right">
+            <a href="{% url 'admin-user-detail' u.id %}"
+              class="opacity-60 group-hover:opacity-100 inline-flex items-center gap-1 px-3 py-1 border border-outline rounded font-label-sm text-[11px] text-on-surface-variant hover:text-tech-cyan hover:border-tech-cyan transition-all">
+              Manage
+              <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+            </a>
+          </td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="px-gutter py-12 text-center">
+      <span class="material-symbols-outlined text-4xl text-on-surface-variant opacity-30 block mb-3">person_off</span>
+      <p class="font-label-sm text-on-surface-variant">
+        {% if search %}No users found for "{{ search }}"{% else %}No users registered yet.{% endif %}
+      </p>
+    </div>
+    {% endif %}
   </div>
-  {% endif %}
 </div>
+
 {% endblock %}
