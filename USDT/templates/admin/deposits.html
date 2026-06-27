@@ -1,54 +1,124 @@
-{% extends "admin/base_admin.html" %}
+{% extends 'admin/admin-dashboard.html' %}
 {% block title %}Deposit Requests{% endblock %}
-
 {% block page_title %}Deposit Requests{% endblock %}
+{% block page_sub %}Review and approve user deposit requests{% endblock %}
+{% block nav_deposits %}active-nav text-tech-cyan{% endblock %}
 
 {% block content %}
 
-<div class="card">
+{# Filter tabs #}
+<div class="flex gap-2">
+  <a href="?status=pending"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if status_filter == 'pending' %}bg-surface-container-highest border-tech-cyan text-tech-cyan{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
+    Pending
+  </a>
+  <a href="?status=approved"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if status_filter == 'approved' %}bg-primary-container border-tech-cyan text-tech-cyan{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
+    Approved
+  </a>
+  <a href="?status=rejected"
+    class="px-4 py-1.5 rounded font-label-sm text-[11px] font-bold border transition-colors
+      {% if status_filter == 'rejected' %}bg-error-container border-error text-error{% else %}border-outline text-on-surface-variant hover:text-white{% endif %}">
+    Rejected
+  </a>
+</div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>User</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th></th>
-            </tr>
-        </thead>
+<div class="glass-card rounded-lg overflow-hidden">
+  <div class="px-container-padding py-4 border-b border-outline flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-tech-cyan text-[20px]">account_balance_wallet</span>
+      <div>
+        <h3 class="font-headline-md text-white">{{ status_filter|capfirst }} Deposits</h3>
+        <p class="font-label-sm text-on-surface-variant text-[11px]">{{ deposits|length }} request{{ deposits|length|pluralize }}</p>
+      </div>
+    </div>
+  </div>
 
-        <tbody>
+  <div class="overflow-x-auto custom-scrollbar">
+    {% if deposits %}
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-surface-container-lowest">
+        <tr>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">User</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Amount</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Payment Method</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">TX ID</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Status</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">Date</th>
+          <th class="px-gutter py-3 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px] text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-outline/30">
+        {% for d in deposits %}
+        <tr class="hover:bg-white/[0.02] transition-colors">
 
-            {% for deposit in deposits %}
-            <tr>
+          <td class="px-gutter py-3">
+            <a href="{% url 'admin-user-detail' d.user.id %}" class="text-tech-cyan font-bold text-sm hover:underline">
+              {{ d.user.username }}
+            </a>
+          </td>
 
-                <td>{{ deposit.user.username }}</td>
+          <td class="px-gutter py-3 font-mono-data text-white font-bold">${{ d.amount }}</td>
 
-                <td>${{ deposit.amount }}</td>
+          <td class="px-gutter py-3 font-label-sm text-sm text-on-surface-variant">
+            {% if d.payment_detail %}
+              {{ d.payment_detail.label }}
+            {% else %}
+              <span class="text-on-surface-variant opacity-50">—</span>
+            {% endif %}
+          </td>
 
-                <td>
-                    <span class="badge badge-{{ deposit.status }}">
-                        {{ deposit.status }}
-                    </span>
-                </td>
+          <td class="px-gutter py-3 font-mono-data text-[11px] text-on-surface-variant">
+            {{ d.transaction_id|default:"—"|truncatechars:20 }}
+          </td>
 
-                <td>{{ deposit.created_at }}</td>
+          <td class="px-gutter py-3">
+            {% if d.status == 'approved' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-tech-cyan">{{ d.status }}</span>
+            {% elif d.status == 'pending' %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-on-surface-variant">{{ d.status }}</span>
+            {% else %}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error-container text-error">{{ d.status }}</span>
+            {% endif %}
+          </td>
 
-                <td>
-                    <a href="{% url 'admin-deposit-detail' deposit.id %}"
-                       class="btn-primary">
-                        View
-                    </a>
-                </td>
+          <td class="px-gutter py-3 font-mono-data text-[11px] text-on-surface-variant whitespace-nowrap">
+            {{ d.created_at|date:"M d, Y" }}
+          </td>
 
-            </tr>
-            {% endfor %}
+          <td class="px-gutter py-3 text-right">
+            <div class="flex gap-2 justify-end">
+              <a href="{% url 'admin-deposit-detail' d.pk %}"
+                class="px-3 py-1 border border-outline rounded font-label-sm text-[11px] text-on-surface-variant hover:text-tech-cyan hover:border-tech-cyan transition-colors">
+                View
+              </a>
+              {% if d.status == 'pending' %}
+              <a href="{% url 'approve-deposit' d.pk %}"
+                class="px-3 py-1 bg-primary-container border border-tech-cyan/30 text-tech-cyan rounded font-label-sm text-[11px] hover:bg-primary-container/80 transition-colors">
+                ✓ Approve
+              </a>
+              <a href="{% url 'reject-deposit' d.pk %}"
+                onclick="return confirm('Reject this deposit?')"
+                class="px-3 py-1 bg-error-container border border-error/30 text-error rounded font-label-sm text-[11px] hover:bg-error-container/80 transition-colors">
+                ✗ Reject
+              </a>
+              {% endif %}
+            </div>
+          </td>
 
-        </tbody>
-
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
-
+    {% else %}
+    <div class="px-gutter py-12 text-center">
+      <span class="material-symbols-outlined text-4xl text-on-surface-variant opacity-30 block mb-3">account_balance_wallet</span>
+      <p class="font-label-sm text-on-surface-variant">No {{ status_filter }} deposit requests.</p>
+    </div>
+    {% endif %}
+  </div>
 </div>
 
 {% endblock %}

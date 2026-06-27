@@ -71,3 +71,4 @@ urlpatterns = [
     path('admin/deposits/<int:pk>/reject/', views.reject_deposit_view, name='reject-deposit'),
     path('admin/deposits/<int:pk>/', views.admin_deposit_detail, name='admin-deposit-detail'),
 ]
+

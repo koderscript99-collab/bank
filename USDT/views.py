@@ -1350,52 +1350,21 @@ def admin_close_ticket(request, ticket_id):
 
 from decimal import Decimal
 from django.utils import timezone
-
-def approve_deposit(deposit, admin_user):
-    if deposit.status != "pending":
-        return
-
-    wallet = deposit.user.wallet
-
-    wallet.balance += Decimal(deposit.amount)
-    wallet.save()
-
-    deposit.status = "approved"
-    deposit.reviewed_by = admin_user
-    deposit.reviewed_at = timezone.now()
-    deposit.save()
-
-    Transaction.objects.create(
-        user=deposit.user,
-        amount=deposit.amount,
-        transaction_type="admin_deposit",
-        status="success",
-        description="Wallet funding approved",
-        performed_by=admin_user,
-    )
-
-    Notification.objects.create(
-        user=deposit.user,
-        title="Deposit Approved",
-        message=f"Your deposit of ${deposit.amount} has been approved and added to your wallet."
-    )
+@admin_required
+def approve_deposit(request, pk):
+    deposit = get_object_or_404(DepositRequest, pk=pk)
+    approve_deposit(deposit, request.user)
+    messages.success(request, f'Deposit of ${deposit.amount} approved.')
+    return redirect('admin-deposits')
 
 
-from django.utils import timezone
-
-def reject_deposit(deposit, admin_user, reason):
-    deposit.status = "rejected"
-    deposit.reviewed_by = admin_user
-    deposit.reviewed_at = timezone.now()
-    deposit.rejection_reason = reason
-    deposit.save()
-
-    Notification.objects.create(
-        user=deposit.user,
-        title="Deposit Rejected",
-        message=f"Your deposit request was rejected. Reason: {reason}"
-    )
-
+@admin_required
+def reject_deposit(request, pk):
+    deposit = get_object_or_404(DepositRequest, pk=pk)
+    reason = request.GET.get('reason', 'Rejected by admin')
+    reject_deposit(deposit, request.user, reason)
+    messages.success(request, f'Deposit rejected.')
+    return redirect('admin-deposits')
 @login_required
 def deposit_request(request):
 
@@ -1439,6 +1408,16 @@ def deposit_history(request):
     )
 
 
+@admin_required
+def admin_deposit_detail(request, pk):
+    deposit = get_object_or_404(DepositRequest, pk=pk)
+    return render(request, 'admin/deposit_detail.html', {
+        'deposit': deposit,
+        'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
+        'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
+        'open_tickets_count': SupportTicket.objects.filter(status='open').count(),
+    })
+
 
 
 def deposit_detail(request, pk):
@@ -1456,19 +1435,21 @@ def approve_deposit_view(request, pk):
 def reject_deposit_view(request, pk):
     pass
 
+@admin_required
+def admin_deposits(request):
+    status_filter = request.GET.get('status', 'pending')
+    deposits = DepositRequest.objects.select_related('user', 'payment_detail').order_by('-created_at')
 
-@login_required
-def admin_deposit_detail(request, pk):
-    deposit = get_object_or_404(
-        DepositRequest,
-        pk=pk
-    )
+    if status_filter in ('pending', 'approved', 'rejected'):
+        deposits = deposits.filter(status=status_filter)
 
-    return render(
-        request,
-        'admin/deposit_detail.html',
-        {'deposit': deposit}
-    )
+    return render(request, 'admin/deposits.html', {
+        'deposits': deposits,
+        'status_filter': status_filter,
+        'pending_activations_count': ActivationPayment.objects.filter(status='pending').count(),
+        'pending_withdrawals_count': WithdrawalRequest.objects.filter(status='pending').count(),
+        'open_tickets_count': SupportTicket.objects.filter(status='open').count(),
+    })
 
 
 from datetime import timedelta
