@@ -1365,31 +1365,42 @@ def reject_deposit(request, pk):
     reject_deposit(deposit, request.user, reason)
     messages.success(request, f'Deposit rejected.')
     return redirect('admin-deposits')
+
+
 @login_required
 def deposit_request(request):
-
     payment_details = PaymentDetail.objects.filter(is_active=True)
 
     if request.method == "POST":
+        payment_detail_id = request.POST.get("payment_detail")
+        amount = request.POST.get("amount")
+        transaction_id = request.POST.get("transaction_id", "")
+        note = request.POST.get("note", "")
+        proof = request.FILES.get("proof")
+
+        if not payment_detail_id or not amount:
+            messages.error(request, "Please select a payment method and enter an amount.")
+            return render(request, "user/deposit_form.html", {"payment_details": payment_details})
 
         DepositRequest.objects.create(
             user=request.user,
-            payment_detail_id=request.POST.get("payment_detail"),
-            amount=request.POST.get("amount"),
-            transaction_id=request.POST.get("transaction_id"),
-            note=request.POST.get("note"),
-            proof=request.FILES.get("proof")
+            payment_detail_id=payment_detail_id,
+            amount=amount,
+            transaction_id=transaction_id,
+            note=note,
+            proof=proof,
         )
 
+        _notify(
+            request.user,
+            "Deposit Submitted",
+            f"Your deposit of ${amount} has been submitted and is under review."
+        )
+
+        messages.success(request, "Deposit submitted successfully. We'll review it shortly.")
         return redirect("deposit-history")
 
-    return render(
-        request,
-        "user/deposit_form.html",
-        {
-            "payment_details": payment_details
-        }
-    )
+    return render(request, "user/deposit_form.html", {"payment_details": payment_details})
 
 
 @login_required

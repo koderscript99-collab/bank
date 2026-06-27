@@ -1,342 +1,378 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
+<html class="dark" lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-<title>Deposit Funds | Obsidian Forest</title>
+<title>Deposit Funds</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Shared Tailwind Configuration -->
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Geist:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "secondary-container": "#474746",
-                        "on-primary-fixed": "#002112",
-                        "on-error": "#690005",
-                        "on-error-container": "#ffdad6",
-                        "tertiary-container": "#305944",
-                        "inverse-surface": "#e2e2e2",
-                        "inverse-on-surface": "#303030",
-                        "surface": "#131313",
-                        "on-secondary": "#313030",
-                        "error-container": "#93000a",
-                        "surface-container": "#1f1f1f",
-                        "secondary": "#c8c6c5",
-                        "on-tertiary": "#0c3825",
-                        "tertiary": "#a4d1b6",
-                        "on-background": "#e2e2e2",
-                        "surface-variant": "#353535",
-                        "surface-container-lowest": "#0e0e0e",
-                        "tertiary-fixed-dim": "#a4d1b6",
-                        "surface-container-highest": "#353535",
-                        "primary-fixed": "#bceecf",
-                        "on-secondary-fixed-variant": "#474746",
-                        "inverse-primary": "#3a674f",
-                        "on-primary-fixed-variant": "#224f39",
-                        "on-tertiary-fixed-variant": "#254f3a",
-                        "surface-container-high": "#2a2a2a",
-                        "surface-bright": "#393939",
-                        "surface-container-low": "#1b1b1b",
-                        "on-tertiary-fixed": "#002113",
-                        "on-primary": "#063824",
-                        "secondary-fixed-dim": "#c8c6c5",
-                        "outline": "#8b938c",
-                        "on-secondary-fixed": "#1c1b1b",
-                        "tertiary-fixed": "#bfedd1",
-                        "primary": "#a1d1b4",
-                        "on-surface": "#e2e2e2",
-                        "primary-container": "#2d5a43",
-                        "background": "#131313",
-                        "surface-tint": "#a1d1b4",
-                        "secondary-fixed": "#e5e2e1",
-                        "on-secondary-container": "#b7b5b4",
-                        "on-tertiary-container": "#a1ceb3",
-                        "error": "#ffb4ab",
-                        "on-surface-variant": "#c0c9c1",
-                        "surface-dim": "#131313",
-                        "primary-fixed-dim": "#a1d1b4",
-                        "outline-variant": "#414943",
-                        "on-primary-container": "#9fcfb2"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "gutter": "16px",
-                        "stack-md": "12px",
-                        "base": "8px",
-                        "stack-sm": "4px",
-                        "stack-lg": "32px",
-                        "container-padding": "24px"
-                    },
-                    "fontFamily": {
-                        "label-sm": ["Geist"],
-                        "mono-data": ["Geist"],
-                        "headline-xl": ["Hanken Grotesk"],
-                        "headline-lg": ["Hanken Grotesk"],
-                        "body-lg": ["Hanken Grotesk"],
-                        "headline-md": ["Hanken Grotesk"],
-                        "body-md": ["Hanken Grotesk"]
-                    },
-                    "fontSize": {
-                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                        "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
-                    }
-                }
-            }
-        }
-    </script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "secondary-container":"#474746","on-primary-fixed":"#002112","on-error":"#690005",
+        "on-error-container":"#ffdad6","tertiary-container":"#305944","inverse-surface":"#e2e2e2",
+        "inverse-on-surface":"#303030","surface":"#131313","on-secondary":"#313030",
+        "error-container":"#93000a","surface-container":"#1f1f1f","secondary":"#c8c6c5",
+        "on-tertiary":"#0c3825","tertiary":"#a4d1b6","on-background":"#e2e2e2",
+        "surface-variant":"#353535","surface-container-lowest":"#0e0e0e",
+        "surface-container-highest":"#353535","primary-fixed":"#bceecf",
+        "inverse-primary":"#3a674f","surface-container-high":"#2a2a2a",
+        "surface-bright":"#393939","surface-container-low":"#1b1b1b",
+        "on-primary":"#063824","outline":"#8b938c","tertiary-fixed":"#bfedd1",
+        "primary":"#a1d1b4","on-surface":"#e2e2e2","primary-container":"#2d5a43",
+        "background":"#131313","surface-tint":"#a1d1b4","secondary-fixed":"#e5e2e1",
+        "on-secondary-container":"#b7b5b4","on-tertiary-container":"#a1ceb3",
+        "error":"#ffb4ab","on-surface-variant":"#c0c9c1","surface-dim":"#131313",
+        "outline-variant":"#414943","on-primary-container":"#9fcfb2"
+      },
+      borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},
+      spacing:{"gutter":"16px","stack-md":"12px","base":"8px","stack-sm":"4px","stack-lg":"32px","container-padding":"24px"},
+      fontFamily:{"label-sm":["Geist"],"mono-data":["Geist"],"headline-xl":["Hanken Grotesk"],"headline-lg":["Hanken Grotesk"],"body-lg":["Hanken Grotesk"],"headline-md":["Hanken Grotesk"],"body-md":["Hanken Grotesk"]}
+    }
+  }
+}
+</script>
 <style>
-        body {
-            background-color: #131313;
-            color: #e2e2e2;
-            font-family: 'Hanken Grotesk', sans-serif;
-            margin: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        /* Glassmorphism subtle effects */
-        .glass-card {
-            background: rgba(27, 27, 27, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .payment-radio:checked + label {
-            border-color: #a1d1b4;
-            background-color: rgba(45, 90, 67, 0.2);
-        }
-        
-        /* Hide scrollbar but keep functionality */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    </style>
+body{background-color:#131313;color:#e2e2e2;font-family:'Hanken Grotesk',sans-serif;margin:0;-webkit-tap-highlight-color:transparent}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+.no-scrollbar::-webkit-scrollbar{display:none}
+.no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+.copy-btn{background:rgba(161,209,180,0.1);border:1px solid rgba(161,209,180,0.2);color:#a1d1b4;border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;display:inline-flex;align-items:center;gap:3px;transition:all .2s;white-space:nowrap;flex-shrink:0}
+.copy-btn:hover{background:rgba(161,209,180,0.2)}
+.copy-btn.copied{background:rgba(45,90,67,0.5);color:#a1d1b4}
+.detail-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05);gap:8px}
+.detail-row:last-child{border-bottom:none;padding-bottom:0}
+.detail-label{font-size:11px;color:#c0c9c1;font-family:'Geist',monospace;flex-shrink:0;min-width:90px}
+.detail-value{font-size:12px;color:#e2e2e2;font-family:'Geist',monospace;word-break:break-all;flex:1}
+.error-toast{position:fixed;top:72px;left:50%;transform:translateX(-50%);background:#93000a;color:#ffdad6;padding:10px 20px;border-radius:8px;font-size:13px;z-index:100;display:none;border:1px solid rgba(255,180,171,0.3)}
+</style>
 </head>
 <body class="bg-background overflow-x-hidden pb-24">
-<!-- Mobile Top Header -->
+
+<div class="error-toast" id="errorToast"></div>
+
+<!-- Header -->
 <header class="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-xl border-b border-surface-container-highest px-gutter h-16 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<img alt="Obsidian Forest Logo" class="w-8 h-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkrZA1Jj3jPDX8YU_-oFXWEaVNWblOvHtUOzq0Fc-y8DRfYOuC4GlA8MNhznouztk3Ruc3JRkx2yPH4hJfbiD1q-fXfO-zWJs24xPL6gqV5KmD6cZwwpC0u4NLzlWxiYxH6yVGJJJYHki8qA25NJ_CVD746JqqAa9AOH1d1Wu3hVILijiHwKZ2sxkx-h_nVxhyJMba3KhkM0MBGW_maKg_nQF7PR5sOkFoae9_Nuv3_WO7DWsEG77jOicDFL8bFFAY5j3JNuZLpwo"/>
-<span class="font-headline-md text-primary font-bold tracking-tight">Deposit</span>
-</div>
-<div class="flex items-center gap-2">
-<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors">
-<span class="material-symbols-outlined text-[24px]">notifications</span>
-<a href="{% url 'notifications' %}" class="block w-full h-full flex items-center justify-center">
-</a>
-</div>
+  <div class="flex items-center gap-3">
+    <span class="font-headline-md text-primary font-bold tracking-tight">Deposit</span>
+  </div>
+  <a href="{% url 'notifications' %}" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors">
+    <span class="material-symbols-outlined text-[24px]">notifications</span>
+  </a>
 </header>
-<!-- Main Content Canvas -->
+
 <main class="mt-16 p-gutter w-full">
-<div class="max-w-md mx-auto space-y-gutter">
-<!-- Page Heading Section -->
-<section class="flex flex-col gap-2 pt-2">
-<span class="font-label-sm text-primary uppercase tracking-[0.15em] opacity-80">Institutional Gateway</span>
-<h2 class="font-headline-lg text-on-surface">Secure Fund Deposit</h2>
-<p class="font-body-md text-on-surface-variant leading-relaxed">
-                    Select your preferred payment method and follow the instructions to credit your account instantly.
-                </p>
-</section>
-<!-- Form Container -->
-<form action="." class="space-y-gutter" enctype="multipart/form-data" method="POST">
-                {% csrf_token %}
-                <!-- Payment Method Selector Card -->
-<div class="bg-surface-container-low p-5 rounded-xl border border-surface-container-highest shadow-sm">
-<div class="flex items-center gap-2 mb-4">
-<span class="material-symbols-outlined text-primary">payments</span>
-<label class="font-headline-md text-on-surface text-lg" for="paymentType">Payment Method</label>
-</div>
-<div class="relative group">
-<select class="w-full bg-surface-container-lowest border border-outline-variant text-on-surface rounded-xl py-4 px-4 appearance-none focus:ring-2 focus:ring-primary-container focus:border-primary transition-all duration-200 outline-none font-body-md" id="paymentType" onchange="togglePaymentMethod()">
-<option value="">Choose a method...</option>
-<option value="bank">Bank Transfer</option>
-<option value="crypto">Cryptocurrency</option>
-</select>
-<div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-on-surface-variant">
-<span class="material-symbols-outlined">expand_more</span>
-</div>
-</div>
-</div>
-<!-- Bank Section (Hidden by Default) -->
-<div class="hidden space-y-3 animate-in fade-in slide-in-from-top-2 duration-300" id="bankSection">
-<h4 class="font-label-sm text-on-surface-variant uppercase ml-1">Select Bank Account</h4>
-                    {% for detail in payment_details %}
-                    {% if detail.payment_type == "bank" %}
-                    <div class="relative">
-<input class="hidden peer payment-radio" id="bank_{{ detail.id }}" name="payment_detail" required type="radio" value="{{ detail.id }}"/>
-<label class="block p-5 rounded-xl border border-surface-container-highest bg-surface-container-low cursor-pointer transition-all active:scale-[0.98] peer-checked:border-primary" for="bank_{{ detail.id }}">
-<div class="flex flex-col gap-3">
-<div class="flex justify-between items-center">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">account_balance</span>
-<h3 class="font-headline-md text-base text-on-surface">{{ detail.bank_name }}</h3>
-</div>
-<div class="w-5 h-5 rounded-full border-2 border-outline peer-checked:border-primary flex items-center justify-center">
-<div class="w-2.5 h-2.5 rounded-full bg-primary opacity-0 peer-checked:opacity-100"></div>
-</div>
-</div>
-<div class="space-y-1 font-mono-data text-on-surface-variant text-xs bg-surface-container-lowest/50 p-3 rounded-lg border border-white/5">
-<p class="flex justify-between"><span>Account:</span> <span class="text-on-surface">{{ detail.account_number }}</span></p>
-<p class="flex justify-between"><span>Holder:</span> <span class="text-on-surface">{{ detail.account_name }}</span></p>
-<p class="flex justify-between"><span>Type:</span> <span class="text-on-surface">{{ detail.account_type }}</span></p>
-</div>
-</div>
-</label>
-</div>
-                    {% endif %}
-                    {% endfor %}
+  <div class="max-w-md mx-auto space-y-gutter">
+
+    <!-- Heading -->
+    <section class="flex flex-col gap-2 pt-2">
+      <span class="font-label-sm text-primary uppercase tracking-[0.15em] opacity-80">Institutional Gateway</span>
+      <h2 class="font-headline-lg text-on-surface">Secure Fund Deposit</h2>
+      <p class="text-on-surface-variant leading-relaxed text-sm">
+        Select your preferred payment method, copy the details, make your transfer, then submit proof below.
+      </p>
+    </section>
+
+    <form action="{% url 'deposit-request' %}" method="POST" enctype="multipart/form-data" id="depositForm" class="space-y-gutter">
+      {% csrf_token %}
+
+      <!-- Step 1 -->
+      <div class="bg-surface-container-low p-5 rounded-xl border border-surface-container-highest">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-6 h-6 rounded-full bg-primary-container text-primary text-xs font-bold flex items-center justify-center flex-shrink-0">1</span>
+          <label class="text-on-surface font-semibold text-base" for="paymentType">Choose Payment Method</label>
+        </div>
+        <div class="relative">
+          <select id="paymentType" name="payment_type" onchange="togglePaymentMethod()"
+            class="w-full bg-surface-container-lowest border border-outline-variant text-on-surface rounded-xl py-4 px-4 appearance-none focus:outline-none font-body-md">
+            <option value="">Choose a method...</option>
+            <option value="bank">Bank Transfer</option>
+            <option value="crypto">Cryptocurrency</option>
+          </select>
+          <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-on-surface-variant">
+            <span class="material-symbols-outlined">expand_more</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Bank -->
+      <div class="hidden space-y-3" id="bankSection">
+        <div class="flex items-center gap-2 px-1">
+          <span class="w-6 h-6 rounded-full bg-primary-container text-primary text-xs font-bold flex items-center justify-center flex-shrink-0">2</span>
+          <h4 class="font-label-sm text-on-surface-variant uppercase">Select & Copy Bank Details</h4>
+        </div>
+        {% for detail in payment_details %}
+        {% if detail.payment_type == "bank" %}
+        <div>
+          <input class="hidden peer" id="bank_{{ detail.id }}" name="payment_detail" type="radio" value="{{ detail.id }}"/>
+          <label class="block rounded-xl border-2 border-surface-container-highest bg-surface-container-low cursor-pointer transition-all peer-checked:border-primary peer-checked:bg-primary-container/10" for="bank_{{ detail.id }}">
+            <div class="flex justify-between items-center p-4 border-b border-surface-container-highest/50">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[20px]">account_balance</span>
+                <div>
+                  <p class="font-bold text-on-surface text-sm">{{ detail.bank_name }}</p>
+                  <p class="text-[11px] text-on-surface-variant font-label-sm">{{ detail.label }}</p>
                 </div>
-<!-- Crypto Section (Hidden by Default) -->
-<div class="hidden space-y-3 animate-in fade-in slide-in-from-top-2 duration-300" id="cryptoSection">
-<h4 class="font-label-sm text-on-surface-variant uppercase ml-1">Select Wallet</h4>
-                    {% for detail in payment_details %}
-                    {% if detail.payment_type == "crypto" %}
-                    <div class="relative">
-<input class="hidden peer payment-radio" id="crypto_{{ detail.id }}" name="payment_detail" required type="radio" value="{{ detail.id }}"/>
-<label class="block p-5 rounded-xl border border-surface-container-highest bg-surface-container-low cursor-pointer transition-all active:scale-[0.98] peer-checked:border-primary" for="crypto_{{ detail.id }}">
-<div class="flex flex-col gap-3">
-<div class="flex justify-between items-center">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">currency_bitcoin</span>
-<h3 class="font-headline-md text-base text-on-surface">{{ detail.crypto_currency }}</h3>
-</div>
-<div class="w-5 h-5 rounded-full border-2 border-outline peer-checked:border-primary flex items-center justify-center">
-<div class="w-2.5 h-2.5 rounded-full bg-primary opacity-0 peer-checked:opacity-100"></div>
-</div>
-</div>
-<div class="p-3 bg-surface-container-lowest/50 rounded-lg border border-white/5">
-<p class="font-mono-data text-[11px] break-all text-primary/80 mb-1">Network: {{ detail.crypto_network }}</p>
-<p class="font-mono-data text-[11px] break-all text-on-surface-variant">{{ detail.wallet_address }}</p>
-</div>
-</div>
-</label>
-</div>
-                    {% endif %}
-                    {% endfor %}
+              </div>
+              <div class="w-5 h-5 rounded-full border-2 border-outline-variant peer-checked:border-primary flex items-center justify-center flex-shrink-0 transition-colors">
+                <div class="w-2.5 h-2.5 rounded-full bg-primary opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+              </div>
+            </div>
+            <div class="p-4 space-y-1">
+              {% if detail.account_name %}
+              <div class="detail-row">
+                <span class="detail-label">Acct Name</span>
+                <span class="detail-value">{{ detail.account_name }}</span>
+                <button type="button" class="copy-btn" onclick="event.preventDefault();copyText(this,'{{ detail.account_name }}')">
+                  <span class="material-symbols-outlined text-[13px]">content_copy</span> Copy
+                </button>
+              </div>
+              {% endif %}
+              {% if detail.account_number %}
+              <div class="detail-row">
+                <span class="detail-label">Acct Number</span>
+                <span class="detail-value">{{ detail.account_number }}</span>
+                <button type="button" class="copy-btn" onclick="event.preventDefault();copyText(this,'{{ detail.account_number }}')">
+                  <span class="material-symbols-outlined text-[13px]">content_copy</span> Copy
+                </button>
+              </div>
+              {% endif %}
+              {% if detail.bank_country %}
+              <div class="detail-row">
+                <span class="detail-label">Country</span>
+                <span class="detail-value">{{ detail.bank_country }}</span>
+                <button type="button" class="copy-btn" onclick="event.preventDefault();copyText(this,'{{ detail.bank_country }}')">
+                  <span class="material-symbols-outlined text-[13px]">content_copy</span> Copy
+                </button>
+              </div>
+              {% endif %}
+              {% if detail.swift_code %}
+              <div class="detail-row">
+                <span class="detail-label">SWIFT</span>
+                <span class="detail-value">{{ detail.swift_code }}</span>
+                <button type="button" class="copy-btn" onclick="event.preventDefault();copyText(this,'{{ detail.swift_code }}')">
+                  <span class="material-symbols-outlined text-[13px]">content_copy</span> Copy
+                </button>
+              </div>
+              {% endif %}
+              {% if detail.iban %}
+              <div class="detail-row">
+                <span class="detail-label">IBAN</span>
+                <span class="detail-value">{{ detail.iban }}</span>
+                <button type="button" class="copy-btn" onclick="event.preventDefault();copyText(this,'{{ detail.iban }}')">
+                  <span class="material-symbols-outlined text-[13px]">content_copy</span> Copy
+                </button>
+              </div>
+              {% endif %}
+              {% if detail.routing_number %}
+              <div class="detail-row">
+                <span class="detail-label">Routing</span>
+                <span class="detail-value">{{ detail.routing_number }}</span>
+                <button type="button" class="copy-btn" onclick="event.preventDefault();copyText(this,'{{ detail.routing_number }}')">
+                  <span class="material-symbols-outlined text-[13px]">content_copy</span> Copy
+                </button>
+              </div>
+              {% endif %}
+            </div>
+          </label>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Step 2: Crypto -->
+      <div class="hidden space-y-3" id="cryptoSection">
+        <div class="flex items-center gap-2 px-1">
+          <span class="w-6 h-6 rounded-full bg-primary-container text-primary text-xs font-bold flex items-center justify-center flex-shrink-0">2</span>
+          <h4 class="font-label-sm text-on-surface-variant uppercase">Select & Copy Wallet Address</h4>
+        </div>
+        {% for detail in payment_details %}
+        {% if detail.payment_type == "crypto" %}
+        <div>
+          <input class="hidden peer" id="crypto_{{ detail.id }}" name="payment_detail" type="radio" value="{{ detail.id }}"/>
+          <label class="block rounded-xl border-2 border-surface-container-highest bg-surface-container-low cursor-pointer transition-all peer-checked:border-primary peer-checked:bg-primary-container/10" for="crypto_{{ detail.id }}">
+            <div class="flex justify-between items-center p-4 border-b border-surface-container-highest/50">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[20px]">currency_bitcoin</span>
+                <div>
+                  <p class="font-bold text-on-surface text-sm">{{ detail.crypto_currency }}</p>
+                  <p class="text-[11px] text-on-surface-variant font-label-sm">{{ detail.crypto_network }} Network</p>
                 </div>
-<!-- Proof & Notes -->
-<div class="space-y-4">
-<!-- File Upload -->
-<div class="bg-surface-container-low p-5 rounded-xl border border-surface-container-highest">
-<div class="flex items-center gap-2 mb-4">
-<span class="material-symbols-outlined text-primary">upload_file</span>
-<h3 class="font-headline-md text-lg">Proof of Payment</h3>
-</div>
-<div class="relative group">
-<input accept="image/*,application/pdf" class="hidden" id="proof" name="proof" type="file"/>
-<label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-outline-variant rounded-xl cursor-pointer hover:border-primary hover:bg-surface-container-high transition-all" for="proof">
-<span class="material-symbols-outlined text-3xl mb-1 text-on-surface-variant">cloud_upload</span>
-<span class="font-body-md text-sm text-on-surface-variant">Tap to <span class="text-primary font-bold">upload proof</span></span>
-<span class="font-label-sm text-[10px] text-outline mt-1">JPG, PNG or PDF (Max 5MB)</span>
-</label>
-</div>
-</div>
-<!-- Note -->
-<div class="bg-surface-container-low p-5 rounded-xl border border-surface-container-highest">
-<div class="flex items-center gap-2 mb-4">
-<span class="material-symbols-outlined text-primary">edit_note</span>
-<h3 class="font-headline-md text-lg">Transaction Note</h3>
-</div>
-<textarea class="w-full bg-surface-container-lowest border border-outline-variant text-on-surface rounded-xl p-4 focus:ring-2 focus:ring-primary-container focus:border-primary transition-all duration-200 outline-none font-body-md resize-none h-28 placeholder:text-outline/50 text-sm" id="note" name="note" placeholder="Add optional details like reference IDs..." rows="4"></textarea>
-</div>
-</div>
-<!-- Submit Button -->
-<div class="pt-2">
-<button class="w-full bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-headline-md py-4 rounded-xl shadow-lg shadow-primary-container/10 transition-all flex items-center justify-center gap-2 active:scale-[0.97]" type="submit">
-<span>Submit Deposit</span>
-<span class="material-symbols-outlined text-[20px]">send</span>
-</button>
-</div>
-</form>
-<!-- Info Footer -->
-<footer class="pt-4 pb-8 flex flex-col gap-4">
-<div class="flex justify-center items-center gap-6 text-on-surface-variant font-label-sm">
-<div class="flex items-center gap-1 opacity-70">
-<span class="material-symbols-outlined text-[16px]">lock</span>
-                        SSL Secured
-                    </div>
-<div class="flex items-center gap-1 opacity-70">
-<span class="material-symbols-outlined text-[16px]">verified_user</span>
-                        Regulated
-                    </div>
-</div>
-<p class="font-label-sm text-[11px] text-on-surface-variant/60 text-center leading-relaxed">
-                    Deposits are typically processed within 15-30 minutes of verification. For assistance, contact our 24/7 support.
-                </p>
-</footer>
-</div>
+              </div>
+              <div class="w-5 h-5 rounded-full border-2 border-outline-variant flex items-center justify-center flex-shrink-0">
+                <div class="w-2.5 h-2.5 rounded-full bg-primary opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+              </div>
+            </div>
+            <div class="p-4">
+              <p class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest mb-2">Wallet Address</p>
+              <div class="flex items-start gap-3 bg-surface-container-lowest/60 rounded-lg p-3 border border-white/5">
+                <p class="font-mono-data text-[11px] text-primary/90 break-all flex-1 leading-relaxed">{{ detail.wallet_address }}</p>
+                <button type="button" class="copy-btn" onclick="event.preventDefault();copyText(this,'{{ detail.wallet_address }}')">
+                  <span class="material-symbols-outlined text-[13px]">content_copy</span>
+                </button>
+              </div>
+            </div>
+          </label>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Step 3: Amount -->
+      <div class="bg-surface-container-low p-5 rounded-xl border border-surface-container-highest">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-6 h-6 rounded-full bg-primary-container text-primary text-xs font-bold flex items-center justify-center flex-shrink-0">3</span>
+          <h3 class="text-on-surface font-semibold text-base">Deposit Amount</h3>
+        </div>
+        <div class="relative">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-mono-data">$</span>
+          <input type="number" name="amount" id="amountInput" min="1" step="0.01" placeholder="0.00"
+            class="w-full bg-surface-container-lowest border border-outline-variant text-on-surface rounded-xl py-4 pl-8 pr-4 focus:outline-none font-mono-data">
+        </div>
+      </div>
+
+      <!-- Step 4: Transaction ID -->
+      <div class="bg-surface-container-low p-5 rounded-xl border border-surface-container-highest">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-6 h-6 rounded-full bg-primary-container text-primary text-xs font-bold flex items-center justify-center flex-shrink-0">4</span>
+          <h3 class="text-on-surface font-semibold text-base">Transaction / Reference ID</h3>
+        </div>
+        <input type="text" name="transaction_id" placeholder="Paste your transaction ID or reference here"
+          class="w-full bg-surface-container-lowest border border-outline-variant text-on-surface rounded-xl py-4 px-4 focus:outline-none font-mono-data text-sm">
+      </div>
+
+      <!-- Step 5: Proof -->
+      <div class="bg-surface-container-low p-5 rounded-xl border border-surface-container-highest">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-6 h-6 rounded-full bg-primary-container text-primary text-xs font-bold flex items-center justify-center flex-shrink-0">5</span>
+          <h3 class="text-on-surface font-semibold text-base">Proof of Payment</h3>
+        </div>
+        <input accept="image/*,application/pdf" class="hidden" id="proof" name="proof" type="file" onchange="showFileName(this)"/>
+        <label for="proof" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-outline-variant rounded-xl cursor-pointer hover:border-primary hover:bg-surface-container-high transition-all">
+          <span class="material-symbols-outlined text-3xl mb-1 text-on-surface-variant">cloud_upload</span>
+          <span class="text-sm text-on-surface-variant">Tap to <span class="text-primary font-bold">upload proof</span></span>
+          <span class="text-[10px] text-outline mt-1">JPG, PNG or PDF (Max 5MB)</span>
+        </label>
+        <p id="fileName" class="hidden mt-2 text-[11px] font-mono-data text-primary flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">attach_file</span>
+          <span id="fileNameText"></span>
+        </p>
+      </div>
+
+      <!-- Step 6: Note -->
+      <div class="bg-surface-container-low p-5 rounded-xl border border-surface-container-highest">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-6 h-6 rounded-full bg-primary-container text-primary text-xs font-bold flex items-center justify-center flex-shrink-0">6</span>
+          <h3 class="text-on-surface font-semibold text-base">Note <span class="text-on-surface-variant font-normal text-sm">(optional)</span></h3>
+        </div>
+        <textarea name="note" rows="3" placeholder="Add optional details..."
+          class="w-full bg-surface-container-lowest border border-outline-variant text-on-surface rounded-xl p-4 focus:outline-none resize-none text-sm placeholder:text-outline/50"></textarea>
+      </div>
+
+      <!-- Submit -->
+      <button type="button" onclick="submitDeposit()"
+        class="w-full bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-semibold text-lg py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-[0.97]">
+        <span>Submit Deposit</span>
+        <span class="material-symbols-outlined text-[20px]">send</span>
+      </button>
+
+    </form>
+
+    <footer class="pt-4 pb-8 flex flex-col gap-4">
+      <div class="flex justify-center items-center gap-6 text-on-surface-variant text-xs">
+        <div class="flex items-center gap-1 opacity-70"><span class="material-symbols-outlined text-[16px]">lock</span> SSL Secured</div>
+        <div class="flex items-center gap-1 opacity-70"><span class="material-symbols-outlined text-[16px]">verified_user</span> Regulated</div>
+      </div>
+      <p class="text-[11px] text-on-surface-variant/60 text-center leading-relaxed">
+        Deposits are typically processed within 15–30 minutes of verification.
+      </p>
+    </footer>
+  </div>
 </main>
-<!-- Fixed Bottom Navigation Bar -->
+
+<!-- Bottom Nav -->
 <nav class="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-t border-surface-container-highest px-4 pb-6 pt-3 h-20">
-<div class="flex justify-between items-center max-w-md mx-auto">
-<a class="flex flex-col items-center gap-1 px-3 text-on-surface-variant hover:text-primary transition-colors" href="{% url 'home' %}">
-<span class="material-symbols-outlined text-[24px]">home</span>
-<span class="text-[10px] font-medium font-label-sm">Home</span>
-</a>
-<a class="flex flex-col items-center gap-1 px-3 text-on-surface-variant hover:text-primary transition-colors" href="{% url 'request-withdrawal' %}">
-<span class="material-symbols-outlined text-[24px]">remove_circle</span>
-<span class="text-[10px] font-medium font-label-sm">Withdraw</span>
-</a>
-<a class="flex flex-col items-center gap-1 px-3 text-primary" href="#">
-<span class="material-symbols-outlined text-[24px] font-variation-fill">add_circle</span>
-<span class="text-[10px] font-medium font-label-sm">Deposit</span>
-</a>
-<a class="flex flex-col items-center gap-1 px-3 text-on-surface-variant hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined text-[24px]">history</span>
-<span class="text-[10px] font-medium font-label-sm">Activity</span>
-</a>
-</div>
+  <div class="flex justify-between items-center max-w-md mx-auto">
+    <a class="flex flex-col items-center gap-1 px-3 text-on-surface-variant hover:text-primary transition-colors" href="{% url 'home' %}">
+      <span class="material-symbols-outlined text-[24px]">home</span>
+      <span class="text-[10px] font-medium">Home</span>
+    </a>
+    <a class="flex flex-col items-center gap-1 px-3 text-on-surface-variant hover:text-primary transition-colors" href="{% url 'request-withdrawal' %}">
+      <span class="material-symbols-outlined text-[24px]">remove_circle</span>
+      <span class="text-[10px] font-medium">Withdraw</span>
+    </a>
+    <a class="flex flex-col items-center gap-1 px-3 text-primary" href="#">
+      <span class="material-symbols-outlined text-[24px]">add_circle</span>
+      <span class="text-[10px] font-medium">Deposit</span>
+    </a>
+    <a class="flex flex-col items-center gap-1 px-3 text-on-surface-variant hover:text-primary transition-colors" href="{% url 'deposit-history' %}">
+      <span class="material-symbols-outlined text-[24px]">history</span>
+      <span class="text-[10px] font-medium">Activity</span>
+    </a>
+  </div>
 </nav>
-<!-- Visual Micro-interaction Scripts -->
+
 <script>
-        function togglePaymentMethod() {
-            var paymentType = document.getElementById("paymentType").value;
-            var bankSection = document.getElementById("bankSection");
-            var cryptoSection = document.getElementById("cryptoSection");
+function showToast(msg) {
+  const t = document.getElementById('errorToast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3000);
+}
 
-            // Reset visibility
-            bankSection.classList.add("hidden");
-            cryptoSection.classList.add("hidden");
+function togglePaymentMethod() {
+  var t = document.getElementById('paymentType').value;
+  document.getElementById('bankSection').classList.toggle('hidden', t !== 'bank');
+  document.getElementById('cryptoSection').classList.toggle('hidden', t !== 'crypto');
+}
 
-            // Show selected
-            if (paymentType === "bank") {
-                bankSection.classList.remove("hidden");
-            } else if (paymentType === "crypto") {
-                cryptoSection.classList.remove("hidden");
-            }
-        }
+function copyText(btn, text) {
+  const orig = btn.innerHTML;
+  const done = () => {
+    btn.innerHTML = '<span class="material-symbols-outlined text-[13px]">check</span> Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('copied'); }, 2000);
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  } else {
+    fallbackCopy(text, done);
+  }
+}
 
-        // Initialize state
-        window.addEventListener('DOMContentLoaded', () => {
-            togglePaymentMethod();
-            
-            // Subtle form interaction feedback
-            const inputs = document.querySelectorAll('input, select, textarea');
-            inputs.forEach(input => {
-                input.addEventListener('focus', () => {
-                    const card = input.closest('.bg-surface-container-low');
-                    if(card) card.classList.add('ring-1', 'ring-primary/30', 'border-primary/20');
-                });
-                input.addEventListener('blur', () => {
-                    const card = input.closest('.bg-surface-container-low');
-                    if(card) card.classList.remove('ring-1', 'ring-primary/30', 'border-primary/20');
-                });
-            });
-        });     
+function fallbackCopy(text, cb) {
+  const el = document.createElement('textarea');
+  el.value = text; el.style.position = 'fixed'; el.style.opacity = '0';
+  document.body.appendChild(el); el.select();
+  try { document.execCommand('copy'); cb(); } catch(e) {}
+  document.body.removeChild(el);
+}
+
+function showFileName(input) {
+  if (input.files && input.files[0]) {
+    document.getElementById('fileNameText').textContent = input.files[0].name;
+    document.getElementById('fileName').classList.remove('hidden');
+  }
+}
+
+function submitDeposit() {
+  const method = document.getElementById('paymentType').value;
+  if (!method) { showToast('Please select a payment method.'); return; }
+
+  const selected = document.querySelector('input[name="payment_detail"]:checked');
+  if (!selected) { showToast('Please select a payment account.'); return; }
+
+  const amount = document.getElementById('amountInput').value;
+  if (!amount || parseFloat(amount) <= 0) { showToast('Please enter a valid amount.'); return; }
+
+  document.getElementById('depositForm').submit();
+}
+
+window.addEventListener('DOMContentLoaded', togglePaymentMethod);
 </script>
-</body> 
+</body>
 </html>

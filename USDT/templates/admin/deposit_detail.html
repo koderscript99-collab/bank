@@ -1,49 +1,138 @@
-{% extends "admin/base_admin.html" %}
-{% block title %}Deposit Review{% endblock %}
+{% extends 'admin/admin-dashboard.html' %}
+{% block title %}Deposit #{{ deposit.id }}{% endblock %}
+{% block page_title %}Deposit Review{% endblock %}
+{% block page_sub %}{{ deposit.user.username }} — ${{ deposit.amount }}{% endblock %}
+{% block nav_deposits %}active-nav text-tech-cyan{% endblock %}
 
 {% block content %}
 
-<div class="card">
+<a href="{% url 'admin-deposits' %}" class="inline-flex items-center gap-2 font-label-sm text-on-surface-variant hover:text-tech-cyan transition-colors mb-stack-lg">
+  <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+  Back to Deposits
+</a>
 
-    <h2>Deposit Review</h2>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
 
-    <p><strong>User:</strong> {{ deposit.user.username }}</p>
+  {# Deposit Info #}
+  <div class="glass-card rounded-lg overflow-hidden">
+    <div class="px-container-padding py-4 border-b border-outline flex items-center gap-3">
+      <span class="material-symbols-outlined text-tech-cyan text-[20px]">account_balance_wallet</span>
+      <h3 class="font-headline-md text-white">Deposit Details</h3>
+    </div>
+    <div class="p-container-padding space-y-2">
 
-    <p><strong>Amount:</strong> ${{ deposit.amount }}</p>
+      <div class="flex justify-between items-center py-2 border-b border-outline/30">
+        <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest">User</span>
+        <a href="{% url 'admin-user-detail' deposit.user.id %}" class="font-mono-data text-sm text-tech-cyan hover:underline font-bold">
+          {{ deposit.user.username }}
+        </a>
+      </div>
 
-    <p><strong>Status:</strong> {{ deposit.status }}</p>
+      <div class="flex justify-between items-center py-2 border-b border-outline/30">
+        <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest">Amount</span>
+        <span class="font-mono-data text-tech-cyan font-bold text-lg">${{ deposit.amount }}</span>
+      </div>
 
-    <p>
-        <strong>Transaction ID:</strong>
-        {{ deposit.transaction_id }}
-    </p>
+      <div class="flex justify-between items-center py-2 border-b border-outline/30">
+        <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest">Status</span>
+        {% if deposit.status == 'approved' %}
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-primary-container text-tech-cyan">{{ deposit.status }}</span>
+        {% elif deposit.status == 'pending' %}
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-on-surface-variant">{{ deposit.status }}</span>
+        {% else %}
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-error-container text-error">{{ deposit.status }}</span>
+        {% endif %}
+      </div>
 
-    <p>
-        <strong>Note:</strong>
-        {{ deposit.note }}
-    </p>
+      <div class="flex justify-between items-center py-2 border-b border-outline/30">
+        <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest">Submitted</span>
+        <span class="font-mono-data text-sm text-white">{{ deposit.created_at|date:"M d, Y H:i" }}</span>
+      </div>
 
+      {% if deposit.payment_detail %}
+      <div class="flex justify-between items-center py-2 border-b border-outline/30">
+        <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest">Method</span>
+        <span class="font-mono-data text-sm text-white">{{ deposit.payment_detail.label }}</span>
+      </div>
+      {% endif %}
+
+      {% if deposit.transaction_id %}
+      <div class="flex justify-between items-center py-2 border-b border-outline/30">
+        <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest">TX ID</span>
+        <span class="font-mono-data text-sm text-white break-all text-right max-w-[200px]">{{ deposit.transaction_id }}</span>
+      </div>
+      {% endif %}
+
+      {% if deposit.note %}
+      <div class="py-2">
+        <span class="font-label-sm text-on-surface-variant text-[11px] uppercase tracking-widest block mb-2">Note</span>
+        <p class="font-label-sm text-sm text-white">{{ deposit.note }}</p>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+  {# Proof + Actions #}
+  <div class="flex flex-col gap-gutter">
+
+    {# Proof image #}
     {% if deposit.proof %}
-    <img src="{{ deposit.proof.url }}"
-         style="width:400px;max-width:100%;border-radius:10px;">
+    <div class="glass-card rounded-lg overflow-hidden">
+      <div class="px-container-padding py-4 border-b border-outline flex items-center gap-3">
+        <span class="material-symbols-outlined text-tech-cyan text-[20px]">image</span>
+        <h3 class="font-headline-md text-white">Proof of Payment</h3>
+      </div>
+      <div class="p-container-padding">
+        <a href="{{ deposit.proof.url }}" target="_blank">
+          <img src="{{ deposit.proof.url }}" alt="Payment proof"
+            class="w-full rounded-lg border border-outline hover:border-tech-cyan transition-colors">
+        </a>
+        <a href="{{ deposit.proof.url }}" target="_blank"
+          class="inline-flex items-center gap-1 mt-3 font-label-sm text-[11px] text-tech-cyan hover:underline">
+          <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          View full size
+        </a>
+      </div>
+    </div>
+    {% else %}
+    <div class="glass-card rounded-lg p-container-padding text-center">
+      <span class="material-symbols-outlined text-3xl text-on-surface-variant opacity-30 block mb-2">image_not_supported</span>
+      <p class="font-label-sm text-on-surface-variant text-[12px]">No proof of payment uploaded.</p>
+    </div>
     {% endif %}
 
-    <br><br>
-
-    {% if deposit.status == "pending" %}
-
-    <a href="{% url 'approve-deposit' deposit.id %}"
-       class="btn-success">
-        Approve
-    </a>
-
-    <a href="{% url 'reject-deposit' deposit.id %}"
-       class="btn-danger">
-        Reject
-    </a>
-
+    {# Actions #}
+    {% if deposit.status == 'pending' %}
+    <div class="glass-card rounded-lg overflow-hidden">
+      <div class="px-container-padding py-4 border-b border-outline flex items-center gap-3">
+        <span class="material-symbols-outlined text-tech-cyan text-[20px]">gavel</span>
+        <h3 class="font-headline-md text-white">Review Action</h3>
+      </div>
+      <div class="p-container-padding flex gap-3">
+        <a href="{% url 'approve-deposit' deposit.pk %}"
+          class="flex-1 py-3 bg-primary-container border border-tech-cyan/30 text-tech-cyan rounded font-label-sm font-bold text-center hover:bg-primary-container/80 transition-colors flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">check_circle</span>
+          Approve
+        </a>
+        <a href="{% url 'reject-deposit' deposit.pk %}"
+          onclick="return confirm('Reject this deposit?')"
+          class="flex-1 py-3 bg-error-container border border-error/30 text-error rounded font-label-sm font-bold text-center hover:bg-error-container/80 transition-colors flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">cancel</span>
+          Reject
+        </a>
+      </div>
+    </div>
+    {% else %}
+    <div class="glass-card rounded-lg p-container-padding">
+      <p class="font-label-sm text-on-surface-variant text-sm text-center">
+        This deposit has already been <span class="font-bold {% if deposit.status == 'approved' %}text-tech-cyan{% else %}text-error{% endif %}">{{ deposit.status }}</span>.
+        {% if deposit.reviewed_by %}by {{ deposit.reviewed_by.username }}{% endif %}
+      </p>
+    </div>
     {% endif %}
 
+  </div>
 </div>
 
 {% endblock %}

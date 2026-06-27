@@ -67,8 +67,8 @@ urlpatterns = [
 
     # ── Admin — deposits ──────────────────────────────────────
     path('admin-panel/deposits/', views.admin_deposits, name='admin-deposits'),
-    path('admin/deposits/<int:pk>/approve/', views.approve_deposit_view, name='approve-deposit'),
-    path('admin/deposits/<int:pk>/reject/', views.reject_deposit_view, name='reject-deposit'),
-    path('admin/deposits/<int:pk>/', views.admin_deposit_detail, name='admin-deposit-detail'),
+    path('admin-panel/deposits/<int:pk>/approve/', views.approve_deposit_view, name='approve-deposit'),
+    path('admin-panel/deposits/<int:pk>/reject/', views.reject_deposit_view, name='reject-deposit'),
+    path('admin-panel/deposits/<int:pk>/', views.admin_deposit_detail, name='admin-deposit-detail'),
 ]
 
