@@ -1,355 +1,361 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
+<html class="dark" lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>Activate Account | SANTANDER</title>
-<!-- Fonts & Icons -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "surface-container": "#1f1f1f",
-                    "on-primary-fixed": "#002112",
-                    "surface-dim": "#131313",
-                    "surface": "#131313",
-                    "on-primary-fixed-variant": "#224f39",
-                    "surface-container-high": "#2a2a2a",
-                    "secondary-fixed-dim": "#c8c6c5",
-                    "primary-fixed-dim": "#a1d1b4",
-                    "on-error": "#690005",
-                    "tertiary-fixed-dim": "#a4d1b6",
-                    "surface-tint": "#a1d1b4",
-                    "primary-fixed": "#bceecf",
-                    "on-error-container": "#ffdad6",
-                    "surface-variant": "#353535",
-                    "on-surface-variant": "#c0c9c1",
-                    "on-secondary-fixed-variant": "#474746",
-                    "on-surface": "#e2e2e2",
-                    "on-secondary-container": "#b7b5b4",
-                    "on-primary": "#063824",
-                    "tertiary-container": "#305944",
-                    "primary": "#a1d1b4",
-                    "on-secondary-fixed": "#1c1b1b",
-                    "secondary": "#c8c6c5",
-                    "surface-container-highest": "#353535",
-                    "outline": "#8b938c",
-                    "on-tertiary-container": "#a1ceb3",
-                    "on-tertiary-fixed-variant": "#254f3a",
-                    "on-secondary": "#313030",
-                    "error": "#ffb4ab",
-                    "on-background": "#e2e2e2",
-                    "surface-container-low": "#1b1b1b",
-                    "on-primary-container": "#9fcfb2",
-                    "inverse-primary": "#3a674f",
-                    "secondary-fixed": "#e5e2e1",
-                    "primary-container": "#2d5a43",
-                    "tertiary-fixed": "#bfedd1",
-                    "surface-container-lowest": "#0e0e0e",
-                    "tertiary": "#a4d1b6",
-                    "surface-bright": "#393939",
-                    "error-container": "#93000a",
-                    "outline-variant": "#414943",
-                    "secondary-container": "#474746",
-                    "inverse-on-surface": "#303030",
-                    "background": "#131313",
-                    "on-tertiary-fixed": "#002113",
-                    "inverse-surface": "#e2e2e2",
-                    "on-tertiary": "#0c3825"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "spacing": {
-                    "gutter": "16px",
-                    "base": "8px",
-                    "stack-sm": "4px",
-                    "stack-md": "12px",
-                    "stack-lg": "32px",
-                    "container-padding": "24px"
-            },
-            "fontFamily": {
-                    "label-sm": ["Geist"],
-                    "body-md": ["Hanken Grotesk"],
-                    "headline-xl": ["Hanken Grotesk"],
-                    "headline-lg": ["Hanken Grotesk"],
-                    "mono-data": ["Geist"],
-                    "headline-md": ["Hanken Grotesk"],
-                    "body-lg": ["Hanken Grotesk"]
-            },
-            "fontSize": {
-                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                    "mono-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
-            }
-          }
-        }
-      }
-    </script>
-<style>
-        body {
-            background-color: #000000;
-            color: #e2e2e2;
-            -webkit-font-smoothing: antialiased;
-        }
-        .glass-card {
-            background: rgba(17, 17, 17, 0.7);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-        .glass-card-accent {
-            border-top: 1px solid #2d5a43;
-        }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            vertical-align: middle;
-        }
-        .copy-success {
-            color: #a1d1b4 !important;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="font-body-md text-body-md overflow-x-hidden">
-<!-- Top App Bar -->
-<header class="fixed top-0 w-full z-50 bg-background/80 dark:bg-background/80 backdrop-blur-xl border-b border-white/5 flex justify-between items-center px-container-padding h-16 w-full">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary">menu</span>
-<span class="font-headline-md text-headline-md font-bold tracking-tighter text-primary dark:text-primary">SANTANDER</span>
-</div>
-<div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center border border-primary/20">
-<span class="material-symbols-outlined text-primary scale-75">person</span>
-</div>
-</header>
-<main class="pt-24 pb-32 px-4 max-w-lg mx-auto min-h-screen">
-<!-- Header Section -->
-<section class="mb-8">
-<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Activate Account</h1>
-<p class="text-on-surface-variant font-body-md opacity-70">Complete your initial deposit to enable full banking features.</p>
-</section>
-<!-- Status Notifications -->
-        {% if payment.status == 'pending' %}
-        <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-primary-container flex gap-4 items-start animate-pulse">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">info</span>
-<div>
-<p class="font-label-sm text-primary uppercase mb-1">Awaiting Payment</p>
-<p class="text-sm opacity-80">Please transfer exactly <span class="font-mono-data font-bold text-primary">${{ activation_amount }}</span> to any of the accounts below.</p>
-</div>
-</div>
-        {% elif payment.status == 'processing' %}
-        <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-tertiary-container flex gap-4 items-start">
-<span class="material-symbols-outlined text-tertiary">history</span>
-<div>
-<p class="font-label-sm text-tertiary uppercase mb-1">Processing</p>
-<p class="text-sm opacity-80">We have received your request. Our compliance team is verifying the transaction.</p>
-</div>
-</div>
-        {% elif payment.status == 'paid' %}
-        <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-primary flex gap-4 items-start">
-<span class="material-symbols-outlined text-primary">check_circle</span>
-<div>
-<p class="font-label-sm text-primary uppercase mb-1">Account Active</p>
-<p class="text-sm opacity-80">Your deposit has been verified. Welcome to Santander Private Banking.</p>
-</div>
-</div>
-        {% elif payment.status == 'failed' %}
-        <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-error flex gap-4 items-start">
-<span class="material-symbols-outlined text-error">error</span>
-<div>
-<p class="font-label-sm text-error uppercase mb-1">Payment Failed</p>
-<p class="text-sm opacity-80">There was an issue with your verification. Please contact support.</p>
-</div>
-</div>
-        {% endif %}
-
-        <!-- Payment Details Loop -->
-<div class="space-y-6">
-            {% for detail in payment_details %}
-            <div class="glass-card glass-card-accent rounded-xl overflow-hidden">
-<div class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-white/5">
-<div class="flex items-center gap-2">
-                        {% if detail.type == 'bank' %}
-                        <span class="material-symbols-outlined text-primary scale-90">account_balance</span>
-<span class="font-label-sm text-on-surface">WIRED TRANSFER</span>
-                        {% else %}
-                        <span class="material-symbols-outlined text-primary scale-90">currency_bitcoin</span>
-<span class="font-label-sm text-on-surface">CRYPTO DEPOSIT</span>
-                        {% endif %}
-                    </div>
-<span class="font-mono-data text-xs text-primary/60 uppercase">{{ detail.network|default:"SWIFT" }}</span>
-</div>
-<div class="p-6 space-y-4">
-                    {% if detail.type == 'bank' %}
-                    <div class="space-y-4">
-<div class="group">
-<label class="font-label-sm text-white/40 block mb-1">BANK NAME</label>
-<p class="text-on-surface font-headline-md tracking-tight">{{ detail.bank_name }}</p>
-</div>
-<div class="grid grid-cols-2 gap-4">
-<div>
-<label class="font-label-sm text-white/40 block mb-1">ACCOUNT NO.</label>
-<div class="flex items-center gap-2">
-<span class="font-mono-data text-on-surface truncate" id="acc_{{ forloop.counter }}">{{ detail.account_no }}</span>
-<button class="text-primary hover:text-white transition-colors" onclick="copyToClipboard('acc_{{ forloop.counter }}', this)">
-<span class="material-symbols-outlined text-[18px]">content_copy</span>
-</button>
-</div>
-</div>
-<div>
-<label class="font-label-sm text-white/40 block mb-1">SWIFT / BIC</label>
-<div class="flex items-center gap-2">
-<span class="font-mono-data text-on-surface" id="swift_{{ forloop.counter }}">{{ detail.swift_code }}</span>
-<button class="text-primary hover:text-white transition-colors" onclick="copyToClipboard('swift_{{ forloop.counter }}', this)">
-<span class="material-symbols-outlined text-[18px]">content_copy</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-                    {% else %}
-                    <div class="space-y-4">
-<div class="flex justify-between items-start">
-<div>
-<label class="font-label-sm text-white/40 block mb-1">CURRENCY</label>
-<p class="text-on-surface font-headline-md tracking-tight">{{ detail.currency }}</p>
-</div>
-<div class="w-16 h-16 bg-white p-1 rounded-lg">
-<!-- QR Placeholder -->
-<div class="w-full h-full bg-slate-100 flex items-center justify-center text-black">
-<span class="material-symbols-outlined">qr_code_2</span>
-</div>
-</div>
-</div>
-<div>
-<label class="font-label-sm text-white/40 block mb-1">WALLET ADDRESS</label>
-<div class="flex items-center gap-2 bg-black/40 p-3 rounded-lg border border-white/5">
-<span class="font-mono-data text-xs text-primary truncate break-all" id="wallet_{{ forloop.counter }}">{{ detail.wallet_address }}</span>
-<button class="shrink-0 text-primary hover:text-white transition-colors" onclick="copyToClipboard('wallet_{{ forloop.counter }}', this)">
-<span class="material-symbols-outlined text-[18px]">content_copy</span>
-</button>
-</div>
-</div>
-</div>
-                    {% endif %}
-                </div>
-</div>
-            {% endfor %}
-        </div>
-<!-- Confirmation Form -->
-        {% if payment.status == 'pending' %}
-        <section class="mt-10">
-<div class="glass-card rounded-xl p-6 border-white/10">
-<h3 class="font-headline-md text-on-surface mb-4">Confirm Payment</h3>
-<form action="." class="space-y-4" method="POST">
-                    {% csrf_token %}
-                    <div class="space-y-2">
-<label class="font-label-sm text-white/60">Transaction Reference / Hash</label>
-<input class="w-full bg-black border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-all text-on-surface font-mono-data" name="ref_code" placeholder="e.g. TXN-99201-X" required="" type="text"/>
-</div>
-<button class="w-full bg-primary-container text-on-primary-container font-headline-md py-4 rounded-xl hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2" type="submit">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
-                        I've Sent Payment
-                    </button>
-<p class="text-center text-[10px] text-white/30 uppercase tracking-widest pt-2">
-                        Average verification time: 2-6 hours
-                    </p>
-</form>
-</div>
-</section>
-        {% endif %}
-
-        <!-- Help Section -->
-<section class="mt-8 mb-12">
-<div class="flex items-center gap-4 text-white/40 hover:text-white/60 transition-colors cursor-pointer">
-<span class="material-symbols-outlined">support_agent</span>
-<span class="font-label-sm underline decoration-white/20 underline-offset-4">Encountering issues? Contact Santander Support</span>
-</div>
-</section>
-</main>
-<!-- Bottom Navigation Bar -->
-<nav class="fixed bottom-0 w-full z-50 bg-surface-container-lowest/90 dark:bg-surface-container-lowest/90 backdrop-blur-2xl border-t border-white/5 shadow-[0_-4px_24px_rgba(45,90,67,0.1)] flex justify-around items-center h-20 px-4 pb-safe w-full md:hidden">
-<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="#">
-<span class="material-symbols-outlined">home</span>
-<span class="font-label-sm text-label-sm">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center text-primary font-bold bg-primary-container/10 rounded-full py-1 px-3 active:scale-90 duration-300" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
-<span class="font-label-sm text-label-sm">Accounts</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="#">
-<span class="material-symbols-outlined">add_circle</span>
-<span class="font-label-sm text-label-sm">Deposit</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="#">
-<span class="material-symbols-outlined">history</span>
-<span class="font-label-sm text-label-sm">Activity</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors active:scale-90 duration-300" href="#">
-<span class="material-symbols-outlined">settings</span>
-<span class="font-label-sm text-label-sm">Settings</span>
-</a>
-</nav>
-<!-- Desktop Sidebar Suggestion (Responsive Pivot) -->
-<aside class="hidden md:flex fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-white/5 flex-col p-6">
-<div class="mb-12">
-<span class="font-headline-md text-primary font-bold tracking-tighter">SANTANDER</span>
-</div>
-<nav class="space-y-6">
-<a class="flex items-center gap-4 text-on-surface-variant hover:text-primary transition-all" href="#">
-<span class="material-symbols-outlined">home</span> Home
-            </a>
-<a class="flex items-center gap-4 text-primary font-bold" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span> Accounts
-            </a>
-<a class="flex items-center gap-4 text-on-surface-variant hover:text-primary transition-all" href="#">
-<span class="material-symbols-outlined">add_circle</span> Deposit
-            </a>
-<a class="flex items-center gap-4 text-on-surface-variant hover:text-primary transition-all" href="#">
-<span class="material-symbols-outlined">history</span> Activity
-            </a>
-</nav>
-</aside>
 <script>
-        function copyToClipboard(id, btn) {
-            const text = document.getElementById(id).innerText;
-            const originalIcon = btn.innerHTML;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                btn.classList.add('copy-success');
-                btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span>';
-                
-                setTimeout(() => {
-                    btn.classList.remove('copy-success');
-                    btn.innerHTML = originalIcon;
-                }, 2000);
-            });
-        }
+tailwind.config = {
+  darkMode:"class",
+  theme:{extend:{
+    colors:{
+      "surface-container":"#1f1f1f","surface-dim":"#131313","surface":"#131313",
+      "surface-container-high":"#2a2a2a","surface-variant":"#353535",
+      "on-surface-variant":"#c0c9c1","on-surface":"#e2e2e2",
+      "on-secondary-container":"#b7b5b4","on-primary":"#063824",
+      "tertiary-container":"#305944","primary":"#a1d1b4",
+      "secondary":"#c8c6c5","surface-container-highest":"#353535",
+      "outline":"#8b938c","on-tertiary-container":"#a1ceb3",
+      "on-secondary":"#313030","error":"#ffb4ab","on-background":"#e2e2e2",
+      "surface-container-low":"#1b1b1b","on-primary-container":"#9fcfb2",
+      "inverse-primary":"#3a674f","primary-container":"#2d5a43",
+      "tertiary-fixed":"#bfedd1","surface-container-lowest":"#0e0e0e",
+      "tertiary":"#a4d1b6","surface-bright":"#393939",
+      "error-container":"#93000a","outline-variant":"#414943",
+      "background":"#131313","inverse-surface":"#e2e2e2"
+    },
+    borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},
+    spacing:{"gutter":"16px","base":"8px","stack-sm":"4px","stack-md":"12px","stack-lg":"32px","container-padding":"24px"},
+    fontFamily:{"label-sm":["Geist"],"body-md":["Hanken Grotesk"],"headline-xl":["Hanken Grotesk"],"headline-lg":["Hanken Grotesk"],"mono-data":["Geist"],"headline-md":["Hanken Grotesk"],"body-lg":["Hanken Grotesk"]}
+  }}
+}
+</script>
+<style>
+body{background-color:#131313;color:#e2e2e2;-webkit-font-smoothing:antialiased}
+.glass-card{background:rgba(17,17,17,0.7);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.05);box-shadow:0 8px 32px 0 rgba(0,0,0,0.37)}
+.glass-card-accent{border-top:1px solid #2d5a43}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+.copy-success{color:#a1d1b4!important}
+</style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
 
-        // Lightweight background parallax or subtle effect
-        document.addEventListener('mousemove', (e) => {
-            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
-            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
-            document.body.style.backgroundPosition = ${moveX}px ${moveY}px;
-        });
-    </script>
-</body></html>
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 flex justify-between items-center px-container-padding h-16">
+  <div class="flex items-center gap-3">
+    <span class="material-symbols-outlined text-primary">security</span>
+    <span class="font-headline-md font-bold tracking-tighter text-primary">SANTANDER</span>
+  </div>
+  <div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center border border-primary/20">
+    <span class="text-primary font-bold text-sm">{{ request.user.username|first|upper }}</span>
+  </div>
+</header>
+
+<main class="pt-24 pb-32 px-4 max-w-lg mx-auto min-h-screen">
+
+  <!-- Heading -->
+  <section class="mb-8">
+    <h1 class="font-headline-lg text-on-surface mb-2">Activate Account</h1>
+    <p class="text-on-surface-variant font-body-md opacity-70">Complete your initial deposit to enable full banking features.</p>
+  </section>
+
+  <!-- Django messages -->
+  {% if messages %}
+    {% for m in messages %}
+    <div class="glass-card mb-4 p-4 rounded-xl flex gap-3 items-start
+      {% if m.tags == 'success' %}border-l-4 border-primary{% elif m.tags == 'error' %}border-l-4 border-error{% else %}border-l-4 border-tertiary{% endif %}">
+      <span class="material-symbols-outlined {% if m.tags == 'success' %}text-primary{% elif m.tags == 'error' %}text-error{% else %}text-tertiary{% endif %}">
+        {% if m.tags == 'success' %}check_circle{% elif m.tags == 'error' %}error{% else %}info{% endif %}
+      </span>
+      <p class="text-sm opacity-80">{{ m }}</p>
+    </div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- Status banner -->
+  {% if request.user.account_activated %}
+  <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-primary flex gap-4 items-start">
+    <span class="material-symbols-outlined text-primary">check_circle</span>
+    <div>
+      <p class="font-label-sm text-primary uppercase mb-1">Account Active</p>
+      <p class="text-sm opacity-80">Your account is fully activated. Welcome to Santander Private Banking.</p>
+    </div>
+  </div>
+
+  {% elif payment is None %}
+  <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-outline flex gap-4 items-start">
+    <span class="material-symbols-outlined text-on-surface-variant">info</span>
+    <div>
+      <p class="font-label-sm text-on-surface-variant uppercase mb-1">Not Set Up Yet</p>
+      <p class="text-sm opacity-80">Your admin has not assigned an activation fee yet. Please contact support.</p>
+    </div>
+  </div>
+
+  {% elif payment.status == 'paid' %}
+  <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-tertiary flex gap-4 items-start">
+    <span class="material-symbols-outlined text-tertiary">history</span>
+    <div>
+      <p class="font-label-sm text-tertiary uppercase mb-1">Under Review</p>
+      <p class="text-sm opacity-80">Payment submitted. Our compliance team is verifying your transaction.</p>
+    </div>
+  </div>
+
+  {% elif payment.status == 'failed' %}
+  <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-error flex gap-4 items-start">
+    <span class="material-symbols-outlined text-error">error</span>
+    <div>
+      <p class="font-label-sm text-error uppercase mb-1">Payment Failed</p>
+      <p class="text-sm opacity-80">There was an issue with your verification. Please contact support or resubmit.</p>
+    </div>
+  </div>
+
+  {% else %}
+  <!-- PENDING — show amount notice -->
+  <div class="glass-card mb-6 p-4 rounded-xl border-l-4 border-primary-container flex gap-4 items-start">
+    <span class="material-symbols-outlined text-primary">info</span>
+    <div>
+      <p class="font-label-sm text-primary uppercase mb-1">Awaiting Payment</p>
+      <p class="text-sm opacity-80">Please transfer exactly <span class="font-mono-data font-bold text-primary">${{ activation_amount }}</span> to any account below, then confirm.</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Payment Details -->
+  {% if payment and payment.status == 'pending' %}
+  <div class="space-y-6">
+    {% for detail in payment_details %}
+    <div class="glass-card glass-card-accent rounded-xl overflow-hidden">
+
+      <!-- Card header -->
+      <div class="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-white/5">
+        <div class="flex items-center gap-2">
+          {% if detail.payment_type == 'bank' %}
+            <span class="material-symbols-outlined text-primary" style="font-size:20px">account_balance</span>
+            <span class="font-label-sm text-on-surface uppercase">Bank Transfer</span>
+          {% else %}
+            <span class="material-symbols-outlined text-primary" style="font-size:20px">currency_bitcoin</span>
+            <span class="font-label-sm text-on-surface uppercase">Crypto Deposit</span>
+          {% endif %}
+        </div>
+        <span class="font-mono-data text-xs text-primary/60 uppercase">
+          {% if detail.payment_type == 'bank' %}{{ detail.swift_code|default:"SWIFT" }}{% else %}{{ detail.crypto_network|default:"Network" }}{% endif %}
+        </span>
+      </div>
+
+      <!-- Card body -->
+      <div class="p-6 space-y-4">
+
+        {% if detail.payment_type == 'bank' %}
+        {% if detail.bank_name %}
+        <div>
+          <label class="font-label-sm text-white/40 block mb-1">BANK NAME</label>
+          <p class="text-on-surface font-bold text-lg">{{ detail.bank_name }}</p>
+        </div>
+        {% endif %}
+        <div class="grid grid-cols-2 gap-4">
+          {% if detail.account_number %}
+          <div>
+            <label class="font-label-sm text-white/40 block mb-1">ACCOUNT NO.</label>
+            <div class="flex items-center gap-2">
+              <span class="font-mono-data text-on-surface text-sm truncate" id="acc_{{ forloop.counter }}">{{ detail.account_number }}</span>
+              <button class="text-primary hover:text-white transition-colors flex-shrink-0" onclick="cp('acc_{{ forloop.counter }}', this)">
+                <span class="material-symbols-outlined text-[18px]">content_copy</span>
+              </button>
+            </div>
+          </div>
+          {% endif %}
+          {% if detail.swift_code %}
+          <div>
+            <label class="font-label-sm text-white/40 block mb-1">SWIFT / BIC</label>
+            <div class="flex items-center gap-2">
+              <span class="font-mono-data text-on-surface text-sm" id="swift_{{ forloop.counter }}">{{ detail.swift_code }}</span>
+              <button class="text-primary hover:text-white transition-colors flex-shrink-0" onclick="cp('swift_{{ forloop.counter }}', this)">
+                <span class="material-symbols-outlined text-[18px]">content_copy</span>
+              </button>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+        {% if detail.account_name %}
+        <div>
+          <label class="font-label-sm text-white/40 block mb-1">ACCOUNT NAME</label>
+          <p class="text-on-surface text-sm">{{ detail.account_name }}</p>
+        </div>
+        {% endif %}
+        {% if detail.bank_country %}
+        <div>
+          <label class="font-label-sm text-white/40 block mb-1">COUNTRY</label>
+          <p class="text-on-surface text-sm">{{ detail.bank_country }}</p>
+        </div>
+        {% endif %}
+        {% if detail.iban %}
+        <div>
+          <label class="font-label-sm text-white/40 block mb-1">IBAN</label>
+          <div class="flex items-center gap-2">
+            <span class="font-mono-data text-on-surface text-sm" id="iban_{{ forloop.counter }}">{{ detail.iban }}</span>
+            <button class="text-primary hover:text-white transition-colors flex-shrink-0" onclick="cp('iban_{{ forloop.counter }}', this)">
+              <span class="material-symbols-outlined text-[18px]">content_copy</span>
+            </button>
+          </div>
+        </div>
+        {% endif %}
+        {% if detail.routing_number %}
+        <div>
+          <label class="font-label-sm text-white/40 block mb-1">ROUTING NUMBER</label>
+          <div class="flex items-center gap-2">
+            <span class="font-mono-data text-on-surface text-sm" id="routing_{{ forloop.counter }}">{{ detail.routing_number }}</span>
+            <button class="text-primary hover:text-white transition-colors flex-shrink-0" onclick="cp('routing_{{ forloop.counter }}', this)">
+              <span class="material-symbols-outlined text-[18px]">content_copy</span>
+            </button>
+          </div>
+        </div>
+        {% endif %}
+
+        {% else %}
+        {# Crypto #}
+        {% if detail.crypto_currency %}
+        <div>
+          <label class="font-label-sm text-white/40 block mb-1">CURRENCY</label>
+          <p class="text-on-surface font-bold text-lg">{{ detail.crypto_currency }}</p>
+        </div>
+        {% endif %}
+        {% if detail.crypto_network %}
+        <div>
+          <label class="font-label-sm text-white/40 block mb-1">NETWORK</label>
+          <p class="text-on-surface text-sm">{{ detail.crypto_network }}</p>
+        </div>
+        {% endif %}
+        {% if detail.wallet_address %}
+        <div>
+          <label class="font-label-sm text-white/40 block mb-1">WALLET ADDRESS</label>
+          <div class="flex items-start gap-2 bg-black/40 p-3 rounded-lg border border-white/5">
+            <span class="font-mono-data text-xs text-primary/90 break-all flex-1" id="wallet_{{ forloop.counter }}">{{ detail.wallet_address }}</span>
+            <button class="flex-shrink-0 text-primary hover:text-white transition-colors mt-0.5" onclick="cp('wallet_{{ forloop.counter }}', this)">
+              <span class="material-symbols-outlined text-[18px]">content_copy</span>
+            </button>
+          </div>
+        </div>
+        {% endif %}
+        {% endif %}
+
+      </div>
+    </div>
+    {% empty %}
+    <div class="glass-card rounded-xl p-8 text-center">
+      <span class="material-symbols-outlined text-4xl text-on-surface-variant opacity-30 block mb-3">credit_card_off</span>
+      <p class="text-on-surface-variant text-sm">No payment details available yet. Please contact support.</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Confirm form -->
+  {% if payment_details %}
+  <section class="mt-8">
+    <div class="glass-card rounded-xl p-6 border-white/10">
+      <h3 class="font-bold text-on-surface text-lg mb-4">Confirm Payment</h3>
+      <form action="." method="POST" class="space-y-4">
+        {% csrf_token %}
+        <div class="space-y-2">
+          <label class="font-label-sm text-white/60 block">Transaction Reference / Hash <span class="text-white/30">(optional)</span></label>
+          <input type="text" name="ref_code" placeholder="e.g. TXN-99201-X"
+            class="w-full bg-black border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-all text-on-surface font-mono-data text-sm">
+        </div>
+        <button type="submit"
+          class="w-full bg-primary-container text-on-primary-container font-bold py-4 rounded-xl hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined">send</span>
+          I've Sent Payment — Notify Admin
+        </button>
+        <p class="text-center text-[10px] text-white/30 uppercase tracking-widest pt-1">
+          Average verification time: 2–6 hours
+        </p>
+      </form>
+    </div>
+  </section>
+  {% endif %}
+  {% endif %}
+
+  <!-- Support link -->
+  <section class="mt-8 mb-12">
+    <a href="{% url 'support-create' %}" class="flex items-center gap-3 text-white/40 hover:text-white/70 transition-colors">
+      <span class="material-symbols-outlined">support_agent</span>
+      <span class="font-label-sm underline decoration-white/20 underline-offset-4">Encountering issues? Contact Santander Support</span>
+    </a>
+  </section>
+
+</main>
+
+<!-- Bottom Nav -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-2xl border-t border-white/5 flex justify-around items-center h-20 px-4 md:hidden" style="padding-bottom:env(safe-area-inset-bottom)">
+  <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors" href="{% url 'dashboard' %}">
+    <span class="material-symbols-outlined">home</span>
+    <span class="font-label-sm text-[10px]">Home</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-primary font-bold bg-primary-container/10 rounded-full py-1 px-3" href="{% url 'activate-account' %}">
+    <span class="material-symbols-outlined">account_balance_wallet</span>
+    <span class="font-label-sm text-[10px]">Activate</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors" href="{% url 'deposit-request' %}">
+    <span class="material-symbols-outlined">add_circle</span>
+    <span class="font-label-sm text-[10px]">Deposit</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors" href="{% url 'deposit-history' %}">
+    <span class="material-symbols-outlined">history</span>
+    <span class="font-label-sm text-[10px]">Activity</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant/60 hover:text-primary transition-colors" href="{% url 'notifications' %}">
+    <span class="material-symbols-outlined">notifications</span>
+    <span class="font-label-sm text-[10px]">Alerts</span>
+  </a>
+</nav>
+
+<!-- Desktop Sidebar -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-white/5 flex-col p-6">
+  <div class="mb-12">
+    <span class="font-bold text-primary tracking-tighter text-lg">SANTANDER</span>
+  </div>
+  <nav class="space-y-4">
+    <a class="flex items-center gap-3 text-on-surface-variant hover:text-primary transition-all text-sm" href="{% url 'dashboard' %}">
+      <span class="material-symbols-outlined">home</span> Home
+    </a>
+    <a class="flex items-center gap-3 text-primary font-bold text-sm" href="{% url 'activate-account' %}">
+      <span class="material-symbols-outlined">account_balance_wallet</span> Activate Account
+    </a>
+    <a class="flex items-center gap-3 text-on-surface-variant hover:text-primary transition-all text-sm" href="{% url 'deposit-request' %}">
+      <span class="material-symbols-outlined">add_circle</span> Deposit
+    </a>
+    <a class="flex items-center gap-3 text-on-surface-variant hover:text-primary transition-all text-sm" href="{% url 'request-withdrawal' %}">
+      <span class="material-symbols-outlined">remove_circle</span> Withdraw
+    </a>
+    <a class="flex items-center gap-3 text-on-surface-variant hover:text-primary transition-all text-sm" href="{% url 'notifications' %}">
+      <span class="material-symbols-outlined">notifications</span> Notifications
+    </a>
+    <a class="flex items-center gap-3 text-on-surface-variant hover:text-primary transition-all text-sm" href="{% url 'logout' %}">
+      <span class="material-symbols-outlined">logout</span> Sign Out
+    </a>
+  </nav>
+</aside>
+
+<script>
+function cp(id, btn) {
+  const text = document.getElementById(id).innerText;
+  const orig = btn.innerHTML;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copy-success');
+    btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span>';
+    setTimeout(() => { btn.classList.remove('copy-success'); btn.innerHTML = orig; }, 2000);
+  }).catch(() => {
+    const el = document.createElement('textarea');
+    el.value = text; el.style.position = 'fixed'; el.style.opacity = '0';
+    document.body.appendChild(el); el.select();
+    document.execCommand('copy'); document.body.removeChild(el);
+    btn.classList.add('copy-success');
+    btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span>';
+    setTimeout(() => { btn.classList.remove('copy-success'); btn.innerHTML = orig; }, 2000);
+  });
+}
+</script>
+</body>
+</html>
