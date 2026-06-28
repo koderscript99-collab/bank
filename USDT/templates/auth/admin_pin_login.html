@@ -1,87 +1,163 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html class="dark" lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Admin PIN Login</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Access | Santander</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&family=Geist:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "background":"#000000","surface":"#000000","surface-container":"#111111",
+        "surface-container-low":"#0e0e0e","surface-container-high":"#151515",
+        "surface-container-highest":"#1A1A1A","surface-container-lowest":"#050505",
+        "outline":"#222222","outline-variant":"#333333",
+        "on-surface":"#e2e2e2","on-surface-variant":"#c0c9c1",
+        "primary":"#2D5A43","primary-container":"#1A2E24","on-primary-container":"#9fcfb2",
+        "error":"#ffb4ab","error-container":"#93000a",
+        "tech-cyan":"#4ade80"
+      },
+      fontFamily: {
+        "mono-data":["Geist"],"headline-md":["Hanken Grotesk"],"label-sm":["Geist"]
+      }
+    }
+  }
+}
+</script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--sky:#0ea5e9;--sky2:#0284c7;--bg:#f0f7ff;--surface:#fff;--surface2:#f8fafc;--border:#c8e0f4;--text:#0f172a;--muted:#64748b;--red:#dc2626;--red-dim:rgba(220,38,38,.1);--amber:#d97706;--amber-dim:rgba(217,119,6,.1);--radius:14px}
-[data-theme="dark"]{--bg:#0c1220;--surface:#131c2e;--surface2:#1a2540;--border:#1e3050;--text:#e2e8f0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.auth-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:40px;width:100%;max-width:400px;box-shadow:0 4px 40px rgba(14,165,233,.08)}
-.shield{width:56px;height:56px;background:linear-gradient(135deg,var(--sky),var(--sky2));border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
-.auth-title{font-size:22px;font-weight:700;margin-bottom:6px}
-.auth-sub{font-size:13.5px;color:var(--muted);margin-bottom:28px}
-.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
-.form-group label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
-.form-group input{padding:11px 14px;background:var(--surface2);border:1.5px solid var(--border);border-radius:9px;font-size:14px;color:var(--text);outline:none;transition:border-color .2s;font-family:inherit}
-.form-group input:focus{border-color:var(--sky)}
-/* PIN dots display */
-.pin-display{display:flex;gap:12px;justify-content:center;margin:20px 0}
-.pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);transition:all .2s}
-.pin-dot.filled{background:var(--sky);border-color:var(--sky)}
-/* PIN pad */
-.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
-.pin-key{padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;font-size:18px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s;text-align:center;user-select:none}
-.pin-key:hover{background:var(--sky-dim,rgba(14,165,233,.12));border-color:var(--sky)}
-.pin-key:active{transform:scale(.95)}
-.pin-key.del{font-size:14px;color:var(--red)}
-.btn-full{width:100%;padding:13px;background:var(--sky);color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s}
-.btn-full:hover{opacity:.9}
-.btn-full:disabled{opacity:.5;cursor:not-allowed}
-.msg{padding:11px 14px;border-radius:8px;font-size:13px;margin-bottom:16px;border-left:3px solid var(--red);background:var(--red-dim);color:var(--red)}
-.back-link{display:block;text-align:center;margin-top:16px;font-size:13px;color:var(--muted);text-decoration:none}
-.back-link:hover{color:var(--sky)}
-.hidden-input{position:absolute;opacity:0;pointer-events:none}
+body{background:#000;color:#e2e2e2;font-family:'Hanken Grotesk',sans-serif;margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.terminal-grid{background-image:radial-gradient(rgba(45,90,67,0.05) 1px,transparent 0);background-size:24px 24px;position:fixed;inset:0;pointer-events:none;z-index:0}
+.scanline{width:100%;height:100px;z-index:1;background:linear-gradient(0deg,rgba(0,0,0,0) 0%,rgba(45,90,67,0.02) 50%,rgba(0,0,0,0) 100%);opacity:0.1;position:fixed;bottom:100%;pointer-events:none;animation:scanline 8s linear infinite}
+@keyframes scanline{0%{bottom:100%}100%{bottom:-100px}}
+.pin-dot{width:14px;height:14px;border-radius:50%;border:2px solid #222;transition:all .15s;flex-shrink:0}
+.pin-dot.filled{background:#4ade80;border-color:#4ade80;box-shadow:0 0 8px rgba(74,222,128,0.4)}
+.pin-input:focus{outline:none}
 </style>
 </head>
 <body>
-<div class="auth-card">
-  <div class="shield"><svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-  <div class="auth-title">Admin Access</div>
-  <div class="auth-sub">Enter your username and 4-digit PIN</div>
+<div class="terminal-grid"></div>
+<div class="scanline"></div>
 
-  {% if messages %}{% for m in messages %}<div class="msg">{{ m }}</div>{% endfor %}{% endif %}
+<div class="relative z-10 w-full max-w-sm">
 
-  <form method="post" id="pinForm">
-    {% csrf_token %}
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" name="username" placeholder="Admin username" required autofocus>
+  <!-- Card -->
+  <div style="background:rgba(17,17,17,0.9);backdrop-filter:blur(20px);border:1px solid #222;border-radius:12px;padding:40px 32px">
+
+    <!-- Brand -->
+    <div class="flex items-center gap-3 mb-8">
+      <div style="width:44px;height:44px;background:rgba(26,46,36,1);border:1px solid rgba(74,222,128,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center">
+        <span class="material-symbols-outlined text-[22px]" style="color:#4ade80">security</span>
+      </div>
+      <div>
+        <h1 style="font-size:18px;font-weight:700;color:#fff;letter-spacing:-0.5px">SANTANDER</h1>
+        <p style="font-size:11px;color:#4ade80;letter-spacing:0.15em;text-transform:uppercase">Admin Terminal</p>
+      </div>
     </div>
 
-    <div class="pin-display" id="pinDisplay">
-      <div class="pin-dot" id="d0"></div>
-      <div class="pin-dot" id="d1"></div>
-      <div class="pin-dot" id="d2"></div>
-      <div class="pin-dot" id="d3"></div>
-    </div>
+    <h2 style="font-size:22px;font-weight:700;color:#fff;margin-bottom:6px">Secure Access</h2>
+    <p style="font-size:13px;color:#c0c9c1;margin-bottom:28px">Enter your credentials to continue</p>
 
-    <input type="hidden" name="pin" id="pinValue">
+    <!-- Messages -->
+    {% if messages %}
+      {% for m in messages %}
+      <div style="padding:11px 14px;border-radius:8px;font-size:13px;margin-bottom:16px;background:rgba(248,81,73,.12);border:1px solid rgba(248,81,73,.3);color:#ffb4ab;display:flex;align-items:center;gap:8px">
+        <span class="material-symbols-outlined" style="font-size:16px">error</span>
+        {{ m }}
+      </div>
+      {% endfor %}
+    {% endif %}
 
-    <div class="pin-pad">
-      {% for n in "123456789" %}<div class="pin-key" onclick="addPin('{{ n }}')">{{ n }}</div>{% endfor %}
-      <div class="pin-key del" onclick="clearPin()">CLR</div>
-      <div class="pin-key" onclick="addPin('0')">0</div>
-      <div class="pin-key del" onclick="delPin()">⌫</div>
-    </div>
+    <form method="post" id="pinForm">
+      {% csrf_token %}
 
-    <button type="submit" class="btn-full" id="submitBtn" disabled>Unlock</button>
-  </form>
+      <!-- Username -->
+      <div style="margin-bottom:20px">
+        <label style="display:block;font-size:10px;font-weight:700;color:#c0c9c1;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Username</label>
+        <input type="text" name="username" placeholder="Admin username" required autofocus
+          style="width:100%;padding:12px 14px;background:#050505;border:1.5px solid #222;border-radius:8px;font-size:14px;color:#e2e2e2;outline:none;font-family:inherit;transition:border-color .2s"
+          onfocus="this.style.borderColor='#4ade80'"
+          onblur="this.style.borderColor='#222'">
+      </div>
 
-  <a href="{% url 'login' %}" class="back-link">← Back to user login</a>
+      <!-- PIN dots -->
+      <div style="margin-bottom:12px">
+        <label style="display:block;font-size:10px;font-weight:700;color:#c0c9c1;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">4-Digit PIN</label>
+        <div style="display:flex;gap:12px;justify-content:center;margin-bottom:12px">
+          <div class="pin-dot" id="d0"></div>
+          <div class="pin-dot" id="d1"></div>
+          <div class="pin-dot" id="d2"></div>
+          <div class="pin-dot" id="d3"></div>
+        </div>
+        <!-- Invisible PIN input that captures keyboard -->
+        <input type="password" id="pinInput" name="pin" maxlength="4" inputmode="numeric" pattern="[0-9]{4}"
+          placeholder="Click here and type your PIN"
+          style="width:100%;padding:12px 14px;background:#050505;border:1.5px solid #222;border-radius:8px;font-size:14px;color:#e2e2e2;outline:none;font-family:'Geist',monospace;letter-spacing:0.3em;text-align:center;transition:border-color .2s"
+          onfocus="this.style.borderColor='#4ade80';updateDots()"
+          onblur="this.style.borderColor='#222'"
+          oninput="updateDots()"
+          onkeydown="if(event.key==='Enter' && this.value.length===4) document.getElementById('pinForm').submit()">
+      </div>
+
+      <p style="font-size:11px;color:#c0c9c1;opacity:0.6;text-align:center;margin-bottom:20px">
+        Type your 4-digit PIN using your keyboard
+      </p>
+
+      <!-- Submit -->
+      <button type="submit" id="submitBtn" disabled
+        style="width:100%;padding:13px;background:#1A2E24;border:1px solid rgba(74,222,128,0.3);border-radius:8px;font-size:14px;font-weight:700;color:#4ade80;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;opacity:0.4"
+        onmouseover="if(!this.disabled)this.style.background='rgba(45,90,67,0.5)'"
+        onmouseout="if(!this.disabled)this.style.background='#1A2E24'">
+        <span class="material-symbols-outlined" style="font-size:18px">lock_open</span>
+        UNLOCK TERMINAL
+      </button>
+    </form>
+
+    <a href="{% url 'login' %}"
+      style="display:block;text-align:center;margin-top:20px;font-size:12px;color:#c0c9c1;text-decoration:none;opacity:0.6;transition:opacity .2s"
+      onmouseover="this.style.opacity='1';this.style.color='#4ade80'"
+      onmouseout="this.style.opacity='0.6';this.style.color='#c0c9c1'">
+      ← Back to user login
+    </a>
+
+  </div>
+
+  <!-- Footer -->
+  <p style="text-align:center;font-size:10px;color:#c0c9c1;opacity:0.3;margin-top:16px;letter-spacing:0.2em;text-transform:uppercase">
+    Santander Terminal v4.8.2-stable
+  </p>
+
 </div>
 
 <script>
-let pin = '';
-function updateDisplay(){
-  for(let i=0;i<4;i++) document.getElementById('d'+i).classList.toggle('filled',i<pin.length);
-  document.getElementById('pinValue').value = pin;
-  document.getElementById('submitBtn').disabled = pin.length !== 4;
+function updateDots() {
+  const val = document.getElementById('pinInput').value.replace(/\D/g,'').slice(0,4);
+  // Keep only digits
+  document.getElementById('pinInput').value = val;
+  for (let i = 0; i < 4; i++) {
+    const dot = document.getElementById('d' + i);
+    if (i < val.length) {
+      dot.classList.add('filled');
+    } else {
+      dot.classList.remove('filled');
+    }
+  }
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = val.length !== 4;
+  btn.style.opacity = val.length === 4 ? '1' : '0.4';
+  btn.style.cursor = val.length === 4 ? 'pointer' : 'not-allowed';
 }
-function addPin(d){ if(pin.length<4){pin+=d;updateDisplay()} }
-function delPin(){ pin=pin.slice(0,-1);updateDisplay() }
-function clearPin(){ pin='';updateDisplay() }
+// Auto-focus PIN field after username
+document.querySelector('input[name="username"]').addEventListener('keydown', function(e) {
+  if (e.key === 'Tab' || e.key === 'Enter') {
+    e.preventDefault();
+    document.getElementById('pinInput').focus();
+  }
+});
 </script>
 </body>
 </html>
